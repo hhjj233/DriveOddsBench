@@ -2,7 +2,9 @@
 
 # DriveOddsBench: Are Driving Video World Models Aligned with Real-World Odds?
 
-AUTHORS
+Jiaxi Liu · Keshu Wu · Bin Ran · Xiaopeng Li<sup>*</sup>
+
+Department of Civil and Environmental Engineering, University of Wisconsin–Madison · <sup>*</sup>Corresponding author
 
 [Project page](https://hhjj233.github.io/DriveOddsBench-page/) · [Paper (arXiv)](ARXIV_URL)
 
@@ -129,9 +131,9 @@ DriveOddsBench/
 ## 📚 Citation
 
 ```bibtex
-@article{driveoddsbench2026,
+@article{liu2026driveoddsbench,
   title   = {DriveOddsBench: Are Driving Video World Models Aligned with Real-World Odds?},
-  author  = {AUTHORS},
+  author  = {Liu, Jiaxi and Wu, Keshu and Ran, Bin and Li, Xiaopeng},
   journal = {arXiv preprint arXiv:ARXIV_ID},
   year    = {2026}
 }
