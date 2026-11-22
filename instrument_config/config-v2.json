@@ -1,0 +1,92 @@
+{
+ "version": "bench-v1 instrument v2 (candidate for protocol-v1.1-instrument.md): study-v1 v3/v5/v8 scaled to the 512x288 canvas, generalised to every family",
+ "pixel_scale_canvas_per_pilot_px": 2.1815,
+ "ground_below_ego_m": 0.33,
+ "dv": 0.0,
+ "common": {
+  "score": 0.4,
+  "iou_min": 0.2,
+  "init_scale": 2.5,
+  "max_misses": 10,
+  "max_widen": 2,
+  "min_h": 4.36,
+  "max_h": 288.0,
+  "max_aspect": 4.0,
+  "max_aspect_w": 4.0,
+  "edge_x": [
+   4.0,
+   508.0
+  ],
+  "edge_bottom": 284.0,
+  "t0_check": {
+   "x_abs": 3.0,
+   "x_rel": 0.25,
+   "y_abs": 1.5,
+   "y_rel": 0.05
+  },
+  "predict_exit": 5,
+  "warmup": 5
+ },
+ "trackers": {
+  "v3": {
+   "kind": "iou",
+   "gate_px": 43.63,
+   "max_scale": 1.25,
+   "kin_gate": {
+    "dist_abs": 1.5,
+    "dist_rel": 0.15,
+    "lateral": 0.8
+   }
+  },
+  "v5": {
+   "kind": "iou",
+   "gate_px": 43.63,
+   "scale_gate": {
+    "base": 1.15,
+    "per_miss": 0.05
+   },
+   "kin_gate2": {
+    "dist_rel": 0.08,
+    "dist_per_frame": 0.6,
+    "lateral_abs": 0.3,
+    "lateral_per_frame": 0.3
+   },
+   "predict": 5,
+   "kin_on_prediction": true,
+   "kin_boot_yaw": 0.05
+  },
+  "v8": {
+   "kind": "pixel",
+   "predict": 5,
+   "pixel": {
+    "x_abs": 6.54,
+    "x_per_frame": 2.18,
+    "y_abs": 6.54,
+    "y_per_frame": 2.18,
+    "h_ratio": 1.6,
+    "v_max": 25.0,
+    "vlogh_max": 0.08,
+    "size_frac": 0.35
+   }
+  }
+ },
+ "gate_class": {},
+ "family_overrides": {},
+ "notes": {
+  "pixel_scale": "every pixel threshold of the pilot configs x 512/234.7 = 2.1815 (the pilot frame spanned 234.7 px for the 1550 source columns)",
+  "metric_gates": "kept from the pilot (kin_gate of v3, kin_gate2 of v5)",
+  "edges": "edge_x [4, 508], edge_bottom 284: the canvas edges with the pilot margin (about 1.8 pilot px = 4 canvas px)",
+  "max_h": "288 (the pilot max_box_frac 0.8 x 320 is vacuous on the canvas)",
+  "additions": "t0_check, predict_exit, warmup (common); kin_on_prediction, kin_boot_yaw (v5); v_max 25, size_frac 0.35 (v8)",
+  "family_overrides": "none: ped variants (max_misses 5; score >= 0.5) were tested on DEV raw and changed nothing material",
+  "ground_below_ego_m": "0.33 (as VO v2); no global correction (dv = 0), see protocol-v1.1-instrument.md",
+  "not_adopted": "gate_steps_cap 5 (v2-d): on DEV raw it doubled premature lead exits (6 -> 10 %) with no gain in right target; ped variants v2-e/f: no gain",
+  "history": "separate backward run over frames 20 -> 0 for the constant-velocity baseline inputs (does not feed the forward run)"
+ },
+ "history": {
+  "frames": 20,
+  "predict_exit": 0,
+  "min_trackers": 2,
+  "min_frames": 5
+ }
+}

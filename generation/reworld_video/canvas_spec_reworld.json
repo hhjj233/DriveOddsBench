@@ -1,0 +1,17 @@
+{
+ "model": "reworld_video",
+ "note": "ReWorld-Video Stage 1 (LTX-Video 2B backbone, vae_only, self-guided sampling). Model frame: the full-width 2:1 crop of the TOP of the bench band, source rows [797, 1572), rendered to 1024x512 with cv2.INTER_AREA (aspect kept, no squash). Generation at 8 Hz; the 65-frame native clip (t0 = index 16) is mapped to the 10 Hz canvas by nearest native frame (ties earlier; 12 repeated future steps; <= 50 ms) and every frame to canvas rows [0, 256) with cv2.INTER_AREA (exactly 2x); canvas rows [256, 288) (source rows [1572, 1669)) are black. K_canvas is unchanged. No existing instrument file is modified.",
+ "band_rows": [797, 1669],
+ "valid_canvas_rows": [0, 256],
+ "valid_source_rows": [797, 1572],
+ "canvas": [512, 288],
+ "fps": 10,
+ "ticks": {"first": -20, "last": 60, "step": 1},
+ "prefix": "per_clip",
+ "prefix_note": "The model reads 9 frames over 1 s (t0-1..t0). Canvas frames 0-3 (ticks -20..-17) come from native frames 0-2 and canvas frames 4-9 from native 3-7: the seeded 17-frame codec prefix; canvas frames 10-20 come from native 8-16, each clip's own decode of its pass-1 conditioning latents (per clip, not pixel-identical to the reference). Use the per-clip t0 rule and report the drop share.",
+ "clip_frames": 81,
+ "reference": "Real raw-20-Hz nearest frames on the same 8 Hz grid in the same geometry, VAE round trips of [-1, 3] s and [2, 6] s through the official ReWorld codec functions, the same prefix, assembly, 8 -> 10 Hz map and canvas rows; the exact codec-window policy must pass coordinator review.",
+ "raw": "canvas/real.mp4 with canvas rows [256, 288) black (detect_canvas.py black_from = valid_canvas_rows[1]); the model-frame path differs from the direct render by a mean 0.18 grey levels on DEV t0 (2eeaccb0-t2.5)",
+ "test_freeze_file": "protocol-reworld-video-stage2-frozen.txt",
+ "test_freeze_note": "TEST windows are refused unless this file (bench-v1 relative) exists: the stage-2 frozen protocol of this model"
+}

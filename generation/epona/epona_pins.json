@@ -1,0 +1,250 @@
+{
+ "schema": "wm-calib-bench.epona.pins.v1",
+ "note": "Single source of truth for the Epona entry of bench-v1 (DRAFT, not frozen). The adapter, the input builder and the spec generator read these values; change them only together with a new protocol version.",
+ "code": {
+  "repo": "https://github.com/Kevin-thu/Epona",
+  "commit": "69b24c55f5ab8b3ffde8fa55e9f833bfe64d2c68",
+  "commit_date": "2025-07-21T23:35:45-07:00",
+  "source_digest": "e0d76fea88be877196f3db69cdff915c647ab081b544db266b47509a70e0eeff",
+  "source_digest_rule": "sha256 over the sorted *.py, *.yml, *.yaml files of the source tree (no .git, no __pycache__, no dotfiles): for each, the line '<path>\\0<sha256 of file>\\n' (the Orbis 2 pins' rule)",
+  "files_sha256": {
+   "configs/dit_config_dcae_nuplan.py": "8a20ecc37b1976ff478ab4aa1bec1a18d63f9fbc728e6108773471667002b88d",
+   "models/model.py": "afa4a64aa78bf6d9d3a3cbdad3be1640fd6d841e62f8c5e5b3e50335172be89d",
+   "models/stt.py": "3d561a376c4a4dce24b66231f2b43b5fee60a7ecea4e79acb6b5cc53951d427f",
+   "models/modules/tokenizer.py": "152b490db9de25c32fd91626f753715f9995169967b490e776e368ad29b138a1",
+   "models/modules/dcae.py": "6a423cc0031ebd1b062a9926e11136e1eb8cf348c929d5290c1541c97d92fc28",
+   "utils/preprocess.py": "3d64752f709bd2a4132b011908a324b1e4f50af479bdf5b33be0a73d9227c3c7",
+   "scripts/test/test_demo.py": "d70b69761a235d607810ab2704afd743e38f6d8a5e4d51dfd476953b87c4c5ae",
+   "scripts/test/test_free.py": "e302961aa1e52e45b97716717f9e767af3458cad9a71f625ae70526736478fb0"
+  },
+  "license": "MIT (LICENSE sha256 793789b0aaa4d2b0bfd2a5d288bf5f95622d6fa2a5285f358ec9d101b50dbbcb)"
+ },
+ "weights": {
+  "hf_repo": "Kevin-thu/Epona",
+  "hf_revision": "ebeed5ad07b1d3dac5e0202417971690ffdf2b29",
+  "hf_last_modified": "2025-07-16T15:17:49Z",
+  "gated": false,
+  "license": "mit",
+  "files": {
+   "epona_nuplan+china.pkl": {
+    "bytes": 5183675498,
+    "sha256": "a4069ad8aeecc5a26d78be91cf5a80dab9be67455e25063f0b3b15837ef96553",
+    "role": "world model (STT 1214.5 M + VisDiT 1318.2 M + TrajDiT 59.0 M parameters, bfloat16), 'finetuned on in-house China driving data based on the base model'; the maintainer's recommendation for custom input (issue #17)"
+   },
+   "dcae_td_20000.pkl": {
+    "bytes": 1324577898,
+    "sha256": "aa3bda2db0c8aed2da4bc1d2e1c6ca5c2d28cdbf84dab79c6b899660d0741258",
+    "role": "temporal-aware DCAE f32c32 (323.7 M parameters, float32), finetuned on nuPlan clips"
+   },
+   "README.md": {
+    "bytes": 1139,
+    "sha256": "f24c5cce7ffcabe7a1a14ec83920615e622a8ba3d0f32b254bc3199d85a4404e"
+   },
+   ".gitattributes": {
+    "bytes": 1732,
+    "sha256": "5c3a1ea0e9d622d434ed45113c42251e55c7fe505d511ee1f0f17206d312da18"
+   }
+  },
+  "not_used": {
+   "epona_nuplan.pkl": {
+    "bytes": 5183675556,
+    "sha256": "49a3f228634690320970f3a31092381cd41bedc3c392502bd19ba7b455d6bed9",
+    "note": "base model trained on nuPlan; the alternative checkpoint (open decision), not downloaded"
+   },
+   "epona_nuplan+nusc.pkl": {
+    "bytes": 5183675562,
+    "sha256": "e17d84989bfb39de5186735a28b7a62a1888df8d83520d7ca89c0e14ac64d822",
+    "note": "finetuned on nuScenes (10 Hz config), not used"
+   }
+  },
+  "sha256_source": "computed locally after download; equal to the Hugging Face LFS oids of the pinned revision"
+ },
+ "released_defaults": {
+  "config": "configs/dit_config_dcae_nuplan.py",
+  "config_checked": {
+   "condition_frames": 10,
+   "downsample_fps": 5,
+   "image_size": [
+    512,
+    1024
+   ],
+   "num_sampling_steps": 100,
+   "diffusion_model_type": "flow",
+   "traj_len": 15,
+   "temporal_patch_size": 6,
+   "vae": "DCAE_f32c32",
+   "add_encoder_temporal": false,
+   "add_decoder_temporal": true,
+   "vae_embed_dim": 32,
+   "downsample_size": 32,
+   "patch_size": 1,
+   "block_size": 1,
+   "n_layer": [
+    12,
+    6,
+    6
+   ],
+   "n_embd": 2048,
+   "n_embd_dit": 2048,
+   "n_layer_traj": [
+    1,
+    1
+   ],
+   "pose_x_vocab_size": 128,
+   "pose_y_vocab_size": 128,
+   "yaw_vocab_size": 512,
+   "pose_x_bound": 50,
+   "pose_y_bound": 10,
+   "yaw_bound": 12
+  },
+  "script": "scripts/test/test_demo.py (custom input, self-predicted trajectory); pose preparation as scripts/test/test_free.py (get_rel_pose over the condition frames' absolute poses)",
+  "sampler": "rectified flow, Euler ODE, 100 steps for the VisDiT (shifted schedule get_schedule(100, 512)) and 100 steps for the TrajDiT (get_schedule(100, 15)); no guidance; initial noise torch.randn on the CPU generator, moved to the GPU",
+  "self_pred_traj": true,
+  "autocast": "torch.bfloat16 around model.step_eval only (as the demo); DCAE encode/decode outside autocast",
+  "condition_frames": 10,
+  "frame_rate_hz": 5,
+  "future_frames": 30,
+  "decode_group": 6,
+  "decode_is_video": false,
+  "quantisation": "(x.permute(1, 2, 0).numpy() * 255).astype('uint8') on z_to_image's [0, 1] output (truncation, as the demo)",
+  "seeding": "random.seed, np.random.seed, torch.manual_seed, torch.cuda.manual_seed_all (the demo's start-of-run block), called with the sample's seed right before each sample",
+  "cudnn": "deterministic=True, benchmark=False (the demo sets benchmark=True; changed for bit-reproducibility)"
+ },
+ "geometry": {
+  "band_rows": [
+   797,
+   1669
+  ],
+  "band_cols": [
+   0,
+   1550
+  ],
+  "model_size_wh": [
+   1024,
+   512
+  ],
+  "model_render": "read_rgb (cv2.imread + BGR2RGB), crop the band rows, cv2.resize(crop, (1024, 512), INTER_AREA): the 16:9 band squashed to 2:1, as Epona's loaders squash nuPlan's 16:9 CAM_F0 frames (PIL BICUBIC resize to 1024x512, no crop)",
+  "canvas_size_wh": [
+   512,
+   288
+  ],
+  "model_to_canvas": "Epona frame rows covering source rows [797, min(b, 1669)) (rows [(797 - a) * 512 / 872, 512)), cv2.resize INTER_AREA to canvas rows [0, (min(b, 1669) - 797) * 288 / 872) at width 512; uncovered canvas rows black. With the default band this is cv2.resize(frame, (512, 288), INTER_AREA): it undoes the squash and leaves the canvas geometry (K_canvas) unchanged",
+  "model_band_rows_default": [
+   579,
+   1451
+  ],
+  "model_band_rule": "a 16:9 full-width band of 872 source rows [a, a + 872), a <= 797, with (797 - a) * 512 / 872 an integer, squashed to 1024x512. bench-v1 uses [579, 1451) (owner decision D2, 2026-11-03): the principal point (source row ~1021) at mid-height, as in nuPlan front frames; [797, 1669), the measurement band itself, was the first draft and re-framed moving scenes on DEV",
+  "model_band_variants": {
+   "horizon_centred (bench-v1)": {
+    "rows": [
+     579,
+     1451
+    ],
+    "canvas_rows_covered": [
+     0,
+     216
+    ],
+    "model_rows_used": [
+     128,
+     512
+    ],
+    "note": "canvas rows [216, 288) (source rows 1451-1669, flat ground nearer than about 7 m) are not covered and are written black"
+   },
+   "measurement_band (draft, not used)": {
+    "rows": [
+     797,
+     1669
+    ],
+    "canvas_rows_covered": [
+     0,
+     288
+    ],
+    "model_rows_used": [
+     0,
+     512
+    ]
+   }
+  }
+ },
+ "timing": {
+  "ticks": "k = -20, -18, ..., 60 (5 Hz grid of the bench's 10 Hz ticks t0 + k x 0.1 s; each tick is the nearest 20 Hz camera frame, as in window.json)",
+  "history_ticks": [
+   -20,
+   -18,
+   -16,
+   -14,
+   -12,
+   -10,
+   -8,
+   -6,
+   -4,
+   -2,
+   0
+  ],
+  "model_condition_ticks": [
+   -18,
+   -16,
+   -14,
+   -12,
+   -10,
+   -8,
+   -6,
+   -4,
+   -2,
+   0
+  ],
+  "future_ticks": "2, 4, ..., 60 (30 frames, 6.0 s)",
+  "pose_ticks": [
+   -18,
+   -16,
+   -14,
+   -12,
+   -10,
+   -8,
+   -6,
+   -4,
+   -2,
+   0
+  ]
+ },
+ "output": {
+  "frames": 41,
+  "fps": 5,
+  "size_wh": [
+   512,
+   288
+  ],
+  "layout": "frames 0-10 (k = -20..0 step 2): the per-frame DCAE round trip of the 11 history frames (identical to the real reference's frames 0-10); frames 11-40 (k = 2..60 step 2): the 30 generated frames",
+  "encoder": "ffmpeg libx264rgb -crf 0 -preset medium, rgb24, 5 fps, video_track_timescale 10240; decoded frames checked equal",
+  "native": "optional native.mp4: the same 41 frames at 1024x512 before the canvas resize (--save-native)"
+ },
+ "environment": {
+  "python": "3.10.19 (python-build-standalone via uv)",
+  "torch": "2.1.0+cu121",
+  "torchvision": "0.16.0+cu121",
+  "lock": "models/epona/requirements-epona.lock.txt",
+  "lock_rule": "uv pip compile lock-pyproject.toml --python-version 3.10 --python-platform x86_64-manylinux_2_28 --exclude-newer 2025-07-23T00:00:00Z --generate-hashes (the day after the pinned commit)"
+ },
+ "decisions": {
+  "date": "2026-11-03",
+  "by": "owner, via the coordinator",
+  "D1_checkpoint": "epona_nuplan+china.pkl",
+  "D2_band": "horizon-centred band, source rows [579, 1451) -> 1024x512 model frame -> canvas rows [0, 216) of the 512x288 canvas; canvas rows [216, 288) black; disclosed deviation, the near-road loss shows up in scorability",
+  "D3_pose_entry0": "0, as scripts/test/test_free.py",
+  "D4_layout": "TEST and DEV-full on cluster H200 with batch 16, fixed layout one window per batch (k 0..15); local DEV runs, if any, batch 2-4, recorded as a different layout; never mix layouts within one run",
+  "D5_instrument": "5 Hz canvas-instrument extension built by the shared instrument agent (not in this kit)",
+  "D6_trajectory": "Epona's own predicted ego trajectory (pred_traj.npy) reported as an exploratory result",
+  "storage": "no native-resolution frames for TEST; lossless writer with x264 preset ultrafast"
+ },
+ "cluster": {
+  "batch_k": 16,
+  "windows_per_chunk": 8,
+  "writer_preset": "ultrafast",
+  "save_native": false,
+  "container": "cluster/epona/epona.def (Apptainer) or cluster/epona/Dockerfile",
+  "staged_weights": {
+   "epona-world-nuplan-china.pkl": "epona_nuplan+china.pkl",
+   "epona-dcae-td-20000.pkl": "dcae_td_20000.pkl"
+  }
+ }
+}

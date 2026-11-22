@@ -1,0 +1,14 @@
+{
+ "model": "wan21_vace13b",
+ "note": "Wan2.1-VACE-1.3B, first-clip extension in two rounds at 16 fps: generated at 512x288 on the bench band (the canvas itself: identity mapping; package wan21-vace13b-512-inputs-v1) or at 832x480 (the band squeezed 2.5 % horizontally) and mapped to the canvas with cv2.INTER_AREA by its adapter (package wan21-vace13b-832-inputs-v1); vision.mp4 frame i = tick k = i - 20 = global 16 fps frame 32 + round(1.6 k) (the real reference's tick frames are the bench's tick camera frames; generated tick frames are at most 25 ms from the tick, exact at every 0.5 s multiple); ticks 1-30 from round 1, 31-60 from round 2",
+ "band_rows": [797, 1669],
+ "canvas": [512, 288],
+ "fps": 10,
+ "ticks": {"first": -20, "last": 60, "step": 1},
+ "prefix": "shared",
+ "prefix_note": "frames 0-20 of every clip of a window (continuations and the reference) are copied from the window's prefix sample: the 33 history frames through the Wan VAE alone (the official uint8 conversion), so they are byte-identical across the window's clips (checked by check_smoke.py and collect_outputs.py). VACE itself regenerates its kept frames (not pinned); the regenerated history is recorded per sample, not shown in vision.mp4 (native16.mp4 keeps it where requested)",
+ "reference": "the real 129-frame 16 fps clip through the same Wan VAE window by window as the two rounds (frames 0-80 and 48-128, each encoded and decoded as one 81-frame clip; run vace<TAG>-<split>-recon), frames 0-20 from the window's prefix sample, on the canvas like a generated clip",
+ "clip_frames": 81,
+ "test_freeze_file": "protocol-wan21-vace13b-frozen.txt",
+ "test_freeze_note": "TEST windows are refused unless this file (bench-v1 relative) exists: the frozen protocol of this model"
+}

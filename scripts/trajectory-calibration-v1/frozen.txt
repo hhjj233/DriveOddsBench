@@ -1,0 +1,4 @@
+# trajectory-calibration-v1 freeze, coordinator p-inter-ed, 2026-11-10T11:31:45-0600, before any statistic with the real observation was computed
+# code tests run before the freeze used only generated clips (real row replaced, or the positive control) and the case/consistency checks
+ac5e868a4c87183c0cc67b3b6aab21a3d839283a5167e8264f3eaf08fe02a557  PLAN.md
+edf9d2922af829dde3d96d5ff6ce745e91e32be90ea4e9e016ebd5109149ea0a  analyze_trajectories.py

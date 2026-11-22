@@ -1,0 +1,78 @@
+model:
+  base_learning_rate: 0.0001
+  adjust_learning_rate: false
+  find_unused_parameters: true
+  gradient_clip_algorithm: norm
+  precision: bf16-mixed
+  grad_clip: 1.0
+  grad_acc_steps: 1
+  target: models.second_stage.fm_model_v2.L1L2PredL2PredictorModule
+  params:
+    warmup_steps: 5000
+    min_lr_multiplier: 0.1
+    enc_scale: 4.0
+    enc_scale_dino: 4.0
+    adjust_lr_to_batch_size: false
+    num_pred_frames: 5
+    tokenizer_config:
+      # Tokenizer shipped in this repo under models/tok.
+      folder: $ORBIS2_MODELS_DIR/tok
+      ckpt_path: checkpoints/last.ckpt
+    generator_config:
+      target: networks.DiT.dit_v2.SpatialL2CtxAndLastDiT
+      params:
+        frame_embedding_alignment: suffix
+        num_context_frames: 5
+        sem_in_channels: 16
+        max_num_frames: 64
+        hidden_size: 768
+        depth: 24
+        num_heads: 16
+        mlp_ratio: 4
+        input_size:
+        - 18
+        - 32
+        patch_size: 1
+        in_channels: 16
+        dropout: 0.0
+        mlp_block: swiglu
+        block_config:
+          target: modules.dit.STDiTBlockWithSpatialL2
+          params:
+            causal_time_attn: false
+            modulate_time_attn: true
+    first_stage_handler_config:
+      target: models.second_stage.fm_model_v2.IFSelectBranchFirstStageHandler
+      params:
+        encoder_branch: rec
+    sampler_config:
+      target: modules.fm_samplers.FlowMatchingSamplerHeunPlusEuler
+      params:
+        step_schedule:
+          - solver: heun
+            num_steps: 2
+            step_size: 0.4
+          - solver: euler
+            num_steps: 1
+            step_size: 0.2
+    condition_preprocessor_config:
+      target: models.second_stage.fm_conditions_v2.L2SteeringEndpointConditionPreprocessor
+      params:
+        l2_context_latent: false
+        l2_predictor_frame_rate: 2.0
+        l2_pred_NFE: 20
+        num_context_frames: 5
+        use_z_l2_start: false
+        l2_predictor_config:
+          folder: $ORBIS2_MODELS_DIR/L2
+          ckpt_path: checkpoints/last.ckpt
+
+data:
+  # Training datasets stripped for infe
+  params:
+    validation:
+      params:
+        size:
+        - 288
+        - 512
+        frame_rate: 10

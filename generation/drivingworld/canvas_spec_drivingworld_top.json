@@ -1,0 +1,37 @@
+{
+ "model": "drivingworld",
+ "note": "ALTERNATIVE (model band \"top\", open decision O1): the model frame is the top 256 rows of the 512x288 canvas render of the measurement band; canvas rows [256, 288) are black. Otherwise as canvas_spec_drivingworld.json.",
+ "model_band_rows": [
+  797,
+  1572.1111
+ ],
+ "valid_canvas_rows": [
+  0,
+  256
+ ],
+ "valid_source_rows": [
+  797,
+  1572.1111
+ ],
+ "raw": "canvas/real.mp4 with canvas rows [256, 288) black",
+ "band_rows": [
+  797,
+  1669
+ ],
+ "canvas": [
+  512,
+  288
+ ],
+ "fps": 10,
+ "ticks": {
+  "first": -20,
+  "last": 60,
+  "step": 1
+ },
+ "prefix": "shared",
+ "prefix_note": "frames 0-20 (ticks -20..0) of every clip of a window, continuations and reference, are the same pixels: the released VQ tokenizer round trip of the real history (ticks -14..0: the official conditioning encode of 15 frames + 1 zero frame, decoded with z_to_clips_all; ticks -20..-15: the same encode of ticks -20..-6, positions 0..5). Deterministic (VQ argmin). The model reads ticks -14..0 (15 frames, 1.4 s) and their past ego poses.",
+ "reference": "frames 0-20 = the shared prefix; frames 21-80: each real future frame t tokenised as the newest of a 15-frame causal window (encode real t-14..t + zero frame, position 14) and decoded like a generated frame (released z_to_clips on the 16-frame token window t-15..t); run drivingworld-<split>-*-recon; no randomness",
+ "clip_frames": 81,
+ "test_freeze_file": "protocol-drivingworld-stage2-frozen.txt",
+ "test_freeze_note": "TEST windows are refused unless this file (bench-v1 relative) exists: the stage-2 freeze of this model"
+}

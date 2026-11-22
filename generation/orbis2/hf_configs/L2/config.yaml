@@ -1,0 +1,98 @@
+model:
+  base_learning_rate: 1.0e-05
+  adjust_learning_rate: false
+  find_unused_parameters: false
+  gradient_clip_algorithm: norm
+  precision: bf16-mixed
+  grad_clip: 1.0
+  grad_acc_steps: 4
+  target: models.second_stage.cd_model_v2.ConsistencyDistillPredictorModule
+  params:
+    # INFERENCE-ONLY: self-reference, so the ~9 GB distillation teacher does NOT
+    # have to be shipped.
+    #
+    # ConsistencyDistillPredictorModule.__init__ requires this file to exist and uses
+    # its `ema_vit.*` weights to initialise vit/ema_vit -- but _build_l2_predictor
+    # immediately overwrites both by loading this checkpoint (the distilled student)
+    # on top. So the teacher's weights are dead at inference; only the file's
+    # existence is required. Pointing at the student's own last.ckpt satisfies that
+    # (it has the ema_vit.* keys) and is a no-op.
+    #
+    # For TRAINING/distillation, restore the real teacher:
+    teacher_ckpt_path: $ORBIS2_MODELS_DIR/L2/checkpoints/last.ckpt
+    cd_ema_mu: 0.999
+    cd_weight_decay: 0.0
+    warmup_steps: 500
+    min_lr_multiplier: 0.1
+    enc_scale: 4.0
+    enc_scale_dino: 4.0
+    adjust_lr_to_batch_size: false
+    num_pred_frames: 1
+    tokenizer_config:
+      # Same tokenizer as the L1 model -- shipped under models/tok, not duplicated.
+      # (Originally $TK_WORK_DIR/<training-run>.)
+      folder: $ORBIS2_MODELS_DIR/tok
+      ckpt_path: checkpoints/last.ckpt
+    condition_preprocessor_config:
+      target: models.second_stage.fm_model_v2.SpeedYawMovingGoalConditionPreprocessor
+      params:
+        goal_offsets:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        context_frame_anchor_index: -1
+        odometry_steps_per_image_frame: 5
+    objective_config:
+      target: models.second_stage.cd_model_v2.ConsistencyDistillationObjective
+      params:
+        sigma_min: 1.0e-05
+        cd_num_timesteps: 48
+        cd_t_min: 0.01
+        cd_t_max: 0.99
+        cd_grid: uniform
+        cd_loss: l2
+        cd_pseudo_huber_c: 0.00054
+    sampler_config:
+      target: modules.fm_samplers.FlowMatchingSamplerEuler
+      params:
+        timescale: 1.0
+        timestep_conditioning: per_frame
+    first_stage_handler_config:
+      target: models.second_stage.fm_model_v2.IFSelectBranchFirstStageHandler
+      params:
+        encoder_branch: sem
+    generator_config:
+      target: networks.DiT.dit_v2.DiT
+      params:
+        max_num_frames: 64
+        hidden_size: 768
+        depth: 24
+        num_heads: 16
+        mlp_ratio: 4
+        input_size:
+        - 18
+        - 32
+        patch_size: 1
+        in_channels: 16
+        dropout: 0.0
+        mlp_block: swiglu
+        conditioner_config:
+          target: networks.DiT.dit_v2.PerFrameSequenceGlobalAdditiveConditioner
+          params:
+            aggregation: mean
+            add_positional_embedding: true
+            sequence_length: 5
+            condition_configs:
+              steering:
+                target: modules.steering.LinearSteeringEmbedder
+                params:
+                  num_input_features: 2
+                  hidden_size: 768
+        block_config:
+          target: networks.DiT.dit.STDiTBlock
+          params:
+            causal_time_attn: true
+            modulate_time_attn: true
+# Training datasets stripped for release; only `model` is read at inference.

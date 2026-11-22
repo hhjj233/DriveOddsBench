@@ -1,0 +1,13 @@
+{
+  "model": "drivelaw_video",
+  "note": "Native704x1280,8Hz generation; registered nearest-native selection to the10Hz canvas. No existing instrument file is modified.",
+  "band_rows": [797,1669],
+  "canvas": [512,288],
+  "fps": 10,
+  "ticks": {"first": -20,"last": 60,"step": 1},
+  "prefix": "per_clip",
+  "prefix_note": "The model reads9frames over1s; earlier history is codec-only for measurement. Sample history includes pass1 reconstructed conditioning; use the existing per-clip t0 rule and report drop share.",
+  "clip_frames": 81,
+  "reference": "Real raw20Hz nearest frames sampled on the same8Hz grid, same DriveLaW VAE and8-to10 mapping; exact codec-window policy must pass coordinator review.",
+  "test_freeze_file": "protocol-drivelaw-video-stage2-frozen.txt"
+}

@@ -1,0 +1,375 @@
+{
+ "schema": "wm-calib-bench.reworld_video.pins.v1",
+ "model": "ReWorld-Video (Stage-1 Video DiT with self-guided sampling)",
+ "status": "COORDINATOR_APPROVED_2026-11-13_GPU_SMOKE_PENDING",
+ "code": {
+  "repo": "https://github.com/xiaomi-research/reworld",
+  "commit": "7dfacf354ac13c41ab5f3f3059beb1b02b1b1d59",
+  "license": "Apache-2.0",
+  "commit_date": "2026-08-25T01:17:32+08:00",
+  "source_check_rule": "Git blob SHA1 of every file under src/, configs/, scripts/ plus the top-level build and launch files; no other Python file may exist under src/dualflow; no edits",
+  "sparse_paths": [
+   "/src/",
+   "/configs/",
+   "/scripts/",
+   "/pyproject.toml",
+   "/setup.py",
+   "/LICENSE",
+   "/README.md",
+   "/infer_reworld_stage1.sh",
+   "/train_reworld_stage1.sh",
+   "/.gitignore"
+  ],
+  "files": {
+   ".gitignore": "aec87d8c6c111138118065dfa145194e6102839f",
+   "LICENSE": "b4588315544bd9e4bc3ceb8fca78979f4019b335",
+   "README.md": "6aad03a46dce852c270e1ed2d7eafa3208360dd5",
+   "configs/dualflow/dit_train.online.example.yaml": "b3bfa3caa36ab1eba686f197f803847ae564fcfa",
+   "configs/dualflow/sample_reworld.yaml": "4be517bdb8ae93e3b9172eaf1c1421726b69b507",
+   "configs/dualflow/transformer_config.json": "293f28f8863acd0f96e0862ab85ed41fa7894fb7",
+   "infer_reworld_stage1.sh": "5957b2a32dd93b8c6a33d5b2f7a0a83e84014ddb",
+   "pyproject.toml": "2e54be00aef4f457396efcccbb20b91bf5f85d99",
+   "scripts/generate_reworld_future_from_condition.py": "383463bc009978ad0d321ac6ac7752dbbcf64a3c",
+   "scripts/sample_dualflow_dit.py": "c9982ee21e7177364ff627fef203a4704e206313",
+   "scripts/train_dualflow_dit.py": "6af00f3a1a8736c26a01852bc1d24e8270f50cc6",
+   "setup.py": "13fb26fa1ff29073a7ebf32f85639e9d9a20b3a4",
+   "src/dualflow/__init__.py": "496da9570ec629a767c27129f4726600aeae00c0",
+   "src/dualflow/act_interface.py": "9fca9aca98b7880820fa264fdc19becba102edd9",
+   "src/dualflow/async_dualflow_inference.py": "55caa98b88311f38c9c7fceaba79a40887d4a7c3",
+   "src/dualflow/datasets_dual.py": "151ddc9310a02f6a96823b78c95d5355c7fbc2f2",
+   "src/dualflow/dual_conditioning.py": "930d0ebf8b34b26c2998ab66499701319c62beda",
+   "src/dualflow/internal_guidance.py": "69beb933ca085715672fb758941e4ceb839c29e7",
+   "src/dualflow/ltx/__init__.py": "81a49d355bdcca7b2a19637e8c8fbaedd605fa9e",
+   "src/dualflow/ltx/latents.py": "890f5582019d528c4ec57b00e7ded507f747e5a5",
+   "src/dualflow/ltx/model_loader.py": "aed5fb93bf5ff88e7992fc7830bab780ad0ff5ba",
+   "src/dualflow/ltx/transformer_ltx_ig.py": "9673c1bfa32524eeb76a76c01f322c4073d2e947",
+   "src/dualflow/ltx/video_io.py": "d9c64d2e89d7b4d88f9dcf02aeb515a622688b78",
+   "src/dualflow/model_utils.py": "46d711216d405c0c3baccb987182383c910c6855",
+   "src/dualflow/online_dataset.py": "56d8ab6abf681872f36f0eb848e7626d46ed087b",
+   "src/dualflow/sample_dualflow.py": "f0383a30ce7c7649eaaf77d01827e3a1fa9e5dc8",
+   "src/dualflow/sample_vae_resources.py": "2bfddbd0e6a09580f316c2b732909bdcef4c572f",
+   "src/dualflow/timestep_async.py": "3787103e89c8182b6e31bc4557e7e70e3870251d",
+   "src/dualflow/train_configs.py": "421730c3735a038b723487ed94e033149d6416fc",
+   "src/dualflow/trainer_dualflow_dit.py": "41606b68ea6a06355fe8e313d74dcd789b01aeaf",
+   "train_reworld_stage1.sh": "42e8c4e5a90c2461edc593020e6e6a25083dcfee"
+  },
+  "not_used": "DriveLaW-Act/ (Stages 2-3 Action DiT / NAVSIM planner) is neither fetched nor used"
+ },
+ "weights": {
+  "repos": {
+   "reworld": {
+    "repo": "tz2026/ReWorld",
+    "revision": "8170912332cc30a4a7aeaa923189f7018c9eb9ee",
+    "dest": "ReWorld",
+    "license_path": "ReWorld.license.txt",
+    "license_name": "Apache-2.0, subject to the LTX-Video 2B 0.9.5 Open RAIL-M use-based restrictions",
+    "gated": false,
+    "api_lastModified": "2026-08-24T14:47:54.000Z"
+   },
+   "ltx095": {
+    "repo": "Lightricks/LTX-Video-0.9.5",
+    "revision": "e58e28c39631af4d1468ee57a853764e11c1d37e",
+    "dest": "LTX-Video-0.9.5",
+    "license_path": "ltx-video-2b-v0.9.5.license.txt",
+    "license_name": "LTX-Video 2B 0.9.5 Open RAIL-M",
+    "gated": false,
+    "api_lastModified": "2025-05-06T16:11:26.000Z"
+   }
+  },
+  "files": [
+   {
+    "repo_key": "reworld",
+    "path": "ReWorld/config.json",
+    "repo_path": "config.json",
+    "bytes": 594,
+    "git_blob_sha1": "224347189ef97a50d506822d6931ffe6867a8cd4",
+    "sha256": "80702ac60740461562d9b528a3d188d45eaab2cd542a45b1f5ad546239171ee5"
+   },
+   {
+    "repo_key": "reworld",
+    "path": "ReWorld/README.md",
+    "repo_path": "README.md",
+    "bytes": 11662,
+    "git_blob_sha1": "28ad17aa3c59a5b54cdc5ae8c4061b0917852797",
+    "sha256": "36ce48833dc21d55945f9c5b3109c7504d963598927f1586704329b2fa257dc8"
+   },
+   {
+    "repo_key": "reworld",
+    "path": "ReWorld/ReWorld.license.txt",
+    "repo_path": "ReWorld.license.txt",
+    "bytes": 267,
+    "git_blob_sha1": "2c534e4652923857efbc8525e34c96ba16c82b4e",
+    "sha256": "8e761f5d7e4c5f583f67c3291ec62d68f9c66d1b59d7b6abcdd84b7e212092c5"
+   },
+   {
+    "repo_key": "reworld",
+    "path": "ReWorld/ReWorld-Video/dualflow_dit_best_fvd.safetensors",
+    "repo_path": "ReWorld-Video/dualflow_dit_best_fvd.safetensors",
+    "bytes": 3847926960,
+    "git_blob_sha1": "f37e9adf7a09e03f76fe35b1e74cd89ae3b8f9b0",
+    "sha256": "f4b5af2a8df6b588287ede62c44764c05ad85d8fdd99b51468275cf9e8627ad8"
+   },
+   {
+    "repo_key": "ltx095",
+    "path": "LTX-Video-0.9.5/model_index.json",
+    "repo_path": "model_index.json",
+    "bytes": 412,
+    "git_blob_sha1": "0cffd7265d0adc487e985a4440e694e4691d300e",
+    "sha256": "14d1974241a29026f6dea7bb7e1f89e35b58abc25a994ce3a903f33fa75e75d8"
+   },
+   {
+    "repo_key": "ltx095",
+    "path": "LTX-Video-0.9.5/README.md",
+    "repo_path": "README.md",
+    "bytes": 21993,
+    "git_blob_sha1": "fffedfc66c97d33c5c7cfe669092744c8fcdac6c",
+    "sha256": "f5200749d5e876770eb9779bd33992ba8966cc5627533db92954e8446b509cf4"
+   },
+   {
+    "repo_key": "ltx095",
+    "path": "LTX-Video-0.9.5/ltx-video-2b-v0.9.5.license.txt",
+    "repo_path": "ltx-video-2b-v0.9.5.license.txt",
+    "bytes": 16159,
+    "git_blob_sha1": "97a2b8968383e187331bba9e75f3f79f089d4ee5",
+    "sha256": "b30c536c9c9024b32ac05c88e68a25ce8057b9c24c0c231ac5f2bdf62aba7e51"
+   },
+   {
+    "repo_key": "ltx095",
+    "path": "LTX-Video-0.9.5/scheduler/scheduler_config.json",
+    "repo_path": "scheduler/scheduler_config.json",
+    "bytes": 455,
+    "git_blob_sha1": "0058cf0ff7287fb12d1c3fde753f9f175c2cb42d",
+    "sha256": "195c1b88aa62b95e9c96827ac04e0857334d1bb027abdf06d2ad7684d1c90cf3"
+   },
+   {
+    "repo_key": "ltx095",
+    "path": "LTX-Video-0.9.5/vae/config.json",
+    "repo_path": "vae/config.json",
+    "bytes": 1251,
+    "git_blob_sha1": "3fe2dceec1958d9b57d0399eb2e04e8692523d1d",
+    "sha256": "fdf9d40b5a5d0ca3b1379a6d3f1753fb8627dee4927bb98e5ebadd14e4a3e4cb"
+   },
+   {
+    "repo_key": "ltx095",
+    "path": "LTX-Video-0.9.5/vae/diffusion_pytorch_model.safetensors",
+    "repo_path": "vae/diffusion_pytorch_model.safetensors",
+    "bytes": 2493855612,
+    "git_blob_sha1": "0c1fb99f6e0a4719a76b683dc71715f492c8bd35",
+    "sha256": "7eb65b16cf8ddfd70ccb1c541384ae49ffd6639d754c6b713a11cb72d097233f"
+   }
+  ],
+  "not_downloaded": [
+   "tz2026/ReWorld ReWorld-Act/diffusion_pytorch_model.safetensors (Action DiT, not used)",
+   "Lightricks/LTX-Video-0.9.5 text_encoder/, tokenizer/ (the vae_only Video DiT uses null text embeddings)",
+   "Lightricks/LTX-Video-0.9.5 transformer/ (replaced by the ReWorld Stage-1 DiT checkpoint)"
+  ],
+  "official_loads": [
+   "ReWorld/ReWorld-Video/dualflow_dit_best_fvd.safetensors (sample_dualflow._load_dit_checkpoint + bootstrap_ig_heads_from_checkpoint)",
+   "LTX-Video-0.9.5/vae/{config.json,diffusion_pytorch_model.safetensors} (ltx.model_loader.load_vae -> from_pretrained(subfolder=vae))",
+   "LTX-Video-0.9.5/scheduler/scheduler_config.json (ltx.model_loader.load_scheduler, every call)"
+  ],
+  "vae_identical_to_drivelaw_pin": "sha256 7eb65b16... equals the DriveLaW-Video pinned VAE (same LTX-Video 0.9.5 VAE)"
+ },
+ "bench": {
+  "track": "T1-H2",
+  "band_rows": [
+   797,
+   1669
+  ],
+  "geometry": {
+   "rule": "full-width 2:1 crop at the TOP of the measurement band, cv2.INTER_AREA to the model frame (aspect kept exactly; the official loader would centre-crop a 16:9 clip to 2:1 and never squashes)",
+   "model_source_rows": [
+    797,
+    1572
+   ],
+   "canvas_valid_rows": [
+    0,
+    256
+   ],
+   "canvas_map": "model frame -> cv2.INTER_AREA 512x256 -> canvas rows [0, 256); canvas rows [256, 288) black",
+   "decision": "D2"
+  },
+  "size_wh": [
+   1024,
+   512
+  ],
+  "size_decision": "D1",
+  "native_fps": 8,
+  "canvas_fps": 10,
+  "history_frames": 17,
+  "condition_frames": 9,
+  "context_seconds": 1,
+  "window_frames": 33,
+  "new_frames_per_pass": 24,
+  "passes": 2,
+  "full_native_frames": 65,
+  "t0_native_index": 16,
+  "prefix_native_frames": 17,
+  "canvas_frames": 81,
+  "t0_canvas_index": 20,
+  "latent": {
+   "c_vae": 128,
+   "temporal_compression": 8,
+   "spatial_compression": 32,
+   "condition_latent_frames": 2,
+   "latent_frames": 5
+  },
+  "num_inference_steps": 30,
+  "dtype": "bf16",
+  "text_conditioning": "none: vae_only DiT, null text embeddings (zeros [1, 1, 4096], mask ones); no prompt, action or ego state",
+  "null_text_seq_len": 1,
+  "internal_guidance": {
+   "train_block": 8,
+   "sampling_block": 8,
+   "scale": 1.4,
+   "min_timestep": null
+  },
+  "rope_fps": 8.0,
+  "rope_fps_source": "average fps of the conditioning file as read by decord in the official loader; asserted == 8.0",
+  "vae_tiling": false,
+  "seed_rule": "int.from_bytes(sha256(f\"bench-v1|{window}|{k}\")[:4],\"big\")&0x7fffffff",
+  "pass2_seed_offset": 1000003,
+  "condition_encode_seed_rule": "int.from_bytes(sha256(f\"bench-v1|{window}|{k}|cond{p}\")[:4],\"big\")&0x7fffffff, torch.manual_seed before the official condition encode of pass p (ruling D4)",
+  "prefix": "per_clip",
+  "prefix_seed_rule": "int.from_bytes(sha256(f\"bench-v1|{window}|prefix\")[:4],\"big\")&0x7fffffff",
+  "reference_policy": "VAE round trips (official encode_video/decode_video) of the real 33-frame spans [-1, 3] s and [2, 6] s, seeded seed_of(window,\"recon\") and +1000003, the 17-frame codec prefix, the same assembly and 8 -> 10 Hz map",
+  "uint8_rule": "(clamp(decoded, 0, 1) * 255).astype(uint8): the official diffusers export_to_video conversion (truncation)",
+  "test_generation_freeze": "protocol-reworld-video-frozen.txt",
+  "test_measurement_freeze": "protocol-reworld-video-stage2-frozen.txt",
+  "coordinator_approved": true,
+  "size_note": "1024x512 by ruling D1; the shipped sample config uses 768x384 and the released checkpoint evaluation size is not stated",
+  "smoke": {
+   "windows": [
+    "2eeaccb0-t2.5",
+    "47a9fb77-t9.5"
+   ],
+   "samples": [
+    0,
+    1
+   ],
+   "references": true,
+   "run_prefix": "reworld-dev-smoke-"
+  },
+  "timescale_diagnostic": {
+   "windows": [
+    "00c78269-t4.5",
+    "05d00136-t7.0",
+    "0c6ae415-t7.5",
+    "0cf18266-t4.5"
+   ],
+   "samples": [
+    0,
+    1
+   ],
+   "references": false,
+   "run_prefix": "reworld-dev-tsdiag-",
+   "selection_file": "drivelaw-video/rate8-review-20261110/moving-subset-before-generation.json",
+   "selection_sha256": "314843667f054c994cd0aa354dc8d11b81d71b5fa75b2aed1c9248d9fdcc7441",
+   "bench_view": "drivelaw-video/rate8-review-20261110/diagnostic-bench-view",
+   "bench_view_names_dev_gen_sha256": "604df4f8dab7b9a8c96434f2714f39a734b7ebdf7158c85d18b37f13ccf78445",
+   "rule": "smoke-only time-scale diagnostic (D9); never part of the main DEV analysis",
+   "metric": "inherited ltx25d-2s timescale_dev.py: per clip band-VO advance of group 20->24 over its own group 16->20; eligible if the history advance >= 0.8 m; gate: median over eligible clips in [0.8, 1.25]; STOP on failure"
+  },
+  "registered_names_sha256": {
+   "dev": "1e7b3878a485fb45fa295dddd29e63237f72a7423230cb0de7c012808f47fbd1",
+   "test": "e8343f526ed2e25112af41a63a45a9866171f5b74d56cff7663dd1c2db086233"
+  },
+  "coordinator_approved_by": "coordinator p-inter-84",
+  "coordinator_approved_date": "2026-11-13"
+ },
+ "seed_snapshot": {
+  "file": "scripts/make_bench_nano_specs.py",
+  "sha256": "108c4cc974487284182bcc4fc6c84ff12477437059e9a90a50e1fa6fd441968c"
+ },
+ "decisions_pending": [],
+ "decisions": [
+  {
+   "id": "D1",
+   "topic": "native frame size",
+   "choice": "1024x512 (README \"paper geometry\" and the training config)",
+   "note": "The shipped configs/dualflow/sample_reworld.yaml uses 768x384; the released checkpoint's evaluation size is not stated (paper and model card silent).",
+   "date": "2026-11-13",
+   "by": "coordinator p-inter-84"
+  },
+  {
+   "id": "D2",
+   "topic": "field of view and aspect",
+   "choice": "option (a): full-width 2:1 crop of the TOP of the band, source rows [797, 1572), mapped to canvas rows [0, 256); rows 256-287 black; instrument bottom edge row 252 via the spec, as for Epona",
+   "note": "Disclosed departure with its DEV cost: 4/133 family targets at t0 and 7.2 % of visible target ticks in 0-4 s have box bottoms at or below row 252.",
+   "date": "2026-11-13",
+   "by": "coordinator p-inter-84"
+  },
+  {
+   "id": "D3",
+   "topic": "6 s horizon",
+   "choice": "two official 33-frame calls; pass 2 conditions on pass-1 frames 24-32; pass-2 seed = seed + 1000003 (as DriveLaW)",
+   "note": "",
+   "date": "2026-11-13",
+   "by": "coordinator p-inter-84"
+  },
+  {
+   "id": "D4",
+   "topic": "condition-encode random draw",
+   "choice": "seeded with the per-(window, sample, pass) hash immediately before the official loader",
+   "note": "Rule and seed values recorded in sample_outputs.json (seed_rules).",
+   "date": "2026-11-13",
+   "by": "coordinator p-inter-84"
+  },
+  {
+   "id": "D5",
+   "topic": "codec prefix and real reference",
+   "choice": "DriveLaW's codec-prefix and real-reference rule with ReWorld's own codec functions",
+   "note": "",
+   "date": "2026-11-13",
+   "by": "coordinator p-inter-84"
+  },
+  {
+   "id": "D6",
+   "topic": "diffusers version",
+   "choice": "0.37.1",
+   "note": "",
+   "date": "2026-11-13",
+   "by": "coordinator p-inter-84"
+  },
+  {
+   "id": "D7",
+   "topic": "temporal mapping",
+   "choice": "8 Hz native; nearest native frame to 10 Hz; temporal (RoPE) scale read from the file at 8; inherited time-scale guard [0.8, 1.25]",
+   "note": "No rate alternative: if the guard fails, STOP.",
+   "date": "2026-11-13",
+   "by": "coordinator p-inter-84"
+  },
+  {
+   "id": "D8",
+   "topic": "uint8 conversion",
+   "choice": "truncation as in the official export, for generated and reference clips alike",
+   "note": "",
+   "date": "2026-11-13",
+   "by": "coordinator p-inter-84"
+  },
+  {
+   "id": "D9",
+   "topic": "smoke-only time-scale diagnostic",
+   "choice": "DriveLaW predeclared moving subset (selection sha256 314843667f054c994cd0aa354dc8d11b81d71b5fa75b2aed1c9248d9fdcc7441: 00c78269-t4.5, 05d00136-t7.0, 0c6ae415-t7.5, 0cf18266-t4.5; samples 0 and 1) under the same scoped diagnostic authorisation (diagnostic bench view)",
+   "note": "Never part of the main DEV analysis.",
+   "date": "2026-11-13",
+   "by": "coordinator p-inter-84"
+  },
+  {
+   "id": "D10",
+   "topic": "where GPU work runs",
+   "choice": "RunPod H100 SXM, run by the coordinator",
+   "note": "The runner takes explicit absolute paths (env copied from the RS to the identical absolute path, weights, inputs, output root), runs many specs per process and writes only under the output root, never to cwd.",
+   "date": "2026-11-13",
+   "by": "coordinator p-inter-84"
+  },
+  {
+   "id": "D11",
+   "topic": "instrument registration",
+   "choice": "at DEV measurement time only a NEW canvas spec file and a NEW pipeline file; the canvas spec lives in the kit now; no instrument files added yet",
+   "note": "",
+   "date": "2026-11-13",
+   "by": "coordinator p-inter-84"
+  }
+ ]
+}

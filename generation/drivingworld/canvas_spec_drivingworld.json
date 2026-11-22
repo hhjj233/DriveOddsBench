@@ -1,0 +1,37 @@
+{
+ "model": "drivingworld",
+ "note": "DrivingWorld (YvanYin/DrivingWorld faceb98, HF 949a282): 10 Hz model = canvas rate, vision.mp4 frame i = tick i-20 = native10 frame i (no resampling, no repeats). Model frame 512x256 = the official centre crop of the raw frame (source rows [636.5, 1411.6)), rendered on the canvas pixel grid (tall render of source rows [579, 1669) at 512x360, rows [19, 275)); its rows [53, 256) are canvas rows [0, 203) by an integer offset; canvas rows [203, 288) are black (not generated). K_canvas unchanged.",
+ "model_band_rows": [
+  636.5278,
+  1411.6389
+ ],
+ "valid_canvas_rows": [
+  0,
+  203
+ ],
+ "valid_source_rows": [
+  797,
+  1411.6389
+ ],
+ "raw": "canvas/real.mp4 with canvas rows [203, 288) black",
+ "band_rows": [
+  797,
+  1669
+ ],
+ "canvas": [
+  512,
+  288
+ ],
+ "fps": 10,
+ "ticks": {
+  "first": -20,
+  "last": 60,
+  "step": 1
+ },
+ "prefix": "shared",
+ "prefix_note": "frames 0-20 (ticks -20..0) of every clip of a window, continuations and reference, are the same pixels: the released VQ tokenizer round trip of the real history (ticks -14..0: the official conditioning encode of 15 frames + 1 zero frame, decoded with z_to_clips_all; ticks -20..-15: the same encode of ticks -20..-6, positions 0..5). Deterministic (VQ argmin). The model reads ticks -14..0 (15 frames, 1.4 s) and their past ego poses.",
+ "reference": "frames 0-20 = the shared prefix; frames 21-80: each real future frame t tokenised as the newest of a 15-frame causal window (encode real t-14..t + zero frame, position 14) and decoded like a generated frame (released z_to_clips on the 16-frame token window t-15..t); run drivingworld-<split>-*-recon; no randomness",
+ "clip_frames": 81,
+ "test_freeze_file": "protocol-drivingworld-stage2-frozen.txt",
+ "test_freeze_note": "TEST windows are refused unless this file (bench-v1 relative) exists: the stage-2 freeze of this model"
+}

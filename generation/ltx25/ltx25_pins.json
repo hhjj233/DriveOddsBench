@@ -1,0 +1,421 @@
+{
+ "schema": "wm-calib-bench.ltx25.pins.v3",
+ "note": "Single source of truth for the LTX-2.5 entries of bench-v1 (DRAFT, not frozen). default_variant is what the tools run unless told otherwise; the dev variant is kept available. Change values only together with a new protocol version.",
+ "default_variant": "distilled",
+ "code": {
+  "repo": "https://github.com/Lightricks/LTX-2",
+  "commit": "e98f6d927d83c92ef2be6aec76c8440b19306e39",
+  "commit_date": "2026-10-18T15:15:47Z",
+  "packages": {
+   "ltx-core": "1.5.0",
+   "ltx-pipelines": "1.5.0"
+  },
+  "install": "the two src/ trees of the checkout on sys.path through a .pth file (no build); a local environment records itself in its own env-manifest.json outside the repository",
+  "source_digest": "978c9d59375604166eb393c795b9a446c0be5a538c2c94ff427307dbf9d9d094",
+  "source_digest_files": 266,
+  "source_digest_rule": "sha256 over the sorted *.py files under packages/ltx-core/src and packages/ltx-pipelines/src (no __pycache__, no dot-paths): for each, the line '<path relative to the checkout>\\0<sha256 of file>\\n'",
+  "license_files_sha256": {
+   "LICENSE": "ac628c687b48adb26d8523b967e7f0573590a166157c99c95eb8d070805e739a",
+   "LICENSE-2_x": "ee5b0c880c1516e15bd51c8576a05ea1d2c6e5bb2d070ca098e847e42a75af34"
+  },
+  "license": "LTX-2.x Community License Agreement (LICENSE-2_x, dated 2026-08-11); LTX-2.5 is covered by it"
+ },
+ "weights": {
+  "hf_repo": "Lightricks/LTX-2.5",
+  "hf_revision": "49b093a39c19169a8a81721dcc541e07e945232f",
+  "hf_last_modified": "2026-10-11T07:00:53Z",
+  "gated": "auto (accept the terms at https://huggingface.co/Lightricks/LTX-2.5 with the account whose token the server uses)",
+  "license": "ltx-2.x-community-license-agreement",
+  "sha256_source": "Hugging Face LFS metadata of the pinned revision (HfApi.model_info(files_metadata=True), read 2026-11-03 without access to the files); the download script re-hashes every file",
+  "files": {
+   "diffusion_models/ltx-2.5-22b-distilled-transformer-bf16.safetensors": {
+    "bytes": 42018190584,
+    "sha256": "31eb3cad89b9e54e99dd3baf286f70825ac4f6c660a70d9184d895be76d7bff4",
+    "role": "distilled DiT, bf16 (fixed 8-step schedule, CFG 1); cast to fp8 at load (fp8-cast) where the GPU budget needs it",
+    "variants": [
+     "distilled"
+    ],
+    "required": true,
+    "needed_for": [
+     "distilled:generate",
+     "distilled:encode-prompt"
+    ]
+   },
+   "latent_upscale_models/ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors": {
+    "bytes": 995778752,
+    "sha256": "eb5a71fe4068ee87ccdb1c3aa635e547ca76bd2d30ae20ae889f2c325c0677e8",
+    "role": "x2 spatial latent upsampler between the two distilled stages (required by DistilledPipeline)",
+    "variants": [
+     "distilled"
+    ],
+    "required": true,
+    "needed_for": [
+     "distilled:generate"
+    ]
+   },
+   "diffusion_models/ltx-2.5-22b-dev-transformer-bf16.safetensors": {
+    "bytes": 42018190584,
+    "sha256": "792a2bad501ca03262c0bc2ce7a2949e85b142ce18e30894aad5bc849c8e7584",
+    "role": "full (dev) DiT, bf16; cast to fp8 at load (fp8-cast)",
+    "required": true,
+    "variants": [
+     "dev"
+    ],
+    "needed_for": [
+     "dev:generate",
+     "dev:encode-prompt"
+    ]
+   },
+   "text_encoders/gemma4-12b-with-proj-ltx-2.5-bf16.safetensors": {
+    "bytes": 26263858182,
+    "sha256": "ef7243612fdae7a75cb4d5cee9433e81380675fb6c213bd98ae74a9cd16561d1",
+    "role": "LTX's fine-tuned Gemma 4 12B text encoder with its projections and embedded tokenizer; used once per variant to encode the fixed prompt (prompt cache)",
+    "required": true,
+    "variants": [
+     "distilled",
+     "dev"
+    ],
+    "needed_for": [
+     "distilled:encode-prompt",
+     "dev:generate",
+     "dev:encode-prompt"
+    ]
+   },
+   "vae/ltx-2.5-video-vae-bf16.safetensors": {
+    "bytes": 1472223346,
+    "sha256": "847e14ca7f3355debca0cea4eaa24ac0fbcdf0061da054ac89ca638a869ddba3",
+    "role": "video VAE: deterministic encoder + stochastic diffusion decoder (DiffVAE, NADiffusionDecoder), the released default",
+    "required": true,
+    "variants": [
+     "distilled",
+     "dev"
+    ],
+    "needed_for": [
+     "distilled:generate",
+     "dev:generate",
+     "dev:encode-prompt",
+     "distilled:decode"
+    ]
+   },
+   "vae/ltx-2.5-audio-vae-bf16.safetensors": {
+    "bytes": 364866540,
+    "sha256": "c52733d37f6a7fb7949c3dc0fb468c6cb2169e4d836983a73babb9f0d54837a5",
+    "role": "audio VAE + vocoder: loaded by the dev variant's TI2VidOneStagePipeline; the distilled adapter builds its components without the audio decoder (the joint audio latent is generated, never decoded), so distilled jobs do not need it",
+    "required": true,
+    "variants": [
+     "dev"
+    ],
+    "needed_for": [
+     "dev:generate",
+     "dev:encode-prompt"
+    ]
+   },
+   "vae/ltx-2.5-video-vae-conv-bf16.safetensors": {
+    "bytes": 1452269922,
+    "sha256": "685b06ee3d9b2039647698fc4ea33175112462fc374e2777312c907897dfce8d",
+    "role": "convolutional decoder (model card: \"Conv VAE - faster, lighter\"; it decodes the same latents as the DiffVAE): only for the DEV decoder sensitivity arm (queue dev-diag, PROVISIONAL L4), which re-decodes the saved latents (latents.safetensors) and needs no generation. Whether it injects decode noise depends on its config; the dev-diag conv probe tests it",
+    "required": false,
+    "variants": [
+     "distilled",
+     "dev"
+    ],
+    "needed_for": [
+     "distilled:decode"
+    ]
+   }
+  },
+  "not_used": {
+   "diffusion_models/*-comfy-int8-convrot.safetensors, text_encoders/*-comfy-int8-convrot.safetensors": "ComfyUI only, not loadable by ltx-pipelines",
+   "diffusion_models/ltx-2.5-22b-distilled-transformer-nvfp4.safetensors (18,721,548,408 B, sha256 4b94231e...6c30)": "NVFP4 needs Blackwell (sm >= 10); neither the local Ada GPUs nor an H200 (sm 9.0) qualify",
+   "loras/ltx-2.5-22b-distilled-lora-450-bf16.safetensors (8,899,889,568 B, sha256 86370bbf...bbf5)": "only for the dev transformer's two-stage pipelines (stage-2 refinement); DistilledPipeline uses the distilled checkpoint itself",
+   "latent_upscale_models/ltx-2.5-latent-temporal-upscaler-x2-bf16-1.0.safetensors (261,944,000 B, sha256 2bc3300f...c3fe)": "DFR temporal rounds only",
+   "Lightricks/LTX-2.5-22b-IC-LoRA-Pixel-Spatial-Upscaler (separate repo, gated auto, rev 59f26f1e...; ltx-2.5-22b-ic-lora-pixel-spatial-upscaler-x2-1.0.safetensors 327,322,640 B, sha256 984851b7...1c1d)": "DFR detailing LoRA (DFR not used)",
+   "model_patches/ltx-2.5-duration-head-bf16.safetensors": "only when num_frames is omitted; the benchmark always passes 161"
+  },
+  "precision_choice": "RESOLVED 2026-11-03 (owner): the distilled DEV-full and TEST runs use the released bf16 weights, transformer resident, on cluster H200 (quantization none). fp8-cast (QuantizationKind.FP8_CAST: attention q/k/v/out and feed-forward Linears rounded to float8_e4m3fn at load, upcast to bf16 in each matmul) is used only for the local mechanics smoke on the 48 GB GPUs (bf16 is 42.0 GB; GPU 1's budget is about 27.5 GiB); its specs carry quantization fp8-cast and their clips never enter an analysis",
+  "needed_rule": "needed_for lists <variant>:<purpose>: generate = sampling and decoding (prompt from a cache), encode-prompt = making the prompt cache. Distilled cluster jobs: the dev-smoke job needs both purposes (transformer, upsampler, video VAE, text encoder: 70.8 GB); every later job only generate (44.5 GB)"
+ },
+ "variants": {
+  "distilled": {
+   "status": "DEFAULT (owner decision 2026-11-03: the distilled LTX-2.5 runs the bench TEST)",
+   "pipeline": "ltx_pipelines.distilled.DistilledPipeline (two-stage), constructed unchanged; the adapter re-implements stream_chunks for one chunk (no chunking, no carry) with the history latent as the only video conditioning, the prompt from a cache and a fixed decode tiling",
+   "docs": "README \"Quick Start\" and the model card's Option A use DistilledPipeline (\"Fastest text/image-to-video (starting point)\"; pipelines.md: \"Two-stage generation with 8 predefined sigmas ... Euler ancestral on an LTX-2.5+ checkpoint ... No guidance required ... Requires spatial upsampler\")",
+   "transformer": "diffusion_models/ltx-2.5-22b-distilled-transformer-bf16.safetensors",
+   "spatial_upsampler": "latent_upscale_models/ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors",
+   "final_size_wh": [
+    1024,
+    576
+   ],
+   "size_rule": "two-stage pipelines need the final size divisible by 64 (assert_resolution(is_two_stage=True)); 1024 x 576 qualifies and its stage 1 is exactly the 512 x 288 canvas. Documented defaults are larger (CLI 1024 x 1536, model-card example stage 1 544 x 960 -> 1088 x 1920)",
+   "stage_1": {
+    "size_wh": [
+     512,
+     288
+    ],
+    "latent_thw": [
+     21,
+     9,
+     16
+    ],
+    "video_tokens": 3024,
+    "sigmas": [
+     1.0,
+     0.99375,
+     0.9875,
+     0.98125,
+     0.975,
+     0.909375,
+     0.725,
+     0.421875,
+     0.0
+    ],
+    "steps": 8,
+    "noise_scale": 1.0,
+    "ancestral_noise_seed_offset": 10000,
+    "conditioning": "VideoConditionByLatentIndex(encoder(history20.mp4, 41 x 512x288), strength 1.0, latent_idx 0)"
+   },
+   "upsampler": "spatially_upsample_chunks: the whole stage-1 video latent (history part included) through the x2 latent upsampler (VideoUpsampler: VAE statistics + upsampler); audio passes through",
+   "stage_2": {
+    "size_wh": [
+     1024,
+     576
+    ],
+    "latent_thw": [
+     21,
+     18,
+     32
+    ],
+    "video_tokens": 12096,
+    "sigmas": [
+     0.909375,
+     0.725,
+     0.421875,
+     0.0
+    ],
+    "steps": 3,
+    "noise_scale": "sigmas[0] = 0.909375 (denoise_chunks default): the upsampled latent is re-noised to 0.909375 by the run generator, conditioned tokens excepted",
+    "ancestral_noise_seed_offset": 20000,
+    "conditioning": "VideoConditionByLatentIndex(encoder(history20_1024.mp4, 41 x 1024x576), strength 1.0, latent_idx 0): the stage rebuilds its conditionings at its own resolution, so the upsampled history latents are replaced by the encoded real history"
+   },
+   "docs_note": "pipelines.md says \"4 steps in stage 2\"; the code runs the 4 sigmas [0.909375, 0.725, 0.421875, 0], i.e. 3 Euler steps",
+   "sampler": {
+    "loop": "euler_ancestral_denoising_loop (EulerAncestralDiffusionStep, rectified-flow form)",
+    "eta": 1.0,
+    "s_noise": 1.0,
+    "rule": "DistilledPipeline.use_ancestral_sampler = model_version >= (2, 5) (should_use_ancestral_sampler); the adapter requires it",
+    "noise": "per stage a torch.Generator(device) seeded with seed + offset (10000 stage 1, 20000 stage 2) for the ancestral noise; the run generator torch.Generator(device).manual_seed(seed) draws the initial noise (stage 1), the stage-2 renoise, then drives the DiffVAE",
+    "mask": "the loop re-applies the conditioning mask after every noise injection (post_process_latent), so pinned tokens stay clean"
+   },
+   "guidance": "none: SimpleDenoiser (no CFG, no STG, no negative prompt), as DistilledPipeline",
+   "denoiser_calls": [
+    8,
+    3
+   ],
+   "enhance_prompt": false,
+   "dtype": "bfloat16",
+   "quantization": "none",
+   "quantization_status": "RESOLVED (owner, 2026-11-03): bf16 for every analysed clip; fp8-cast only in specs made with --precision fp8-cast for the local mechanics smoke",
+   "diffvae_optimization": "chunked_eager",
+   "decode": "DiffVAE (chunked_eager, natten) on the stage-2 latent at 1024 x 576 with the run generator, video only (the official chunk decode: video_decoder(latent, tiling, generator, dtype, device_fn)); the audio latent is generated but not decoded",
+   "decode_size_wh": [
+    1024,
+    576
+   ],
+   "decode_free_bytes": 17179869184,
+   "decode_free_bytes_note": "DRAFT (16 GiB): the free memory the tiler assumes before it builds the decoder at 1024 x 576; fixed so the tiling does not depend on the GPU; the transformer is released before decoding in the per-sample and per-call modes. To be fixed from the DEV smoke before freezing",
+   "output_downsize": "official RGB24 conversion of the 1024 x 576 decode (clamp(0,1) x 255, truncate), then cv2.resize(frame, (512, 288), interpolation=cv2.INTER_AREA) per frame (OpenCV 5.0.0, the bench renderer's), the same area downsizing as every bench clip",
+   "inputs": {
+    "history": "windows/<split>/<w>/history20.mp4 (41 x 512x288, stage 1)",
+    "history_hr": "windows/<split>/<w>/history20_1024.mp4 (41 x 1024x576, stage 2)",
+    "real_hr": "windows/<split>/<w>/real20_1024.mp4 (161 x 1024x576, the reference)"
+   },
+   "reference": "encoder(real20_1024.mp4, 161 frames) -> the same DiffVAE call at 1024 x 576 seeded with seed_of(w, \"recon\") -> RGB24 -> INTER_AREA 512 x 288. The reference never passes stage 1 or the upsampler: the generated clips' final latents are full-resolution latents whose history part is the encoded real history, and the reference is the encoded real clip",
+   "prompt_cache": "prompt only (DistilledPipeline encodes no negative prompt); the embeddings processor comes from the distilled transformer checkpoint, so the cache is made per variant",
+   "residency_default": "resident",
+   "residency_modes": {
+    "per-call": "official lifecycle: the transformer is built for each stage call and freed after it (two builds per sample)",
+    "per-sample": "built once per sample, kept through stage 1, the upsampler and stage 2, freed before the decoder: the local fp8 smoke",
+    "resident": "kept across samples and through decoding: the cluster H200 runs (bf16)"
+   },
+   "allowed_quantization": [
+    "none",
+    "fp8-cast"
+   ],
+   "construction": "the adapter builds DistilledPipeline's components exactly as its __init__ does (ImageConditioner, DiffusionStage.from_checkpoint, VideoUpsampler, VideoDecoder; should_use_ancestral_sampler) on a DistilledPipeline instance, without the PromptEncoder (the prompt comes from the cache) and the AudioDecoder (audio is not decoded), so generation jobs need neither the 26 GB text encoder nor the audio VAE",
+   "local_smoke": {
+    "quantization": "fp8-cast",
+    "residency": "per-sample",
+    "rerun_residency": "per-call",
+    "run_prefix": "ltx25d-dev-localsmoke",
+    "purpose": "mechanics only on the local 48 GB GPU; its clips never enter an analysis"
+   },
+   "outputs": "vision.mp4 (81 frames, canvas) and latents.safetensors (the stage-2 video latent, the audio latent and the DiffVAE generator state before decoding, so any decode can be repeated or redone with another decoder later); native20.mp4 and full1024.mp4 only on request",
+   "diag": {
+    "queue": "dev-diag",
+    "package": "ltx25d-diag-v1",
+    "built_by": "models/ltx25/build_diag_package.py on the research server, after the DEV runs ltx25d-dev-recon and ltx25d-dev-k16 are collected",
+    "windows": 10,
+    "window_rule": "the 10 DEV windows of names-dev-gen.txt with the smallest sha256('bench-v1|ltx25d-diag|' + window) (hex order); fixed before any DEV clip exists",
+    "decoders": {
+     "diffvae": "vae/ltx-2.5-video-vae-bf16.safetensors",
+     "conv": "vae/ltx-2.5-video-vae-conv-bf16.safetensors"
+    },
+    "decode_call": "ltx_pipelines.utils.blocks.VideoDecoder(checkpoint, bf16, device, diffvae_optimization) called as video_decoder(latent, tiling_config_for_vae(checkpoint, 1024 x 576, 161 frames, decode_free_bytes), generator, dtype=bf16, device_fn): the call the generation runs use, here on the saved final latent (latents.safetensors: video_latent)",
+    "runs": {
+     "ltx25d-dev-recon-draws": "3 extra DiffVAE draws per reference: <w>-recon-d<j>, a fresh CUDA generator seeded seed_of(w, 'recon-d<j>'), j = 1..3 (the decoder noise floor; never in the analysis set)",
+     "ltx25d-dev-redecode": "reproduction check: every reference (<w>-recon-rep) and s0 of the first window (<w>-s0-rep) through the DiffVAE again with the generator restored to the saved decoder state; must equal the DEV clip bit for bit",
+     "ltx25d-dev-conv-recon": "the conv decoder on each reference latent, generator restored to the saved decoder state",
+     "ltx25d-dev-conv-k16": "the conv decoder on the 16 continuations' final latents, each with its saved decoder state",
+     "ltx25d-dev-conv-probe": "the first window's reference through the conv decoder once more with seed_of(w, 'conv-probe'): identical to its ltx25d-dev-conv-recon clip = the conv decoder ignores the generator"
+    },
+    "recon_draws": 3,
+    "specs": 212,
+    "gpu_hours": "about 0.3-0.9 on one H200 (40 DiffVAE + 171 conv decodes, no transformer); run it on the GPU type of the DEV runs, so that the reproduction check can be bit-exact"
+   }
+  },
+  "dev": {
+   "source": "ltx_pipelines.utils.constants.detect_params(transformer): LTX-2.5 declares a model_version >= 2.4, so it gets LTX_2_4_PARAMS (= LTX_2_3_PARAMS with image CRF 18); the adapter reads them back and refuses to run if any differs from this block",
+   "pipeline": "ltx_pipelines.ti2vid_one_stage.TI2VidOneStagePipeline (single-stage, full model, guided), constructed unchanged; the adapter re-implements its __call__ line for line with the history latent as the only conditioning item",
+   "num_inference_steps": 30,
+   "video_guider": {
+    "cfg_scale": 3.0,
+    "stg_scale": 1.0,
+    "stg_blocks": [
+     28
+    ],
+    "rescale_scale": 0.7,
+    "modality_scale": 3.0,
+    "skip_step": 0
+   },
+   "audio_guider": {
+    "cfg_scale": 7.0,
+    "stg_scale": 1.0,
+    "stg_blocks": [
+     28
+    ],
+    "rescale_scale": 0.7,
+    "modality_scale": 3.0,
+    "skip_step": 0
+   },
+   "guidance_passes_per_step": [
+    "cond",
+    "uncond",
+    "ptb (STG: skip video and audio self-attention in block 28)",
+    "isolated modality"
+   ],
+   "scheduler": {
+    "class": "LTX2Scheduler",
+    "max_shift": 2.05,
+    "base_shift": 0.95,
+    "stretch": true,
+    "terminal": 0.1,
+    "tokens": "default 4096 (the one-stage pipeline passes no latent), i.e. shift 2.05"
+   },
+   "sampler": "euler_denoising_loop (EulerDiffusionStep, deterministic given the initial noise)",
+   "noiser": "GaussianNoiser(torch.Generator(device).manual_seed(seed)); the same generator then drives the DiffVAE decoder, as in the pipeline",
+   "negative_prompt": "ltx_pipelines.utils.constants.DEFAULT_NEGATIVE_PROMPT",
+   "negative_prompt_sha256": "5d3fc170ddbab647fd3baf4694dfcca44dd817fe489bc3ab0684e12505472be4",
+   "enhance_prompt": false,
+   "dtype": "bfloat16",
+   "quantization": "fp8-cast",
+   "max_batch_size": 1,
+   "diffvae_optimization": "chunked_eager",
+   "diffvae_attention": "natten (0.21.7, CUTLASS FNA backend), the production path on Ada/Hopper",
+   "video_encoder_input": "ltx_pipelines.utils.media_io.decode.video_preprocess: resize_and_center_crop (the identity at 512x288) then x / 127.5 - 1, bf16; no H.264 re-compression (that is only applied to still-image conditionings)",
+   "output_conversion": "ltx_core.color.yuv.FrameConverter.RGB24: clamp(x, 0, 1) * 255 then .to(uint8) (truncation), the official RGB24 path",
+   "transformer": "diffusion_models/ltx-2.5-22b-dev-transformer-bf16.safetensors",
+   "model_size_wh": [
+    512,
+    288
+   ],
+   "decode_free_bytes": 4294967296,
+   "decode_size_wh": [
+    512,
+    288
+   ],
+   "prompt_cache": "prompt and DEFAULT_NEGATIVE_PROMPT",
+   "residency_default": "per-sample",
+   "residency_modes": {
+    "per-sample": "the transformer is built for the call and freed before the decoder (official lifecycle)",
+    "resident": "kept across samples (DiffusionStage.resident())"
+   },
+   "status": "kept available, not the default (owner, 2026-11-03: run the distilled model)",
+   "inputs": {
+    "history": "windows/<split>/<w>/history20.mp4 (41 x 512x288)",
+    "real": "windows/<split>/<w>/real20.mp4 (161 x 512x288)"
+   },
+   "allowed_quantization": [
+    "fp8-cast",
+    "none"
+   ]
+  }
+ },
+ "bench": {
+  "fps": 20.0,
+  "frames": 161,
+  "history_frames": 41,
+  "history_latent_frames": 6,
+  "future_frames": 120,
+  "latent_frames": 21,
+  "timeline": "pixel frame j (0..160) is the 20 Hz camera frame nearest to t0 + (j - 40) x 0.05 s; frames 0..40 are the history t0 - 2.0 .. t0 (8k+1 = 41, latents 0..5), frames 41..160 the future t0 + 0.05 .. t0 + 6.0 (latents 6..20)",
+  "prompt_source": "the bench-v1 Cosmos3-Nano prompt 'long' of make_bench_nano_specs.py (snapshot sha256 108c4cc9...), verbatim: a fixed generic dashcam description with no motion, no events and no future",
+  "prompt": "A continuous, unedited video from a forward-facing dashcam mounted behind the windshield of a passenger car on public roads in a North American city. The camera is rigidly fixed to the car at a constant height and angle, looking straight ahead along the road. The view shows the road surface with lane markings, curbs and crosswalks, together with other vehicles, pedestrians, cyclists, traffic lights, road signs, poles, trees, parked cars and buildings along the street. The video seamlessly continues the given footage from its last frame, with the same camera, lens, exposure, weather and lighting. There are no cuts, no scene changes, no transitions, no zoom, no text, no overlays and no watermarks. Photorealistic, natural colors, sharp details, and consistent geometry and perspective throughout.",
+  "prompt_sha256": "129805d05d420e74847f213bfa4e630e90f7a2ef8984e140833fd4d58d732fc9",
+  "prompt_words": 124,
+  "prompt_cache": "the fixed (prompt, negative prompt) pair is encoded once (Gemma 4 TE + the transformer checkpoint's embeddings processor) and saved as safetensors; every generation process loads it and never builds the text encoder. Encoding is deterministic (enhance_prompt off)",
+  "seeds": {
+   "continue": "seed_of(window, k) of make_bench_nano_specs.py (the shared bench-v1 table), k = 0..15",
+   "recon": "seed_of(window, 'recon') = first 4 bytes of sha256('bench-v1|<window>|recon') & 0x7FFFFFFF: seeds the DiffVAE decoder of the real reference (distinct from every sample seed; one independent decoder draw per window)"
+  },
+  "cudnn": {
+   "deterministic": true,
+   "benchmark": false
+  },
+  "canvas_wh": [
+   512,
+   288
+  ],
+  "provisional": {
+   "note": "PROVISIONAL, pending owner; all pre-freeze (coordinator, 2026-11-03)",
+   "L1": "licence quotes stand; the gate must be accepted by the owner (not done by us)",
+   "L2": "20 fps (41-frame history, 161-frame clip), with a DEV time-scale audit before freezing; fallback 24 fps nearest-frame",
+   "L3": "each clip keeps its own decoded prefix; the instrument gets a validated per-clip t0-alignment wrapper (DEV)",
+   "L4": "the reference decode uses seed_of(w, \"recon\"); DEV diagnostics in queue dev-diag: 3 extra DiffVAE draws of the reference on 10 DEV windows (decoder noise floor) and the conv decoder on the same windows' saved latents (sensitivity arm)",
+   "L5": "RESOLVED (owner, 2026-11-03): bf16, transformer resident, on cluster H200 for DEV-full and TEST; fp8-cast only for the local mechanics smoke",
+   "L7": "replaced by the two-stage mapping: final 1024 x 576 (stage 1 = the 512 x 288 canvas), INTER_AREA down to the canvas",
+   "L8": "the Nano prompt verbatim"
+  }
+ },
+ "output": {
+  "files": {
+   "vision.mp4": "81 frames, 512x288, 10 fps, lossless: canvas frames 0, 2, ..., 160 (t0 - 2.0 .. t0 + 6.0 at the bench's 10 Hz ticks; frame 20 = t0); what the instrument reads",
+   "latents.safetensors": "video_latent (distilled: the final stage-2 latent [1,128,21,18,32]; recon: the encoded real clip), audio_latent (continuations), decoder_rng_state (the CUDA generator state right before the DiffVAE call), with metadata (seed, mode, variant, shapes)",
+   "native20.mp4": "optional (--keep-native20): the 161 canvas frames at 20 fps, lossless",
+   "full1024.mp4": "optional (--keep-full-res, distilled): the 161 decoded frames at 1024x576, 20 fps, lossless",
+   "sample_outputs.json": "status, settings read back, inputs, seeds, timings per phase, GPU and host memory, hardware and software versions, diagnostics, hashes"
+  },
+  "encoder": "ffmpeg libx264rgb -crf 0 -preset medium, rgb24, -video_track_timescale 10240 (make_wm_calibration_windows.write_video at -r 10, the same call at -r 20 for native20.mp4); every written file is decoded and checked equal",
+  "prefix": "frames 0..20 of vision.mp4 are the decoder's output for the pinned history latents in that clip's own decode (PROVISIONAL L3), not a copy of the reference; they differ from the reference's by the DiffVAE sampling noise (recorded per sample)"
+ },
+ "environment": {
+  "python": "3.12.12 (python-build-standalone, uv-managed)",
+  "uv": "0.9.5 (cluster/ltx25/uv-requirements.txt, hash-pinned)",
+  "torch": "2.13.0+cu126",
+  "torchvision": "0.28.0+cu126",
+  "torchaudio": "2.11.0+cpu",
+  "natten": "0.21.7+torch2130cu126",
+  "transformers": "5.14.1",
+  "lock": "models/ltx25/requirements-ltx25.lock.txt",
+  "lock_rule": "uv pip compile requirements-ltx25.in --python-version 3.12 --python-platform x86_64-manylinux_2_28 --exclude-newer 2026-10-19T00:00:00Z --index https://download.pytorch.org/whl/cu126 --index https://download.pytorch.org/whl/cpu --find-links https://whl.natten.org --index-strategy unsafe-best-match --generate-hashes --emit-index-url --emit-find-links (compile into a fresh output path: with an existing lock as preference uv rejects cuda-toolkit, which has no publish time)",
+  "upstream_differs": "upstream pins torch 2.13.0 and natten 0.21.7 as CUDA 13.2 builds (+cu132) and torchaudio 2.11.0+cu132; the NVIDIA driver here (570.207) supports CUDA <= 12.8, so the same versions are taken as CUDA 12.6 builds and torchaudio as its CPU build (no CUDA 12 torchaudio build exists for torch 2.13). The model card recommends CUDA >= 12.7; no torch 2.13 build exists for CUDA 12.7/12.8",
+  "opencv": "opencv-python-headless 5.0.0.93 (cv2 5.0.0)",
+  "machine_paths": "not pinned: the local tools take the environment, weights and output directories and the GPU lock from environment variables or the git-ignored models/ltx25/local.env (template local.env.example); the cluster jobs pass every path explicitly"
+ },
+ "cluster": {
+  "kit": "wm-calib-bench/cluster/ltx25/ (RUNBOOK.md); input package cluster-packages/ltx25d-inputs-v1/",
+  "container": "ltx25d-bench-v2.sif from cluster/ltx25/ltx25d.def (Ubuntu 22.04 digest-pinned, ffmpeg 4.4.2, gcc and libc6-dev for Triton's run-time C build, uv 0.9.5, CPython 3.12.12, the hash lock, the LTX-2 source at the pinned commit with its digest checked); v1 had no C compiler, so Triton kernels could not launch on the GPU",
+  "gpu": "H200 recommended for every analysed clip (one GPU type; the submit files allow capability 8.0-9.0 with >= 80 GB); torch 2.13.0+cu126 ships sm_90 kernels and no PTX, so Blackwell cannot run it",
+  "adapter_args": "--residency resident --keep-free-mib 2048 --need-mib 61440",
+  "diag": "queue dev-diag: cluster/ltx25/ltx25d_diag.sub, one job on the package ltx25d-diag-v1 (saved latents + 212 redecode specs); needs only the two video VAEs (stage_weights.sh --with-conv); checked by cluster/ltx25/check_diag.py"
+ }
+}

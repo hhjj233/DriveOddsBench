@@ -1,0 +1,4 @@
+# trajectory-calibration-v1 addendum 1 freeze, coordinator p-inter-ed, 2026-11-10T13:12:08-0600, before any trajectory score against climatology was computed
+# code test before the freeze: climatology loading and consistency check only (counts 62/61/62/63/108, 0 mismatches)
+cbb7a139bb801b67b5208c743d3d9f43ff3233be71dfc1cdeb2033c3824dc942  PLAN-ADDENDUM-1.md
+bcc15bffdca9a6484a344dd8c126b5dda89e132d17e92b9baecc3c53e18e101a  analyze_trajectory_climatology.py

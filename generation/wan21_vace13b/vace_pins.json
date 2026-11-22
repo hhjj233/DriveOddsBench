@@ -1,0 +1,133 @@
+{
+ "schema": "wm-calib-bench.wan21_vace13b.pins.v1",
+ "created": "2026-11-05",
+ "status": "DRAFT (bench-v1, table T1-H2; DEV phase only, nothing frozen)",
+ "model": "Wan2.1-VACE-1.3B (Wan-AI / Alibaba Tongyi Lab; VACE: all-in-one video creation and editing on Wan2.1-T2V-1.3B), used in its first-clip video extension mode",
+ "code": {
+  "repo": "https://github.com/Wan-Video/Wan2.1",
+  "commit": "9737cba9c1c3c4d04b33fcad41c111989865d315",
+  "commit_date": "2026-03-05T17:38:07+08:00",
+  "vace_code_last_changed": {
+   "commit": "76e9427657c74f7d063f6c50fce9529900c59e28",
+   "date": "2025-05-16",
+   "note": "VACE added in 18d53feb (2025-05-14), size fix c709fcf0 (2025-05-14), formatting 76e94276 (2025-05-16); the only later code commit 841fe523 (2025-12-02) changes wan/image2video.py (not on the VACE path); later commits change README.md only"
+  },
+  "source_digest_rule": "sha256 over the sorted *.py / *.yml / *.yaml files of the checkout (path NUL sha256 newline), .git and __pycache__ excluded (the rule of the SkyReels, Vista and LTX adapters)",
+  "source_digest": "e192cccbc010efbec72cf21ee50bc9ec89e55acfde3b668e0c8818debd490f24",
+  "source_files": 36,
+  "files_sha256": {
+   "generate.py": "0b12bde63bb316a91ad1462a3db073db4388ec96c818f7548f4e6487939427a4",
+   "wan/vace.py": "bcb792e4750459af3049bfcc52a3e804895d2d7c98bc2e4d2ce7aaa545da9837",
+   "wan/modules/vace_model.py": "91194ce34c771f6ecc264577ee7adf542551a62167a793cfef24f876e3291faa",
+   "wan/modules/model.py": "c1572ade3bf7345bd4c00d4a19535788fab62f9c08b5aeb15f6d01f4435bb47a",
+   "wan/modules/vae.py": "4912ffd7a9fbb17ceef9a17d4a9c4b8aee36ec37c32594f54e57693b29909498",
+   "wan/modules/t5.py": "8b0cebf3192c542f92a344255a06c203df3ba24160715899a055cc8de0cd930f",
+   "wan/modules/attention.py": "23fe7c6f6e4065242d95e5e188cb2d1a16bd283f05dca7e7e878977158fcfdbc",
+   "wan/modules/tokenizers.py": "cf5b189c1ae017326efadab2fc6380ba223fa7a59d0be6464bd264db53c76934",
+   "wan/utils/vace_processor.py": "3fc56687d1d6204cc9603625238f20a8453f7d89f38efff11c3353ac7ab83e36",
+   "wan/utils/fm_solvers_unipc.py": "0dec8c7ed17f6f2049275c6848113314da6ccec1c8db5bdc89df43c05c6038d9",
+   "wan/utils/utils.py": "8e2d85b1c7961233379b9ab38cee153ca8d95358f27cb8bb6dd154e809731c8c",
+   "wan/configs/shared_config.py": "a942b6f0a1d1a4ec9a7893c17a6218651ce272953b90d012ce5cdd19d15e45f7",
+   "wan/configs/wan_t2v_1_3B.py": "6976ec4c03f737b69ae17afe13339b32905739205d4c19f16c8b329f9f06e986",
+   "wan/configs/__init__.py": "0af8a5a3374058b1b21f0b2408fc109062c55589e4441bcae25fcfa005d3c9d0",
+   "wan/text2video.py": "169f0929b273b27a7bc0e094d15a01d48183adc529a1dbce626b179dced29fe8",
+   "wan/__init__.py": "bd4c7993b6022f321f63c77d36a146955f0ce1d3a9fb520698b645a9f3e728b9",
+   "requirements.txt": "70b8bd1018b0465ddcb2525da541302fd713b4d39c26e3a833fb549262d99251",
+   "LICENSE.txt": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+  },
+  "license": "Apache-2.0 (LICENSE.txt)",
+  "install": "none: the adapter puts the checkout on sys.path (the wan package) with bytecode writing disabled"
+ },
+ "vace_reference": {
+  "repo": "https://github.com/ali-vilab/VACE",
+  "commit": "48eb44f1c4be87cc65a98bff985a26976841e9f3",
+  "commit_date": "2025-10-17",
+  "use": "documentation only (not run): the first-clip extension semantics and the long-video procedure",
+  "files_sha256": {
+   "vace/annotators/frameref.py": "dd622057ce57078c0afdac2ad89d9698f1fd28867c4db8379efabbe2dc861053",
+   "vace/configs/video_preproccess.py": "aac5f87f844288e25f5b6fe778565551f7039937550896c9426854a43b7e16f4",
+   "vace/annotators/utils.py": "e55719f190aa911a5f6169f5ae55bad7b549a2d9b798a34b9735003c7e8ccc4e",
+   "vace/vace_wan_inference.py": "cde0353136d4ee5c7712c8ed4b868638870391dd4c655fef1c3c336817694c08",
+   "UserGuide.md": "c6f9ea55be60b1d7ed1fd7cdebaf49d266ff8bdf494c9b5ffc18865f79924c17",
+   "LICENSE.txt": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+  },
+  "points": [
+   "FrameRefExpandAnnotator mode 'firstclip': out_frames = the given clip + expand_num frames of REF_COLOR 127.5; out_masks = 0 for the given frames (kept) + 255 for the expansion (generated); the clip length is free, expand_num 80 by default",
+   "UserGuide 2.2: 'For users who are demanding of long video generation, we recommend to generate 5s video clips one by one, while using firstclip video extension task to keep the temporal consistency'",
+   "UserGuide 3.1: src_video gray areas (values equal to 127) are the missing part; src_mask white = generated, black = retained",
+   "save_one_video writes the preprocessed src_video / src_mask with imageio libx264 quality 8 (lossy): a constant 127.5 frame is written as 127",
+   "vace_wan_inference.py defaults: 50 steps, shift 16, guidance 5.0, unipc, 81 frames, model vace-1.3B, size 480p (the same as the Wan2.1 generate.py defaults)"
+  ]
+ },
+ "weights": {
+  "hf_repo": "Wan-AI/Wan2.1-VACE-1.3B",
+  "hf_revision": "574e6a744642ce3bee319afc31496b88bde8aac4",
+  "hf_last_modified": "2025-05-19T03:18:05Z",
+  "gated": false,
+  "license": "apache-2.0 (LICENSE.txt: the Apache License 2.0 text; the model card adds: no rights claimed over generated content, the user is accountable for lawful use)",
+  "dit": "VaceWanModel (config.json: dim 1536, 30 layers, 12 heads, ffn 8960, vace_layers 0, 2, ..., 28 (15 VACE blocks), vace_in_dim 96); 2,153,972,032 parameters (734,975,232 in the VACE blocks), the file stores 825 fp32 and 439 bf16 tensors; VaceWanModel.from_pretrained (diffusers) loads them into the fp32 model",
+  "files": {
+   "diffusion_pytorch_model.safetensors": {"bytes": 7146067848, "sha256": "c46a6f5f7d32c453c3983bbc59761ea41cd02ad584fb55d1a7ee2b76145847a2", "role": "DiT (VaceWanModel)", "cluster": true},
+   "config.json": {"bytes": 349, "git_blob_sha1": "75c3b83dcd4d66a530e6f6049069f41b6c5c3f5a", "sha256": "e19df24acf3f440e0aea37d299f22b96f88d164f3349ae696daecd960a35ab1e", "role": "DiT config", "cluster": true},
+   "Wan2.1_VAE.pth": {"bytes": 507609880, "sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981", "role": "Wan2.1 VAE (fp32; byte-identical to the SkyReels-V2-DF checkpoint's)", "cluster": true},
+   "models_t5_umt5-xxl-enc-bf16.pth": {"bytes": 11361920418, "sha256": "7cace0da2b446bbbbc57d031ab6cf163a3d59b366da94e5afe36745b746fd81d", "role": "umT5-XXL text encoder (bf16): only for the prompt cache (research server)", "cluster": false},
+   "google/umt5-xxl/special_tokens_map.json": {"bytes": 6623, "git_blob_sha1": "14855e7052ffbb595057dfd791d293c1c940db2c", "sha256": "7b8a9f5040adb67b5805abdfd42c1f8d0f3d0e711f10726580eb3789cd0ad61d", "role": "tokenizer (prompt cache only)", "cluster": false},
+   "google/umt5-xxl/spiece.model": {"bytes": 4548313, "sha256": "e3909a67b780650b35cf529ac782ad2b6b26e6d1f849d3fbb6a872905f452458", "role": "tokenizer (prompt cache only)", "cluster": false},
+   "google/umt5-xxl/tokenizer.json": {"bytes": 16837417, "sha256": "6e197b4d3dbd71da14b4eb255f4fa91c9c1f2068b20a2de2472967ca3d22602b", "role": "tokenizer (prompt cache only)", "cluster": false},
+   "google/umt5-xxl/tokenizer_config.json": {"bytes": 61728, "git_blob_sha1": "4e1cc1cd85599ce0b47fd0a746af188fe4043ff2", "sha256": "ed9a3a8b0faa71a70a32847e0435fe036e6e112d4df4edb7bb48a921e344dc05", "role": "tokenizer (prompt cache only)", "cluster": false},
+   "LICENSE.txt": {"bytes": 11357, "git_blob_sha1": "261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64", "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4", "role": "licence", "cluster": true},
+   "README.md": {"bytes": 40485, "git_blob_sha1": "ecb8cb95edfe06022839144e0d965780482f2321", "sha256": "1eed52faea991fffe9c4bbd3f2df4e7ba376a05b1ab87ce734b0d2af18fd4aff", "role": "model card", "cluster": true}
+  },
+  "not_downloaded": ["assets/*.png", "assets/*.jpg", ".gitattributes"],
+  "sha256_note": "LFS files: the Hub LFS sha256 of the pinned revision; small files: sha256 of the download whose git blob sha1 matched the Hub tree (2026-11-05)"
+ },
+ "released_defaults": {
+  "source": "generate.py of the pinned commit (_validate_args and argparse) and wan/vace.py; the same values in VACE's vace_wan_inference.py",
+  "task": "vace-1.3B (WAN_CONFIGS: the t2v_1_3B config)",
+  "size": "SUPPORTED_SIZES['vace-1.3B'] = 480*832, 832*480; the model card: 480P (~81 x 480 x 832), 720P not supported for 1.3B; 'the input supports any resolution, but to achieve optimal results, the video size should fall within a specific range'. prepare_source sets the processor's area to W x H of --size and the official VaceVideoProcessor keeps an input video's own size when it is smaller than that area (area_z = min(seq_len, max_area / 256, (h // 16) (w // 16)))",
+  "frame_num": 81,
+  "sample_solver": "unipc (FlowUniPCMultistepScheduler, shift passed to set_timesteps)",
+  "sample_steps": 50,
+  "sample_shift": "16 for vace tasks (_validate_args: 'elif \"flf2v\" in args.task or \"vace\" in args.task: args.sample_shift = 16'); the diffusers port uses 3.0 (not the official code)",
+  "sample_guide_scale": 5.0,
+  "context_scale": 1.0,
+  "n_prompt": "'' -> config.sample_neg_prompt (the fixed Chinese negative prompt of shared_config.py, sha256 in the adapter)",
+  "base_seed": "random if not given; torch.Generator(device).manual_seed(seed) for the noise and the scheduler steps",
+  "offload_model": "True on one GPU (moves the DiT to the CPU after sampling and back; no numeric effect)",
+  "t5_cpu": false,
+  "use_prompt_extend": false,
+  "dtypes": "T5 bf16; DiT fp32 parameters under torch.cuda.amp.autocast(bfloat16); VAE fp32; flash-attention 2 in bf16",
+  "fps": "16 (config.sample_fps; cache_video writes the output at this rate)",
+  "output": "cache_video: clamp(-1, 1), (x + 1) / 2, x 255, uint8 truncation, imageio libx264 quality 8 (lossy; the adapter writes the same uint8 frames losslessly)"
+ },
+ "bench": {
+  "fps": 16,
+  "history_frames": 33,
+  "new_frames_per_round": 48,
+  "round_frames": 81,
+  "rounds": 2,
+  "total_frames": 129,
+  "t0_index": 32,
+  "round2_offset": 48,
+  "camera_hz": 20,
+  "band_rows": [797, 1669],
+  "canvas_wh": [512, 288],
+  "gray_value": 127,
+  "timeline_rule": "16 fps global frame j (0..128) = camera frame c0 + m(j), c0 the window's t0 camera frame (window.json tick k = 0), m(j) = round_half_even(5 (j - 32) / 4): the 20 Hz camera frame nearest to t0_cam + (j - 32) / 16 s; the ties (25 ms each way, every j - 32 = 2 mod 4) go to the even offset, i.e. to the bench's 10 Hz frame. Every frame is a real camera frame (33 of the 41 history camera frames; one in five is skipped), timing error <= 25 ms, no drift",
+  "tick_rule": "bench tick k (-20..60) = global 16 fps frame 32 + round(1.6 k) (no ties); that frame is exactly the bench tick camera frame c0 + 2k for every k (so the real reference's tick frames are the bench's tick frames); a generated frame at tick k sits at model time round(1.6 k) / 16 s: +25, -12.5, +12.5, -25, 0 ms from the tick over each 0.5 s, exact at every 0.5 s multiple (all outcome horizons)",
+  "round_rule": "round 1: 81 frames = the 33 history frames (mask 0, kept) + 48 new frames (mask 1) = global frames 0-80; round 2: 81 frames = round 1's output frames 48-80 (t0 + 1.0 .. t0 + 3.0 s, mask 0) + 48 new frames = global frames 48-128; the bench ticks k = 1..30 come from round 1 (global frames 34..80), k = 31..60 from round 2 (its frames 34..80)",
+  "prefix_rule": "vision.mp4 frames 0-20 (ticks -20..0) = the real 33-frame history through the Wan VAE alone (encode, decode, the official uint8 conversion), shared by every clip of a window and by its real reference; frames 21-80 = the generated frames (continuations) or the real clip through the same VAE window by window (reference)",
+  "prompt": "the Nano prompt 'long' of make_bench_nano_specs.py, verbatim (as SkyReels-V2-DF and MAGI-1)",
+  "seed_rule": "round 1: seed_of(window, k); round 2: seed_of(window, f'{k}|r2'), each through torch.Generator(device).manual_seed(seed) inside the official WanVace.generate (the noise and the UniPC step)",
+  "prompt_cache_rule": "the official T5EncoderModel call (bf16 umT5-XXL on the GPU) on the fixed prompt and on the config's negative prompt, once, on the research server; the tensors are stored in a safetensors file with their provenance and sha256-checked by every job",
+  "sizes": {
+   "canvas": {"wh": [512, 288], "tag": "512", "package": "wan21-vace13b-512-inputs-v1", "note": "the bench evaluation canvas itself (identity mapping); accepted by the official processor at area 480*832 without any resize (it keeps an input smaller than the area); 576 tokens per latent frame (480P: 1,560)"},
+   "480p": {"wh": [832, 480], "tag": "832", "package": "wan21-vace13b-832-inputs-v1", "note": "the official 480P size of the 1.3B model; the band (1550 x 872, aspect 1.7775) rendered directly to 832 x 480 (aspect 1.7333: the picture is squeezed 2.5 % horizontally), every output frame mapped back to the canvas with cv2.INTER_AREA"}
+  },
+  "default_size": "480p",
+  "default_size_note": "832 x 480 (the official 480P size of the 1.3B model) after the 2026-11-05 size probe: at 512 x 288 VACE replaced the scene within 0.5-2 s in 2 of 4 smoke continuations and morphed the background in a third; at 832 x 480 the first round (3 s) stayed coherent (protocol-wan21-vace13b-v1-draft.md section 7). 512 x 288 stays one switch away (package wan21-vace13b-512-inputs-v1, SIZE=512)",
+  "prompt_cache_sha256": "20634552c44bb2ab0bb0df1ff0b84e437a95156c4d7611da50960895249affc8",
+  "prompt_cache": "prompt-cache/vace-t5-long.safetensors (+ .json) of every input package; made by run_vace_bench.py --make-prompt-cache on the research server (the official T5 call on its GPU)",
+  "cluster": {"windows_per_chunk": 4}
+ }
+}

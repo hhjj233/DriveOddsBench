@@ -1,0 +1,12 @@
+{
+ "model": "vista",
+ "note": "Vista (OpenDriveLab/Vista): generated at 576x320 (W x H, the released UNet unmodified) from the band rendered to 576x320, every frame resized to the canvas with INTER_AREA by its adapter (since 2026-11-04 ~23:00; superseded: 288x512, the canvas itself; 1024x576 with the exact 2x INTER_AREA); vision.mp4 frame i = tick k = i - 20",
+ "band_rows": [797, 1669],
+ "canvas": [512, 288],
+ "fps": 10,
+ "ticks": {"first": -20, "last": 60, "step": 1},
+ "prefix": "per_clip",
+ "prefix_note": "frames 0-19 of every clip are the window's prefix (Vista VAE round trip of the real history), pixel-identical across the window's clips; frame 20 (t0) is each clip's own decode of the encoded anchor latent with its rollout neighbours, so the t0 association and warm-up run per clip, and v1.1's drop rule applies",
+ "reference": "frames 0-19 = the prefix; frames 20-80 = the real frames k = 0..60 through the same VAE encode and 61-latent decode as a rollout (run vista-<split>-recon)",
+ "clip_frames": 81
+}

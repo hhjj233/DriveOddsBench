@@ -1,0 +1,215 @@
+{
+ "note": "Figure 1 case data (derived readings only; no image). Frames: 512x288 canvas, 10 Hz, 81 frames; t0 = frame 20; +4 s = frame 60. Boxes are pixel [x1, y1, x2, y2] on that canvas at t0+4 s; gaps are the frozen instrument readings (ensemble median over 3 trackers).",
+ "model": "Orbis 2",
+ "window": "9947fb6e-t6.5",
+ "split": "TEST",
+ "frames": {
+  "history": {
+   "source": "real video (raw)",
+   "frame_index": [
+    0,
+    10,
+    20
+   ],
+   "label": [
+    "-2 s",
+    "-1 s",
+    "t0"
+   ]
+  },
+  "real_future": {
+   "source": "real future through Orbis 2's own autoencoder (the instrument's real reference)",
+   "frame_index": 60
+  },
+  "samples": {
+   "source": "Orbis 2 sample videos",
+   "frame_index": 60
+  }
+ },
+ "real": {
+  "gap_m": 7.881,
+  "box_xyxy_px": [
+   154.2,
+   88.9,
+   335.7,
+   236.3
+  ]
+ },
+ "samples": {
+  "sample_01": {
+   "gap_m": 13.202,
+   "box_xyxy_px": [
+    180.1,
+    83.7,
+    281.1,
+    160.4
+   ]
+  },
+  "sample_02": {
+   "gap_m": 17.21,
+   "box_xyxy_px": [
+    197.2,
+    85.1,
+    267.1,
+    137.5
+   ]
+  },
+  "sample_03": {
+   "gap_m": 13.278,
+   "box_xyxy_px": [
+    189.0,
+    86.2,
+    282.2,
+    159.9
+   ]
+  },
+  "sample_04": {
+   "gap_m": 15.632,
+   "box_xyxy_px": [
+    212.8,
+    83.9,
+    288.1,
+    145.0
+   ]
+  },
+  "sample_05": {
+   "gap_m": 12.728,
+   "box_xyxy_px": [
+    187.9,
+    87.5,
+    284.6,
+    164.2
+   ]
+  },
+  "sample_06": {
+   "gap_m": 15.903,
+   "box_xyxy_px": [
+    187.9,
+    86.5,
+    257.7,
+    143.6
+   ]
+  },
+  "sample_07": {
+   "gap_m": 13.919,
+   "box_xyxy_px": [
+    191.4,
+    88.0,
+    276.1,
+    155.2
+   ]
+  },
+  "sample_08": {
+   "gap_m": 14.852,
+   "box_xyxy_px": [
+    189.8,
+    86.7,
+    269.8,
+    149.3
+   ]
+  },
+  "sample_09": {
+   "gap_m": 17.508,
+   "box_xyxy_px": [
+    221.6,
+    83.9,
+    286.0,
+    136.3
+   ]
+  },
+  "sample_10": {
+   "gap_m": 17.305,
+   "box_xyxy_px": [
+    214.8,
+    86.3,
+    277.7,
+    137.1
+   ]
+  },
+  "sample_11": {
+   "gap_m": 18.569,
+   "box_xyxy_px": [
+    213.5,
+    81.5,
+    278.6,
+    132.2
+   ]
+  },
+  "sample_12": {
+   "gap_m": 14.594,
+   "box_xyxy_px": [
+    214.3,
+    84.6,
+    293.6,
+    150.9
+   ]
+  },
+  "sample_13": {
+   "gap_m": 14.169,
+   "box_xyxy_px": [
+    182.7,
+    86.6,
+    265.9,
+    153.6
+   ]
+  },
+  "sample_14": {
+   "gap_m": 12.74,
+   "box_xyxy_px": [
+    182.6,
+    84.0,
+    283.7,
+    164.2
+   ]
+  },
+  "sample_15": {
+   "gap_m": 12.475,
+   "box_xyxy_px": [
+    168.1,
+    85.0,
+    274.0,
+    166.4
+   ]
+  },
+  "sample_16": {
+   "gap_m": 16.407,
+   "box_xyxy_px": [
+    168.9,
+    85.0,
+    240.3,
+    141.1
+   ]
+  }
+ },
+ "shown": [
+  "sample_15",
+  "sample_08",
+  "sample_11"
+ ],
+ "pooled": {
+  "description": "rank of the real outcome among 16 samples, H2 pool (5 families, primary outcomes), ties split at random (seed 2026)",
+  "cases": 353,
+  "histories": 184,
+  "counts_rank_0_to_16": [
+   51,
+   21,
+   15,
+   20,
+   19,
+   17,
+   16,
+   15,
+   13,
+   8,
+   15,
+   20,
+   13,
+   18,
+   23,
+   20,
+   49
+  ],
+  "outside_share": 0.2833,
+  "official_H2": 0.2795
+ }
+}

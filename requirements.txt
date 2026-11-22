@@ -1,0 +1,11 @@
+# Instrument and analysis (the model kits pin their own environments: generation/<model>/requirements*.lock.txt)
+numpy
+scipy
+pandas
+pyarrow
+opencv-python
+torch
+torchvision
+av2
+shapely
+matplotlib

@@ -1,0 +1,34 @@
+# [cu118 variant for the cluster container] Vista (OpenDriveLab/Vista commit cc9821b4, docs/INSTALL.md: Python 3.9, PyTorch 2.0.1, CUDA 11.7) requirements.txt,
+# the inference subset that sample.py / sample_utils.py / train.py (top-level imports only) and vwm/ import on the sampling
+# path, at the versions pinned there; open ">=" pins are resolved as of the weights release (2024-06-07, --exclude-newer).
+# Not listed here (training, data, logging or demo-UI code only; not imported on the sampling path the adapter uses):
+# black, chardet, clip (openai), deepspeed, fairscale, fire, invisible-watermark, ninja, opencv-python, pandas, pudb,
+# streamlit, tensorboardx, torchaudio, torchdata, wandb, webdataset. timm, torchmetrics, urllib3 and wheel still come in as
+# dependencies of open-clip-torch / pytorch-lightning / requests. triton 2.0.0 comes with torch 2.0.1 (its own pin). The
+# PyPI torch 2.0.1 wheel is the CUDA 11.7 build (INSTALL.md); the PyPI xformers 0.0.22 wheel is built for torch 2.0.1
+# with CUDA 11.8 (sm_50-sm_90, no sm_86 / sm_89 SASS: the RTX 6000 Ada runs the sm_80 kernels).
+# cluster / H100 / H200 variant: the CUDA 11.8 builds of the same versions (the CUDA 11.7 wheel has kernels for sm_37-sm_86 only
+# and no PTX, so it cannot run on sm_90; xformers 0.0.22's PyPI wheel is itself built with CUDA 11.8 for torch 2.0.1)
+torch==2.0.1+cu118
+torchvision==0.15.2+cu118
+# the configured attention (softmax-xformers / vanilla-xformers); newest release that accepts torch 2.0.1
+xformers
+pytorch-lightning==2.0.1
+transformers==4.19.1
+tokenizers==0.12.1
+kornia==0.6.9
+open-clip-torch>=2.20.0
+einops>=0.6.1
+omegaconf>=2.3.0
+fsspec>=2023.6.0
+imageio==2.31.1
+imageio-ffmpeg==0.4.8
+matplotlib>=3.7.2
+natsort>=8.4.0
+numpy>=1.24.4
+pillow>=9.5.0
+scipy>=1.10.1
+tqdm>=4.65.0
+# imported by sample_utils.py / vwm (safetensors.torch.load_file) and by torch (packaging) but not listed in requirements.txt
+safetensors
+packaging

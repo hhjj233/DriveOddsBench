@@ -1,0 +1,440 @@
+{
+ "schema": "wm-calib-bench.drivingworld.pins.v1",
+ "model": "DrivingWorld",
+ "status": "CPU_CANDIDATE_GPU_SMOKE_PENDING",
+ "code": {
+  "repo": "https://github.com/YvanYin/DrivingWorld",
+  "commit": "faceb9861582c2ecad0d82c1f97699a1a314cb62",
+  "commit_date": "2025-01-15T12:18:56+08:00",
+  "license": "MIT (LICENSE, sha256 793789b0aaa4d2b0bfd2a5d288bf5f95622d6fa2a5285f358ec9d101b50dbbcb)",
+  "source_check_rule": "git blob sha1 of every tracked file at the commit; no unregistered .py under models/, modules/, utils/, configs/",
+  "config_file": "configs/drivingworld_v1/gen_videovq_conf_demo.py",
+  "inference_files": [
+   "models/model.py",
+   "models/ar.py",
+   "modules/tokenizers/model_tokenizer.py",
+   "modules/tokenizers/vq_model.py",
+   "modules/tokenizers/pose_tokenizer.py",
+   "utils/generat_utils.py",
+   "utils/embeddings.py",
+   "utils/rope_2d.py",
+   "configs/drivingworld_v1/gen_videovq_conf_demo.py"
+  ],
+  "reference_scripts": [
+   "tools/test_long_term_demo.py",
+   "tools/test_change_road_demo.py",
+   "datasets/dataset_demo.py",
+   "datasets/dataset_nuplan.py",
+   "datasets/datasets_utils.py",
+   "video_data_preprocess/create_nuplan_json.py"
+  ],
+  "files": {
+   "LICENSE": {
+    "git_blob_sha1": "a4440eb39415ac6930768af56e50b7f782779b19",
+    "bytes": 1073
+   },
+   "README.md": {
+    "git_blob_sha1": "86e3f183224d2291c7a88b8565e7f48c77cf2e1c",
+    "bytes": 5325
+   },
+   "configs/drivingworld_v1/gen_videovq_conf_demo.py": {
+    "git_blob_sha1": "876a06450ab02347db04d06e3695c9561fb62056",
+    "bytes": 546
+   },
+   "datasets/__init__.py": {
+    "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+    "bytes": 0
+   },
+   "datasets/create_dataset.py": {
+    "git_blob_sha1": "4ab502de7ce7f5bb92a5c3737bb6299a7af968fc",
+    "bytes": 787
+   },
+   "datasets/dataset_demo.py": {
+    "git_blob_sha1": "5e9102688e524b6fdf578adf0d0e77b9e238f416",
+    "bytes": 2722
+   },
+   "datasets/dataset_nuplan.py": {
+    "git_blob_sha1": "8062faccb4fe29ac708317e933db6ac07b52489c",
+    "bytes": 4868
+   },
+   "datasets/datasets_utils.py": {
+    "git_blob_sha1": "5c5d74ff300098b680c42c6b11fe19b3b7bffd62",
+    "bytes": 1520
+   },
+   "images/pipeline.png": {
+    "git_blob_sha1": "8730db2316b72cab9a235c9767e4ccef8b920b4f",
+    "bytes": 120202
+   },
+   "images/teaser.png": {
+    "git_blob_sha1": "d2ade483b33e9ab7a9258b160042f0aa96717edc",
+    "bytes": 783642
+   },
+   "models/__init__.py": {
+    "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+    "bytes": 0
+   },
+   "models/ar.py": {
+    "git_blob_sha1": "ebdd44a561517ec5da6f20525ea6a3b5337ca4ec",
+    "bytes": 26507
+   },
+   "models/model.py": {
+    "git_blob_sha1": "a46bc3df6ebe088be28035883092daeeaa2c472c",
+    "bytes": 11944
+   },
+   "modules/tokenizers/__init__.py": {
+    "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+    "bytes": 0
+   },
+   "modules/tokenizers/model_tokenizer.py": {
+    "git_blob_sha1": "a32c88f4d830424d45b69427ebd8ee75aed1fd99",
+    "bytes": 3666
+   },
+   "modules/tokenizers/pose_tokenizer.py": {
+    "git_blob_sha1": "dde70cecf9897f423c9c6b3bb3dd1321feb081ed",
+    "bytes": 1438
+   },
+   "modules/tokenizers/vq_model.py": {
+    "git_blob_sha1": "099ae97ca352453ff388fb9ac475940770a54bba",
+    "bytes": 25915
+   },
+   "requirements.txt": {
+    "git_blob_sha1": "76ee6d5784e3b270e6e4c10744152021a0ba4356",
+    "bytes": 2214
+   },
+   "tools/test_change_road_demo.py": {
+    "git_blob_sha1": "3e1f24bebfa98f592f98d48ebc18f5f50501862e",
+    "bytes": 6915
+   },
+   "tools/test_long_term_demo.py": {
+    "git_blob_sha1": "b4d6d6879a53a2baa7bf03f258c3e89b5b730501",
+    "bytes": 6632
+   },
+   "utils/__init__.py": {
+    "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+    "bytes": 0
+   },
+   "utils/comm.py": {
+    "git_blob_sha1": "e52472c2ced2bd097c89a21dbfa3b644eb32556a",
+    "bytes": 1149
+   },
+   "utils/config_utils.py": {
+    "git_blob_sha1": "c9f831d2e4abf9e0c4ba25e7b8de21c15945ffc7",
+    "bytes": 90001
+   },
+   "utils/deepspeed_utils.py": {
+    "git_blob_sha1": "d6bc83ace4725f6950bdaa4c4eeb88d110c7ffb4",
+    "bytes": 1759
+   },
+   "utils/dist.py": {
+    "git_blob_sha1": "d13c52ed07a4330d55d9a9f8bd2cd94a560b35c3",
+    "bytes": 5694
+   },
+   "utils/embeddings.py": {
+    "git_blob_sha1": "39bd6a7e4b0f8354edd8f16a7c1fc442efe02551",
+    "bytes": 2477
+   },
+   "utils/generat_utils.py": {
+    "git_blob_sha1": "b002d4e1be0fc6ab7852c766e7ee3778a0ad3369",
+    "bytes": 3323
+   },
+   "utils/merge_dataset.py": {
+    "git_blob_sha1": "54155ea6d736b5570f939ce201bc2f65a0559840",
+    "bytes": 5007
+   },
+   "utils/rope_2d.py": {
+    "git_blob_sha1": "10dfb6fdc90f43e79cb744f001e6142fe3c90eba",
+    "bytes": 1824
+   },
+   "utils/running.py": {
+    "git_blob_sha1": "b22f72685be51b408e64af8e041ffb9ab5493ef3",
+    "bytes": 8294
+   },
+   "utils/testing_utils.py": {
+    "git_blob_sha1": "76eb63cc2db5c19637738d2579385ace16c1ab8f",
+    "bytes": 4681
+   },
+   "utils/undistort_image.py": {
+    "git_blob_sha1": "8c9f87805aa8b65228f60659b13d606c88de2747",
+    "bytes": 1950
+   },
+   "utils/utils.py": {
+    "git_blob_sha1": "ddaeaa57a23d9095865d1f66cc8afc46f332dd5d",
+    "bytes": 1393
+   },
+   "video_data_preprocess/create_nuplan_json.py": {
+    "git_blob_sha1": "cc59c8df7b849e43ec97acd17a2d46840403a712",
+    "bytes": 7259
+   },
+   "video_data_preprocess/video_data_preprocess.md": {
+    "git_blob_sha1": "e25757bacd4907ba244e5c4467a3518a0d6c70d3",
+    "bytes": 2986
+   }
+  }
+ },
+ "weights": {
+  "repo": "huxiaotaostasy/DrivingWorld",
+  "revision": "949a282034a8f2116d53b194c294f4eeea8e8697",
+  "gated": false,
+  "license_name": "MIT (model card front matter license: mit; code repository LICENSE MIT)",
+  "license_path": "README.md",
+  "files": [
+   {
+    "path": "README.md",
+    "repo_path": "README.md",
+    "bytes": 269,
+    "git_blob_sha1": "29237968a4bc93a06f14c8636ead4a17899a7551",
+    "last_commit": "949a282034a8f2116d53b194c294f4eeea8e8697"
+   },
+   {
+    "path": "vqvae.pt",
+    "repo_path": "vqvae.pt",
+    "bytes": 921844407,
+    "git_blob_sha1": "32b8472d3a1597afcb15a8aff22c89221442547f",
+    "last_commit": "187e94cde77e4e384bd6ac46706988a5051d078b",
+    "sha256": "8aeb2c84e61181d5c3d23c288f5325642552a2c55d46d6525fbe295021451981"
+   },
+   {
+    "path": "world_model.pth",
+    "repo_path": "world_model.pth",
+    "bytes": 4009966724,
+    "git_blob_sha1": "2a71478b7258f81653d0610abadafd4ced63980a",
+    "last_commit": "d8e51e5a10fc45d7ce135ac89b1221edc635a637",
+    "sha256": "90b57bb1af1629c1dac49a25b5e96661f4a950db8d17322e4e6e5ba7e9f16ac2"
+   }
+  ],
+  "not_downloaded": [
+   ".gitattributes",
+   "demo_video_test_nuplan.zip",
+   "nuplan_val.json",
+   "youtube_val.json",
+   "video_demo.mp4",
+   "video_github.gif"
+  ],
+  "pickle_globals_allowed": {
+   "vqvae.pt": [
+    [
+     "collections",
+     "OrderedDict"
+    ],
+    [
+     "torch._utils",
+     "_rebuild_tensor_v2"
+    ],
+    [
+     "torch",
+     "FloatStorage"
+    ],
+    [
+     "torch",
+     "LongStorage"
+    ],
+    [
+     "argparse",
+     "Namespace"
+    ],
+    [
+     "torch._utils",
+     "_rebuild_parameter"
+    ]
+   ],
+   "world_model.pth": [
+    [
+     "collections",
+     "OrderedDict"
+    ],
+    [
+     "torch._utils",
+     "_rebuild_tensor_v2"
+    ],
+    [
+     "torch",
+     "FloatStorage"
+    ],
+    [
+     "torch._utils",
+     "_rebuild_parameter"
+    ]
+   ]
+  }
+ },
+ "bench": {
+  "track": "T1-H2",
+  "band_rows": [
+   797,
+   1669
+  ],
+  "canvas_wh": [
+   512,
+   288
+  ],
+  "canvas_fps": 10,
+  "canvas_frames": 81,
+  "t0_canvas_index": 20,
+  "size_wh": [
+   512,
+   256
+  ],
+  "fps": 10,
+  "condition_frames": 15,
+  "condition_ticks": [
+   -14,
+   0
+  ],
+  "history_ticks": [
+   -20,
+   0
+  ],
+  "future_ticks": [
+   1,
+   60
+  ],
+  "frame_rate_evidence": "paper v1-v3 text and Table 1: 10 Hz (40 s = 400 frames); one figure caption says 5 Hz; released NuPlanTest loader default downsample_fps=5 (10 Hz nuPlan / 2); demo config has no downsample_fps",
+  "model_band": "centred",
+  "bands": {
+   "centred": {
+    "tall_source_rows": [
+     579,
+     1669
+    ],
+    "tall_size_wh": [
+     512,
+     360
+    ],
+    "tall_rows": [
+     19,
+     275
+    ],
+    "canvas_rows": [
+     -53,
+     203
+    ],
+    "valid_canvas_rows": [
+     0,
+     203
+    ],
+    "source_rows_exact": [
+     636.5278,
+     1411.6389
+    ],
+    "rule": "official centre crop (resize to width 512, keep the middle 256 rows of the raw 1550x2048 frame = source rows [636.2, 1411.8)), realised on the canvas pixel grid: the tall render of source rows [579, 1669) at the canvas scale, rows [19, 275)"
+   },
+   "top": {
+    "tall_source_rows": [
+     797,
+     1669
+    ],
+    "tall_size_wh": [
+     512,
+     288
+    ],
+    "tall_rows": [
+     0,
+     256
+    ],
+    "canvas_rows": [
+     0,
+     256
+    ],
+    "valid_canvas_rows": [
+     0,
+     256
+    ],
+    "source_rows_exact": [
+     797.0,
+     1572.1111
+    ],
+    "rule": "the top 256 rows of the 512x288 canvas render of the measurement band (alternative; horizon at 29 % of the model frame)"
+   }
+  },
+  "resample": "cv2.INTER_AREA (bench render_version 2); released loader uses PIL BICUBIC",
+  "official_config": {
+   "seed": 1234,
+   "image_size": [
+    256,
+    512
+   ],
+   "n_layer": [
+    12,
+    6
+   ],
+   "n_embd": 1536,
+   "gpt_type": "ar",
+   "pkeep": 0.7,
+   "condition_frames": 15,
+   "pose_x_vocab_size": 128,
+   "pose_y_vocab_size": 128,
+   "yaw_vocab_size": 512,
+   "codebook_size": 16384,
+   "codebook_embed_dim": 32,
+   "downsample_size": 16,
+   "vq_model": "VideoVQ-16",
+   "video_vq_temp_frames": 16,
+   "sampling_mtd": "top_k",
+   "top_k": 30,
+   "temperature_k": 1.0,
+   "top_p": 0.8,
+   "temperature_p": 1.0
+  },
+  "sampling": {
+    "pose_mode": "released_long_term_last_step",
+    "pose_mode_note": "coordinator ruling v2 (COORDINATOR-RULINGS-v2.json): every future step is given the last history pose step (x, y, yaw), as the released tools/test_long_term_demo.py (pose_expand); no pose token is sampled. Alternative registered value: own (sampled yaw/x/y, ruling v1).",
+   "image": {
+    "method": "top_k",
+    "top_k": 30,
+    "temperature": 1.0
+   },
+   "pose": {
+    "method": "top_k",
+    "top_k": 30,
+    "temperature": 1.0
+   },
+   "order": [
+    "yaw",
+    "x",
+    "y",
+    "image_512_raster"
+   ],
+   "pose_y_head": "pose_y_head (training forward); released eval_third reuses pose_x_head for position 2"
+  },
+  "generator": "per-sample torch.Generator(device=cuda) seeded with seed_of(window,k); torch.multinomial per row; no global RNG consumed",
+  "autocast": "torch.autocast(cuda, bfloat16) around each next-state call (as the demos); tokenizer encode/decode float32 outside autocast",
+  "batch_layout": "one window per batch: the window's continuation samples in ascending k (K=16 -> batch 16)",
+  "uint8_rule": "(clip(x/2+0.5,0,1) * 255).astype(uint8) truncation, as the demos",
+  "seed_rule": "int.from_bytes(sha256(f\"bench-v1|{window}|{k}\")[:4],\"big\")&0x7fffffff",
+  "pose_rule": "AV2 city_SE3_egovehicle at the exact camera timestamp of each conditioning frame (ticks -14..0); released get_meta_data: entry 0 = 0, entry i = inv(P_{i-1}) P_i -> (x, y) m, zyx-Euler z angle deg; first window entry zeroed every step (demos); predicted (yaw, x, y) tokens decoded by the released indices_to_pose / indices_to_yaws and fed back as the next entry",
+  "pose_bins": {
+   "x_m": [
+    0.0,
+    8.0,
+    128
+   ],
+   "y_m": [
+    -0.5,
+    0.5,
+    128
+   ],
+   "yaw_deg": [
+    -8.0,
+    8.0,
+    512
+   ]
+  },
+  "prefix": "shared",
+  "prefix_rule": "ticks -14..0: official conditioning encode (15 real frames + 1 zero frame) decoded with the released z_to_clips_all (positions 0..14); ticks -20..-15: the same encode of real ticks -20..-6 + zero frame, positions 0..5; deterministic (VQ argmin), identical in every clip of the window",
+  "reference_rule": "future tick t: tokens = encode(real t-14..t + zero frame)[position 14] (each real frame encoded as the newest conditioning frame); decoded like generated frames (released z_to_clips on the 16-frame token window t-15..t); no randomness",
+  "test_generation_freeze": "protocol-drivingworld-frozen.txt",
+  "test_measurement_freeze": "protocol-drivingworld-stage2-frozen.txt"
+ },
+ "seed_snapshot": {
+  "file": "scripts/make_bench_nano_specs.py",
+  "sha256": "108c4cc974487284182bcc4fc6c84ff12477437059e9a90a50e1fa6fd441968c"
+ },
+ "decisions_pending": [
+  "O1 model band centred (default) vs top",
+  "O2 frame rate 10 Hz (paper) vs 5 Hz (released nuPlan loader default)",
+  "O3 self-predicted poses with the released top-k sampler; pose_y_head",
+  "O4 batch 16 per window with per-row generators (vs released batch 1)",
+  "O5 reference and prefix codec rules",
+  "O6 INTER_AREA vs released PIL BICUBIC"
+ ]
+}

@@ -1,0 +1,33 @@
+{
+ "model": "vavim",
+ "note": "VaViM-L (valeoai/VideoActionModel 738050e, release v1.0.0 width_2048_pretrained_139k_total_155k): autoregressive GPT over LlamaGen VQ-16 tokens; its 512x288 frame IS the canvas render of the bench band (no crop, pad or resize between model and canvas; all 288 rows valid; K_canvas unchanged). The model runs at 2 Hz (0.5 s per frame): it reads the history ticks -20, -15, -10, -5, 0 and generates ticks 5, 10, ..., 60. vision.mp4 is the 10 Hz canvas: frame i = tick k = i - 20 shows the 2 Hz model frame of tick 5 round(k / 5) (registered canvas_map 'nearest'; no ties for integer k): each model frame covers ticks 5m-2..5m+2, ticks 1-2 show the t0 frame, ticks 3-4 the first generated frame; canvas frames at ticks divisible by 5 are the exact model frames. Motion on the canvas is therefore stepped: four repeated ticks, then one 0.5-s step (the native 2 Hz clip native2.mp4, 17 frames, is kept beside vision.mp4). Alternative map 'hold' (tick 5 floor(k / 5)) is a registered option, pending the coordinator's ruling.",
+ "band_rows": [
+  797,
+  1669
+ ],
+ "valid_canvas_rows": [
+  0,
+  288
+ ],
+ "valid_source_rows": [
+  797,
+  1669
+ ],
+ "canvas": [
+  512,
+  288
+ ],
+ "fps": 10,
+ "ticks": {
+  "first": -20,
+  "last": 60,
+  "step": 1
+ },
+ "prefix": "shared",
+ "prefix_note": "Every canvas frame shown before the first generated one (ticks -20..2 under 'nearest') is the same pixels in every clip of a window and its reference: the released VQ round trip of the history frames (one encoder call and one decoder call per window). Registered prefix_rate '2hz': ticks -20..2 show the round trips of ticks -20, -15, -10, -5, 0 by the same map (exactly the decoded context tokens the model reads). Alternative '10hz': ticks -20..0 show the round trips of all 21 history frames (Orbis 2 precedent; identical at the 2 Hz ticks). The t0 frame (canvas frame 20) is shared, so the per-clip t0 association of v1.1 gives one association per window.",
+ "reference": "frames before the first generated one = the shared prefix; afterwards the real future frames at ticks 5, 10, ..., 60 (the window's own tick frames) through the same VQ encoder and detokenizer (one call each, deterministic, no sampling), on the same 2 Hz -> 10 Hz map; run vavim-<split>-*-recon. The real reference therefore has the same stepped 2 Hz motion as the continuations.",
+ "clip_frames": 81,
+ "instrument_notes": "Untested with this content: the trackers see four identical ticks and then a 0.5-s jump; the band VO sees one 0.5-s stride-1 pair per five; the VO stall count sees one empty 0.4-s group in five by construction; the continuation-break J of the 10 Hz canvas is 0 by construction (compute J/C on the 2 Hz frames, canvas frames 0, 5, ..., 80 = native2.mp4, --fps 2 --t0-frame 4). With prefix_rate '2hz' and canvas_map 'nearest' the inherited VO time-scale groups 16->20 and 20->24 contain exactly the history step -5 -> 0 and the first generated step 0 -> 5.",
+ "test_freeze_file": "protocol-vavim-stage2-frozen.txt",
+ "test_freeze_note": "TEST windows are refused unless this file (bench-v1 relative) exists: the stage-2 freeze of this model"
+}

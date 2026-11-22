@@ -1,0 +1,23 @@
+# Epona requirements.txt (Kevin-thu/Epona commit 69b24c5, 2025-07-21), the inference subset, at the versions pinned there.
+# Left out (training, dataset or text-conditioning code only; not imported on the inference path the adapter uses):
+# transformers 4.39.3, deepspeed 0.14.4, matplotlib 3.5.3, mmengine 0.10.3, tensorboard 2.14.0, nuplan-devkit 1.2.0,
+# pyquaternion 0.9.9, shapely 1.8.5. The README's CUDA build of torch/torchvision is used (+cu121).
+torch==2.1.0+cu121
+torchvision==0.16.0+cu121
+triton==2.1.0
+einops==0.6.1
+numpy==1.26.4
+scipy==1.13.0
+opencv-python==4.10.0.84
+Pillow==10.3.0
+imageio==2.34.1
+tqdm==4.66.4
+omegaconf==2.3.0
+addict==2.4.0
+safetensors==0.4.2
+PyYAML==6.0.1
+# torch 2.1.0 needs packaging (or setuptools' pkg_resources) at import; in the README's conda env it comes with
+# setuptools and with matplotlib. Resolved to the newest release on or before the cut-off date.
+packaging
+# triton 2.1.0 imports setuptools at import time (present in the README's conda env).
+setuptools

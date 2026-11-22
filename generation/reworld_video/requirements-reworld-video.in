@@ -1,0 +1,39 @@
+# Candidate ReWorld-Video inference environment: Linux x86_64, CPython 3.10, torch 2.6.0 CUDA 12.4
+# (the DriveLaW-Video kit's interpreter, torch build and shared versions). ReWorld vendors no diffusers:
+# diffusers comes from PyPI. 0.37.1 is the proposed pin (decision D6 in reworld_pins.json): the release
+# code imports diffusers.utils.apply_lora_scale, which first exists in 0.37.0, and the LTX transformer,
+# LTX VAE, flow-match scheduler and export_utils files are byte-identical in 0.37.0, 0.37.1 and 0.38.0.
+# The official source is NOT pip-installed: its src/ is put on sys.path, exactly as the shipped
+# scripts/sample_dualflow_dit.py does. Runtime dependencies of the official pyproject.toml are kept,
+# except bitsandbytes (8-bit text-encoder quantisation; the vae_only inference path never imports it).
+# This file is resolved without installing packages or downloading model weights.
+torch==2.6.0
+torchvision==0.21.0
+numpy==1.26.4
+diffusers==0.37.1
+transformers==4.57.1
+tokenizers==0.22.1
+accelerate==1.11.0
+huggingface-hub==0.36.0
+safetensors==0.6.2
+decord==0.6.0
+pydantic>=2.10.4
+rich>=13.9.4
+opencv-python==4.11.0.86
+pillow==11.3.0
+imageio==2.37.0
+imageio-ffmpeg==0.6.0
+av>=14.2.1
+scipy==1.15.3
+matplotlib>=3.8.0
+pyyaml==6.0.3
+typer>=0.15.1
+tqdm==4.67.1
+filelock==3.20.0
+httpx==0.28.1
+importlib-metadata==8.7.0
+packaging==25.0
+requests==2.32.5
+setuptools==80.9.0
+# Flash-attn is not a dependency of the released inference path: PyTorch SDPA through the diffusers
+# native attention dispatcher is used and recorded (processor classes and enabled SDPA backends).

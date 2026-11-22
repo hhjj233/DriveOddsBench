@@ -1,0 +1,37 @@
+# LTX-2.5 environment for bench-v1: the dependencies of ltx-core and ltx-pipelines 1.5.0 at Lightricks/LTX-2 commit
+# e98f6d927d83c92ef2be6aec76c8440b19306e39 (2026-10-18), resolved for Python 3.12 with versions published on or before
+# 2026-10-18. ltx-core and ltx-pipelines themselves are installed from that checkout with --no-deps (not from an index).
+#
+# Departures from the upstream pyproject (both forced by this host's NVIDIA driver 570.207, CUDA 12.8 at most, which
+# cannot load the cu132 builds upstream pins):
+#   torch 2.13.0 and natten 0.21.7 at the upstream-pinned versions, but the CUDA 12.6 builds (+cu126, +torch2130cu126)
+#   torchaudio 2.11.0 (the upstream version) as its CPU build (+cpu, PyTorch CPU index) instead of +cu132 from the
+#   PyTorch test index: the cu126/cu128 indexes stop at torchaudio 2.9.1 (built on torch 2.9.1's non-stable C++ ABI),
+#   2.10.0 pins torch 2.10.0, and the PyPI 2.11.x wheels link CUDA 13 (libcudart.so.13). The +cpu build uses torch's
+#   stable ABI (abi3) and links no CUDA library, so it loads under torch 2.13.0+cu126. It is only imported by the
+#   audio-VAE ops (MelSpectrogram, resample: plain torch ops)
+# The model card recommends CUDA >= 12.7; no torch 2.13 build exists for CUDA 12.7/12.8, so the runtime is CUDA 12.6
+# (driver 570.207 supports up to 12.8).
+torch==2.13.0+cu126
+torchvision==0.28.0+cu126
+torchaudio==2.11.0+cpu
+natten==0.21.7+torch2130cu126
+# ltx-core 1.5.0
+einops
+numpy
+colour-science
+av
+transformers==5.14.1
+safetensors
+accelerate
+scipy>=1.14
+# ltx-pipelines 1.5.0
+tqdm
+pillow
+openimageio
+cloudpickle>=3.1
+# weight download (hf CLI) and the adapter
+huggingface_hub
+# the bench renderer's OpenCV (cv2 5.0.0, as in the research env that rendered bench-v1): INTER_AREA for the distilled
+# variant's 1024x576 -> 512x288 output step and the 1024x576 input renders
+opencv-python-headless==5.0.0.93

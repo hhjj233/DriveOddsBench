@@ -1,0 +1,106 @@
+model:
+  base_learning_rate: 0.0001
+  adjust_learning_rate: false
+  static_graph: false
+  find_unused_parameters: true
+  target: models.first_stage.vqgan.VQModelIFExtraSepEncSepDecJointSem
+  params:
+    monitor: val/rec_loss
+    grad_acc_steps: 1
+    cont_ratio_trainig: 1.0
+    min_lr_multiplier: 0.1
+    only_decoder: true
+    distill_model_type: VIT_DINOv2
+    scale_equivariance: false
+    sem_dec_loss_weight: 0.1
+    encoder_config:
+      target: networks.tokenizer.pretrained_models.MaskedEncoder
+      params:
+        resolution:
+        - 288
+        - 512
+        pretrained_encoder: MAE
+        # INFERENCE: false, so building the tokenizer does not pull the MAE init
+        # weights from timm (timm/vit_base_patch16_224.mae). Those weights are only
+        # an initialisation and are overwritten by this model's own last.ckpt below.
+        # PredictorModule.build_tokenizer already forces this to False at load time;
+        # setting it here makes the shipped config self-consistent. Use `true` for training.
+        use_pretrained_weights: false
+        patch_size: 16
+        z_channels: 768
+        normalize_embedding: true
+        mask_ratio_min: 0.0
+        mask_ratio_max: 0.0
+        mask_during_eval: false
+    encoder_config2:
+      target: networks.tokenizer.pretrained_models.Encoder
+      params:
+        resolution:
+        - 288
+        - 512
+        pretrained_encoder: MAE
+        # INFERENCE: see encoder_config above -- no timm/MAE download needed.
+        use_pretrained_weights: false
+        patch_size: 16
+        z_channels: 768
+        normalize_embedding: true
+    decoder_config:
+      target: networks.tokenizer.ae.Decoder
+      params:
+        double_z: false
+        z_channels: 768
+        resolution:
+        - 288
+        - 512
+        in_channels: 3
+        out_ch: 3
+        ch: 192
+        ch_mult:
+        - 1
+        - 1
+        - 2
+        - 2
+        - 4
+        num_res_blocks: 2
+        attn_resolutions:
+        - 32
+        dropout: 0.0
+        normalize_embedding: false
+    quantizer_config:
+      target: modules.quantize.VectorQuantizer
+      params:
+        n_e: 32768
+        e_dim: 16
+        beta: 0.25
+        normalize_embedding: true
+    quantizer_config2:
+      target: modules.quantize.VectorQuantizer
+      params:
+        n_e: 32768
+        e_dim: 16
+        beta: 0.25
+        normalize_embedding: true
+    loss_config:
+      target: modules.vqloss.VQLPIPSWithDiscriminator
+      params:
+        disc_conditional: false
+        disc_in_channels: 3
+        disc_start: 10000
+        disc_weight: 0.1
+        adaptive_disc_weight: true
+        codebook_weight: 1.0
+        distill_loss_weight: 2.0
+        perceptual_weight: 1.0
+        l1_loss_weight: 1.0
+        l2_loss_weight: 0.0
+        se_weight: 0.25
+        warmup_steps: 5000
+        beta_1: 0.5
+        beta_2: 0.9
+    entropy_loss_weight_scheduler_config:
+      target: modules.lr_scheduler.VQEntropyLossScheduler
+      params:
+        decay_steps: 10000
+        weight_max: 0.01
+        weight_min: 0.001
+# Training datasets stripped for release; only `model` is read at inference.

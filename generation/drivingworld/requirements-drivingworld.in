@@ -1,0 +1,12 @@
+# DrivingWorld requirements.txt (YvanYin/DrivingWorld commit faceb98, 2025-01-15): the inference subset at the versions
+# pinned there. The kit imports models/{model,ar}.py, modules/tokenizers/*.py and utils/{generat_utils,embeddings,rope_2d}.py,
+# which need torch and einops only (numpy for the kit's I/O; video I/O uses the system ffmpeg binary).
+# Left out (training, dataset, demo or evaluation code only; never imported on the kit's path): deepspeed, xformers,
+# flash-attn, nuplan-devkit, opencv, Pillow, scipy, imageio, addict and the rest of requirements.txt.
+torch==2.1.0+cu121
+triton==2.1.0
+einops==0.8.0
+numpy==1.26.4
+# torch 2.1.0 needs packaging (or setuptools' pkg_resources) at import, and triton 2.1.0 imports setuptools (Epona lesson).
+packaging
+setuptools

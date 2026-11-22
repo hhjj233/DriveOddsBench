@@ -1,0 +1,37 @@
+# Wan2.1-VACE-1.3B inference (Wan-Video/Wan2.1 at the pinned commit, vace_pins.json): the repository's requirements.txt,
+# the subset imported on the path the adapter runs (wan.WanVace: VaceWanModel, WanVAE, T5EncoderModel, the UniPC flow
+# solver, VaceVideoProcessor). Open pins (">=" or none) are resolved as of the last change of the VACE code (2025-05-16,
+# commit 76e94276 "Format the code"; --exclude-newer 2025-05-17), except torch / torchvision / opencv-python /
+# transformers / tokenizers / accelerate / flash-attn, which are set to the versions of the sibling Wan2.1-architecture kit
+# (models/skyreels_v2_df: torch 2.5.1+cu124 with sm_90 kernels and the official flash-attn release wheel for it; all inside
+# the official ranges torch>=2.4.0, torchvision>=0.19.0, opencv-python>=4.9.0.80, transformers>=4.49.0, tokenizers>=0.20.3,
+# accelerate>=1.1.1). Not installed (not imported on that path): dashscope (prompt extension API), gradio (demo), xfuser
+# (multi-GPU USP).
+torch==2.5.1
+torchvision==0.20.1
+opencv-python==4.10.0.84
+diffusers>=0.31.0
+transformers==4.49.0
+tokenizers==0.21.1
+accelerate==1.6.0
+tqdm
+imageio
+easydict
+ftfy
+imageio-ffmpeg
+numpy>=1.23.5,<2
+# requirements.txt lists flash_attn unpinned and PyPI has no wheel: the release wheel built for torch 2.5 / CUDA 12 /
+# CPython 3.10 (cxx11abi FALSE, as the PyPI torch wheels), v2.7.4.post1 (2025-01-29), the newest release before
+# 2025-05-17; sha256 pinned in the lock. wan/modules/model.py calls flash_attention() directly (no SDPA fallback there).
+flash-attn @ https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.4.post1/flash_attn-2.7.4.post1+cu12torch2.5cxx11abiFALSE-cp310-cp310-linux_x86_64.whl
+# imported by wan/utils/vace_processor.py (VaceVideoProcessor.load_video_batch: the official reader of src_video /
+# src_mask; the adapter's equivalence check uses it) but not listed in requirements.txt (the VACE repository lists it)
+decord
+# imported by wan/modules/vae.py (einops) and wan/modules/tokenizers.py (regex); dependencies of transformers too
+einops
+regex
+safetensors
+# triton 3.1.0 (torch 2.5.1's pin) imports setuptools at import time; pip-made environments carry it, a uv venv does not
+setuptools
+# the weight download helpers and the prompt-cache provenance
+huggingface_hub

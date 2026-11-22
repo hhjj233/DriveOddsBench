@@ -1,0 +1,83 @@
+{
+ "schema": "wm-calib-bench.orbis2.pins.v1",
+ "note": "Single source of truth for the Orbis 2 entry of bench-v1. The adapter, the spec generator, the staging script and the container recipes read or copy these values; change them only together with a new protocol version.",
+ "code": {
+  "repo": "https://github.com/lmb-freiburg/orbis2",
+  "commit": "f8a0d6898689a20df10e9f71bcc0fa2abfdb7a8c",
+  "commit_date": "2026-07-20T16:09:41+02:00",
+  "source_digest": "e43cb577586b110bd6ed6852696e19519c1e0fe3ea3c05c5cfe60c40012edec8",
+  "source_digest_rule": "sha256 over the sorted tracked *.py, *.yml, *.yaml files: for each, the line '<path>\\0<sha256 of file>\\n'",
+  "license": "MIT"
+ },
+ "weights": {
+  "hf_repo": "sud0301/orbis2",
+  "hf_revision": "7163cbfbe5c48195ad7536f4d2c2b804002992b9",
+  "hf_last_modified": "2026-08-26T13:38:56Z",
+  "gated": false,
+  "license": "mit",
+  "files": {
+   "L1/checkpoints/last.ckpt": {"bytes": 6282655257, "sha256": "329f3d47956f6d7e900f83c4f0541ca13dc11f4d28326e810b6c69778fb4d2cd", "staged_as": "orbis2-L1-last.ckpt"},
+   "L2/checkpoints/last.ckpt": {"bytes": 9641801543, "sha256": "f2fa9be4a65b6d1977d228332f8ed0135be8da70b830f480918d67abd5237a68", "staged_as": "orbis2-L2-last.ckpt"},
+   "tok/checkpoints/last.ckpt": {"bytes": 4701305009, "sha256": "cbfbdd80cbb5458c1a55c87dca3de8fe2823d0a437428c4f7371706b792a2812", "staged_as": "orbis2-tok-last.ckpt"},
+   "L1/config.yaml": {"sha256": "f03d70537869674e5164d2ee1b74a87f352ab962af6123c91913f31af3d1a950"},
+   "L2/config.yaml": {"sha256": "d0e53409dbf2732e7d57e1247197cd3a27161e4129510189ff65b5d1c7e1498d"},
+   "tok/config.yaml": {"sha256": "b706e7160d25fc26c16e293a02e6e2e378dd9b97e8563c41e96795ce65e83da7"},
+   "L1/config_distill.yaml": {"sha256": "7278eb50bb7753eb1cd529bfccc8e995b30915bf79d22f3491fbfe7c9f11d710"},
+   "L2_distilled/config.yaml": {"sha256": "fa4a4f2421021441414b1de2a901263651ed6601fc2ff213e8c0939320416249"}
+  },
+  "not_used": {
+   "L2_distilled/checkpoints/last.ckpt": "distilled L2 (4 NFE); only for a later ablation, not the released default",
+   "L1/checkpoints/compile_cache.pkl": "torch.compile cache; the benchmark runs without --compile"
+  },
+  "configs_tar": "orbis2-configs-7163cbf.tar"
+ },
+ "released_defaults": {
+  "config": "L1/config.yaml",
+  "ckpt": "L1/checkpoints/last.ckpt",
+  "l1_predictor": "networks.DiT.dit_v2.SpatialL2CtxAndLastDiT, 5 context frames + 5 predicted frames at 10 Hz",
+  "l1_sampler": "modules.fm_samplers.FlowMatchingSamplerHeunPlusEuler with step_schedule [heun 2 x 0.4, euler 1 x 0.2]: 3 steps, 5 network evaluations per rollout step; the CLI --l1_nfe (default 30) is ignored with a warning",
+  "l1_nfe_cli": 30,
+  "l2_predictor": "models.second_stage.cd_model_v2.ConsistencyDistillPredictorModule loaded from L2/ (standard, not distilled), 5 context frames at 2 Hz, 1 predicted frame",
+  "l2_sampler": "modules.fm_samplers.FlowMatchingSamplerEuler, per-frame timestep conditioning, l2_pred_NFE 20 per call, eta 0",
+  "l2_pred_nfe": 20,
+  "eta": 0.0,
+  "guidance": "none (l2_guidance_scale must be 1.0; no CFG anywhere)",
+  "use_ema": true,
+  "autocast": "torch.float16 on CUDA, as evaluate/rollout_demo_v2.py",
+  "steering": "none: the framework's all-NaN [1, 81, 2] placeholder (make_unconditional_steering), embedded as no_value_embeddings",
+  "speed_scale": 1.0,
+  "yaw_rate_scale": 1.0,
+  "num_rollout_steps": 12,
+  "num_pred_frames": 5,
+  "image_size_hw": [288, 512],
+  "l1_frame_rate": 10.0,
+  "l2_frame_rate": 2.0,
+  "l1_context_frames": 5,
+  "l2_context_frames": 5,
+  "history_frames": 21,
+  "l1_context_indices": [16, 17, 18, 19, 20],
+  "l2_context_indices": [0, 5, 10, 15, 20],
+  "required_steering_rows": 81,
+  "decode_device": "cpu",
+  "compile": false,
+  "cudnn_deterministic": true
+ },
+ "paper_differs": "arXiv 2607.15898 App. A.6 states 30 NFE for the detail (L1) predictor and 15 for the abstract (L2) predictor; the released config runs 5 and 20. The benchmark uses the released config.",
+ "environment": {
+  "python": "3.10",
+  "torch": "2.13.0+cu126",
+  "torchvision": "0.28.0+cu126",
+  "lock": "models/orbis2/requirements-orbis2.lock.txt",
+  "lock_rule": "uv pip compile requirements-orbis2.in --python-version 3.10 --exclude-newer 2026-07-21T00:00:00Z (the day after the pinned commit) --generate-hashes",
+  "base_image": "ubuntu:jammy-20260627@sha256:0e0a0fc6d18feda9db1590da249ac93e8d5abfea8f4c3c0c849ce512b5ef8982",
+  "apt": {"python3.10": "3.10.12-1~22.04.18 or the archive's current jammy-updates build", "ffmpeg": "7:4.4.2-0ubuntu0.22.04.1"}
+ },
+ "output": {
+  "frames": 81,
+  "fps": 10,
+  "size_wh": [512, 288],
+  "layout": "frames 0-20: the per-frame tokenizer round trip of the 21 history frames (identical to the real reference's frames 0-20); frames 21-80: the 60 rolled-out frames",
+  "encoder": "ffmpeg libx264rgb -crf 0 -preset medium, rgb24, 10 fps, video_track_timescale 10240 (make_wm_calibration_windows.write_video); decoded frames checked equal",
+  "quantisation": "uint8 = clamp(round(((x + 1) / 2) * 255)), computed in float32 (torchvision save_image's rule)"
+ }
+}

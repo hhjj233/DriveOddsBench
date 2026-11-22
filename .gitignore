@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+local.env
+outputs/
+checkpoints/
+datasets/
+cache/
+*.mp4
+*.sif
+*.tar

@@ -1,0 +1,201 @@
+{
+ "schema": "wm-calib-bench.vista.pins.v1",
+ "model": "vista",
+ "status": "DRAFT for bench-v1 tracks T1-H0 (anchor frame only, action-free) and T2 (anchor frame + real future ego trajectory); not frozen",
+ "code": {
+  "repo": "https://github.com/OpenDriveLab/Vista",
+  "commit": "cc9821b4253ca7987c32757613d2fc2448fa9f5d",
+  "commit_date": "2025-07-02",
+  "license": "Apache-2.0 (LICENSE sha256 c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4)",
+  "source_digest": "e779fea2a6aa689a7ec9a15df7a3674c4e08fb25d897fec3ab369cde9b3ca8ff",
+  "source_digest_rule": "sha256 over the sorted *.py / *.yml / *.yaml files of the checkout (outside .git and __pycache__, no dot files): relative path, NUL, the file's sha256, newline (46 files)",
+  "files_sha256": {
+   "sample.py": "6f3c8a86a147be95daa888e86708308212dfde87e56a7eb25219aba939df9828",
+   "sample_utils.py": "e4982f3bbdf5f9ab51dab50d93c79cbf25f05090d4b82c47d3f03dc991f7d083",
+   "train.py": "c5d86cc703236e79bc54121ed0df2ff662724b700acf91736c324825008c520f",
+   "configs/inference/vista.yaml": "988c0d26898b0dda4bd8b7d9e44963ca2ba1d1886917018a543c1cc05122ed94",
+   "vwm/models/diffusion.py": "017cc77e322bc9056e5538240fe72e4a51a4c17af78a85313119e0b6e954fc5b",
+   "vwm/modules/encoders/modules.py": "b5be0f1d62e5abf190efc1b77614a2176522a5a2c05ad83b4c0cfd42342649cc"
+  }
+ },
+ "weights": {
+  "hf_repo": "OpenDriveLab/Vista",
+  "hf_revision": "a92d28c7b3da931ec959d587153dc45fffe570ef",
+  "hf_revision_date": "2024-06-07T10:13:26Z",
+  "gated": false,
+  "license": "apache-2.0 (model card)",
+  "note": "the re-upload after the EMA-merge fix announced in the README (the only revision of vista.safetensors on the Hub)",
+  "files": {
+   "vista.safetensors": {
+    "bytes": 10053461572,
+    "sha256": "1b267bb753aa5c5e4d363f6e4c864dd4e343996dedc18b5ab20af6d20be34b98",
+    "tensors": 2514,
+    "dtype": "F32",
+    "parameters": {
+     "model (VideoUNet)": 1648079082,
+     "conditioner (OpenCLIP ViT-H/14 image tower + cond-frame VAE encoder)": 767453928,
+     "first_stage_model (VAE: image encoder + temporal decoder)": 97742775
+    }
+   }
+  },
+  "open_clip_init": "FrozenOpenCLIPImageEmbedder is built with pretrained=None (no laion2b_s32b_b79k download): every one of its tensors is in vista.safetensors and overwrites the initialisation; the adapter refuses to run unless load_state_dict reports no missing and no unexpected key"
+ },
+ "released_defaults": {
+  "source": "sample.py argparse defaults and main loop, sample_utils.py (init_sampling, get_guider, get_sampler, init_embedder_options, do_sample), configs/inference/vista.yaml, docs/SAMPLING.md",
+  "height": 576,
+  "width": 1024,
+  "n_frames": 25,
+  "n_conds": 1,
+  "n_steps": 50,
+  "cfg_scale": 2.5,
+  "cond_aug": 0.0,
+  "guider_single_round": "VanillaCFG(scale 2.5)",
+  "guider_multi_round": "TrianglePredictionGuider(max_scale 2.5, min_scale 1.0, num_frames 25, period 1.0, period_fusing max)",
+  "sampler": "EulerEDMSampler(num_steps 50, s_churn 0.0, s_tmin 0.0, s_tmax 999.0, s_noise 1.0)",
+  "discretization": "EDMDiscretization(sigma_min 0.002, sigma_max 700.0, rho 7.0)",
+  "embedder_options": {
+   "fps_id": 9,
+   "motion_bucket_id": 127
+  },
+  "uc_keys": [
+   "cond_frames",
+   "cond_frames_without_noise",
+   "command",
+   "trajectory",
+   "speed",
+   "angle",
+   "goal"
+  ],
+  "rollout": "round 1: the condition frame at index 0 (initial_cond_mask[0] = 1); rounds 2..: the last 3 latents of the previous round as condition frames 0-2 (prediction_cond_mask[0, 1, 2] = 1), the CLIP image of the third-last decoded frame, 22 new frames per round; total latents num_rounds x 22 + 3",
+  "decode": "decode_first_stage: 14-latent windows with a 3-latent overlap averaged, fp32 (disable_first_stage_autocast)",
+  "encode": "encode_first_stage: chunks of 14 frames, DiagonalGaussianRegularizer posterior sample (CPU generator), x scale_factor 0.18215",
+  "low_vram": "--low_vram ('if you are using a GPU with less than 80 GB VRAM'): UNet weights in fp16, each sub-model moved to the GPU only while used",
+  "input_image": "load_img: centre crop to 16:9, PIL LANCZOS resize to 1024 x 576, ToTensor, x * 2 - 1",
+  "output_image": "clamp((x + 1) / 2, 0, 1), then perform_save_locally: (255.0 * x).astype(np.uint8) (truncation), mp4 at 10 fps",
+  "action_modes": {
+   "trajectory": "traj[2:]: 4 waypoints (x right, y forward) in metres, flattened to 8 numbers",
+   "command": "0 right, 1 left, 2 stop, 3 straight",
+   "steer": "speed km/h [1:] (4) and steering angle [1:] / 780 (4)",
+   "goal": "image point / (1600, 900)"
+  }
+ },
+ "bench": {
+  "tracks": {
+   "h0": "T1-H0: the anchor frame only, action-free (the released default 'free' mode: the action embeddings are zero)",
+   "t2": "T2: the anchor frame plus the real future ego trajectory (mode trajectory), one action per rollout round"
+  },
+  "frames": 81,
+  "fps": 10,
+  "canvas_wh": [
+   512,
+   288
+  ],
+  "default_size": "320x576",
+  "sizes": {
+   "320x576": {
+    "hw": [
+     320,
+     576
+    ],
+    "input_tag": "576",
+    "canvas_mapping": "cv2.INTER_AREA from 576 x 320 to the 512 x 288 canvas (run_vista_bench.inter_area: the generic area resampling of OpenCV, checked bit for bit against cv2 5.0.0 on every input frame)",
+    "note": "the owner's decision of 2026-11-04 ~23:00: Vista generates at 320 x 576 (H x W), both multiples of 64, so the UNet code is not modified at all; below the 576 x 1024 training size. The bench band (1550 x 872, aspect 1.7775) is rendered directly to 576 x 320 (aspect 1.8: a vertical squeeze of 1.3 %); every output frame, the prefix and the reference are resized with INTER_AREA to the 512 x 288 canvas (disclosed)",
+    "unet_adaptation": null
+   },
+   "canvas": {
+    "hw": [
+     288,
+     512
+    ],
+    "input_tag": "512",
+    "canvas_mapping": "identity: the official uint8 (truncation) frames of the 288 x 512 decode are the canvas",
+    "note": "the owner's decision of 2026-11-04: every model of the benchmark generates at the 512 x 288 evaluation canvas (compute); for Vista below its 576 x 1024 training size (disclosed). The inputs are the bench renderer's own 512 x 288 frames of the band. Latent 36 x 64: the VideoUNet's one upsampling from 5 x 8 interpolates (nearest) to its 9 x 16 skip size (run_vista_bench.configure_size)",
+    "status": "superseded 2026-11-04 ~23:00: it needed the upsampling adaptation of one UNet layer (unet_adaptation); the owner chose 320 x 576 so that the UNet code is not modified at all; code snapshot vista-v1/superseded-288x512/",
+    "unet_adaptation": "upsample_to_skip"
+   },
+   "native": {
+    "hw": [
+     576,
+     1024
+    ],
+    "input_tag": "1024",
+    "canvas_mapping": "official uint8 (truncation) at 1024 x 576, then the exact 2 x 2 area mean of cv2.INTER_AREA ((a + b + c + d + 2) >> 2), i.e. 512 x 288 on the bench band",
+    "status": "superseded 2026-11-04 (the first local DEV smoke and the paused T2 check; code snapshot vista-v1/superseded-576x1024/)"
+   }
+  },
+  "band_rows": [
+   797,
+   1669
+  ],
+  "n_rounds": 3,
+  "rollout_latents": 69,
+  "decoded_latents": 61,
+  "clip_layout": "vision.mp4 frame i = tick k = i - 20: frames 0-19 = the window's prefix (Vista VAE round trip of the real history frames k = -20..-1, seed_of(w, 'prefix'), shared by every clip of the window); frames 20-80 = the clip's own decode of latents 0-60 (k = 0..60): the generated rollout for h0 / t2, the real frames k = 0..60 through the same encode and decode for recon",
+  "trajectory_rule": {
+   "frames": "round n (0, 1, 2) covers rollout frames 22n .. 22n + 24; its 4 waypoints are frames 22n + 6i (i = 1..4), i.e. ticks k = 22n + 6i (t = 0.1 k s after t0): the frame-index alignment of Vista's nuScenes annotation (25 camera frames at 12 Hz, key frames 0, 6, 12, 18, 24 at 2 Hz)",
+   "reference_point_m": 0.94,
+   "reference_point_note": "the point 0.94 m ahead of the AV2 rear axle: the nuScenes LIDAR_TOP lever arm (calibrated_sensor translation x 0.943713 m), whose positions Vista's annotation script (issue #30) uses",
+   "axes": "x = right (= -y of the AV2 ego frame at the round's first frame), y = forward (= x - 0.94); metres",
+   "poses": "AV2 city_SE3_egovehicle (devkit SE3), nearest pose to the camera frame of each tick (k <= 60: window.json ticks; k > 60: the nearest ring_front_center frame within 25 ms)",
+   "missing": "a waypoint after the log's last pose is extrapolated at the constant speed and yaw rate of the last 1.0 s of ticks (flagged per window)"
+  },
+  "seed_rule": "seed_of(window, k) of make_bench_nano_specs.py (code snapshot orbis2-code-snapshot-v1, sha256 108c4cc9...968c): h0 and t2 sample k of a window share the seed; recon seed_of(w, 'recon'); prefix seed_of(w, 'prefix')",
+  "default_layout": "official",
+  "layouts": {
+   "official": {
+    "low_vram": false,
+    "cond_encode_chunk": null,
+    "min_gpu_memory_gb": {
+     "320x576": 40,
+     "canvas": 40,
+     "native": 80
+    },
+    "note": "the released setting (no --low_vram): every sub-model resident in fp32, the UNet under autocast, the conditioner encodes the 25 condition copies at once; one sample per call (batching measured slower per sample). Peak by size: see min_gpu_memory_gb"
+   },
+   "local48": {
+    "low_vram": true,
+    "cond_encode_chunk": 1,
+    "note": "local 48 GB mechanics at the native size only (DEV smoke, DEV T2 scale check on the research server): --low_vram (UNet fp16) and the cond-frame encoder's chunking 1 (TF32 convolution numerics differ from the released batch-25 encode at about 1e-3); peak about 35 GiB allocated"
+   }
+  },
+  "cluster": {
+   "windows_per_chunk": 8,
+   "checkpoint_windows": 4,
+   "default_gpu_min_memory_mb": 40000,
+   "gpu_capability": [
+    8.0,
+    9.0
+   ],
+   "container": "vista-bench-v1.sif (cluster/vista/vista.def): CPython 3.9.24 (uv), requirements-vista-cu118.lock.txt (torch 2.0.1+cu118, kernels sm_37-sm_90)",
+   "note": "320 x 576 (2026-11-04 ~23:00): the official layout (no --low_vram) needs a GPU of 40 GB or more (A100 40/80 GB, A40, L40(S), H100, H200)"
+  }
+ },
+ "env": {
+  "python": "3.9.24 (uv-managed python-build-standalone)",
+  "research_server": {
+   "lock": "requirements-vista.lock.txt",
+   "torch": "2.0.1+cu117",
+   "note": "the INSTALL.md build (CUDA 11.7): kernels sm_37-sm_86, no PTX, so it cannot run on sm_90; on the RTX 6000 Ada (sm_89) it runs about 1.8x slower than the cu118 build (CUDA 11.7 libraries predate Ada)"
+  },
+  "container": {
+   "lock": "requirements-vista-cu118.lock.txt",
+   "torch": "2.0.1+cu118",
+   "torchvision": "0.15.2+cu118",
+   "cudnn": "8.7",
+   "note": "kernels up to sm_90 (H100 / H200); the same versions as INSTALL.md, CUDA 11.8 build; xformers 0.0.22 is itself built with CUDA 11.8 for torch 2.0.1"
+  },
+  "key_versions": {
+   "xformers": "0.0.22",
+   "pytorch-lightning": "2.0.1",
+   "open-clip-torch": "2.24.0",
+   "transformers": "4.19.1",
+   "kornia": "0.6.9",
+   "numpy": "1.26.4"
+  },
+  "research_server_cu118": {
+   "lock": "requirements-vista-cu118.lock.txt",
+   "venv": "venv-cu118 (the 64 packages of the container lock, checked)",
+   "note": "the local runs at the canvas size use the same lock as the cluster container"
+  }
+ }
+}

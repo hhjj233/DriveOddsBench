@@ -1,0 +1,1041 @@
+{
+ "schema": "wm-calib-bench.vavim.pins.v1",
+ "model": "VaViM-L (valeo.ai VideoActionModel, 1.2B GPT-2 video model, width 2048, fine-tuned checkpoint 139k + 16k)",
+ "status": "CPU_CANDIDATE_GPU_SMOKE_PENDING",
+ "code": {
+  "repo": "https://github.com/valeoai/VideoActionModel",
+  "commit": "738050ec7000fc23b7af0c3ca14693d75abb056e",
+  "commit_date": "2025-06-04T13:17:06+02:00",
+  "release_tag": "v1.0.0 = 997bee85ad18cc26e37ba6e8f39fc8d7d0e6e5eb (2025-02-20; the weights release)",
+  "pin_reason": "main HEAD; it carries #57 (738050e, \"[Hot fix] mistake in slicing when performing rolling\"): forward_inference keeps the LAST nb_timesteps-1 frames when the context rolls (v1.0.0 kept the FIRST 7, so every frame after the 3rd from a 5-frame context would be conditioned on a stale context). Every other change since v1.0.0 is documentation, scripts or packaging metadata.",
+  "license": "code MIT (LICENSE sha256 7185bbd74b80eb223a2325f9f8e4927c751f7135903a6a281901819a3e3d4a61); weights research-only VideoActionModel RAIL-M (LICENSE_MODEL sha256 71b13168fa4b0ad2201d118b8eaeda261f4342966df689d41b05d65af491547a)",
+  "source_check_rule": "git blob sha1 of every tracked file at the commit; no unregistered .py anywhere under vam/; nothing patched",
+  "imported_package": "vam.video_pretraining (mup_gpt2.MupGPT2, the package __init__ also imports next_token_predictor and prepare_token_sequence)",
+  "inference_files": [
+   "vam/__init__.py",
+   "vam/video_pretraining/__init__.py",
+   "vam/video_pretraining/mup_gpt2.py",
+   "vam/video_pretraining/next_token_predictor.py",
+   "vam/video_pretraining/prepare_token_sequence.py",
+   "mup_shapes/gpt2_24layers_basewidth256.bsh"
+  ],
+  "reference_files": [
+   "README.md",
+   "MODELS.md",
+   "scripts/handle_checkpoints.py",
+   "scripts/quality_evaluation.py",
+   "scripts/video_qualitative_results.py",
+   "notebooks/qualitative_study_video_generation.ipynb",
+   "vam/datalib/transforms.py",
+   "vam/datalib/token_creator.py",
+   "vam/datalib/opendv_tokens_dataset.py",
+   "vam/datalib/data_mixing.py",
+   "vam/datalib/scripts/_extract_frames.sh",
+   "vam/datalib/scripts/extract_opendv_frames.sh",
+   "configs/experiment/video_pretraining_GPT2_llamagen_ds16_16384_opendv.yaml",
+   "configs/experiment/finetune_mix_complet.yaml"
+  ],
+  "mup_base_shapes_file": "mup_shapes/gpt2_24layers_basewidth256.bsh",
+  "files": {
+   ".flake8": {
+    "git_blob_sha1": "764746bc773b6298b6f50988d482b88ee9a15c14",
+    "bytes": 245
+   },
+   ".github/ressources/frontal_0103_run_45.gif": {
+    "git_blob_sha1": "6a8c26c284640c8ae7822a4c437572ef612ec11f",
+    "bytes": 2545076
+   },
+   ".gitignore": {
+    "git_blob_sha1": "443433ee35f73546a399aa445a1136644acac2a2",
+    "bytes": 2285
+   },
+   "CITATION.cff": {
+    "git_blob_sha1": "cc7a40d691daca223ade5307edff2656c3b611cb",
+    "bytes": 810
+   },
+   "LICENSE": {
+    "git_blob_sha1": "8de2fc89a9c0a3915c37ed8ecd5ecc6bc5ff78d7",
+    "bytes": 1057
+   },
+   "LICENSE_DATA": {
+    "git_blob_sha1": "be35b4f304ccaf172424e1ff971d6db2ac93c135",
+    "bytes": 462
+   },
+   "LICENSE_MODEL": {
+    "git_blob_sha1": "ce3b94c7b0bc04f85dde1ee9d01fb6c64e8e4811",
+    "bytes": 14555
+   },
+   "MODELS.md": {
+    "git_blob_sha1": "f22dfe4d2c645aab58af4517d864bd8b5087ce23",
+    "bytes": 10948
+   },
+   "README.md": {
+    "git_blob_sha1": "4dc0ab4c875ea5d53915084b00aae1641bad6094",
+    "bytes": 18843
+   },
+   "configs/__init__.py": {
+    "git_blob_sha1": "56bf7f4aa4906bc0f997132708cc0826c198e4aa",
+    "bytes": 81
+   },
+   "configs/callbacks/callbacks_action_training.yaml": {
+    "git_blob_sha1": "6b8c80bc89ae35892aee37c21c2003c1e6f35581",
+    "bytes": 1161
+   },
+   "configs/callbacks/callbacks_debug.yaml": {
+    "git_blob_sha1": "f4113972ed4b41f6a46d8d5a731db7a4268945f9",
+    "bytes": 87
+   },
+   "configs/callbacks/callbacks_finetuning.yaml": {
+    "git_blob_sha1": "4b075a1f66b07de864b4f8ebe8638c98ad705e74",
+    "bytes": 665
+   },
+   "configs/callbacks/callbacks_grid_search.yaml": {
+    "git_blob_sha1": "b8a0b45ec952e95e6b8f5c48a6a1ab1727bd6780",
+    "bytes": 112
+   },
+   "configs/callbacks/callbacks_nuplan_training.yaml": {
+    "git_blob_sha1": "82044c6a8439d53c4fa6e4538c530e0b98bdd8ce",
+    "bytes": 841
+   },
+   "configs/callbacks/callbacks_opendv_training.yaml": {
+    "git_blob_sha1": "a065438250a1accbf3e8a4bb7df9f06b7080d50f",
+    "bytes": 1156
+   },
+   "configs/callbacks/callbacks_opendv_validate.yaml": {
+    "git_blob_sha1": "b8a0b45ec952e95e6b8f5c48a6a1ab1727bd6780",
+    "bytes": 112
+   },
+   "configs/callbacks/callbacks_training.yaml": {
+    "git_blob_sha1": "17f109a3eb75cf03fa56cafb57f6e5409f9617b1",
+    "bytes": 298
+   },
+   "configs/callbacks/device_stats_monitor.yaml": {
+    "git_blob_sha1": "020f1c93756d9939dfce297d9353f7e1640436c9",
+    "bytes": 82
+   },
+   "configs/callbacks/early_stopping.yaml": {
+    "git_blob_sha1": "c826c8d58651a5e2c7cca0e99948a9b6ccabccf3",
+    "bytes": 1116
+   },
+   "configs/callbacks/learning_rate_monitor.yaml": {
+    "git_blob_sha1": "8173321ac1d1f11aea42f89bf3f188150892df1b",
+    "bytes": 109
+   },
+   "configs/callbacks/model_checkpoint.yaml": {
+    "git_blob_sha1": "a8c6e0b9a02c1ef5c99dd6d81e67c592eeddb3a8",
+    "bytes": 1225
+   },
+   "configs/callbacks/model_summary.yaml": {
+    "git_blob_sha1": "61adb0c081772ba01488af63234f5c2a41060617",
+    "bytes": 244
+   },
+   "configs/callbacks/none.yaml": {
+    "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+    "bytes": 0
+   },
+   "configs/callbacks/rich_progress_bar.yaml": {
+    "git_blob_sha1": "9d35df158516933d6bfa7072d10baf54895ab311",
+    "bytes": 167
+   },
+   "configs/callbacks/tqdm_progress_bar.yaml": {
+    "git_blob_sha1": "f046ba9f7f83693c2495b83f6c98c83d2d9c0e6c",
+    "bytes": 246
+   },
+   "configs/callbacks/trajectory_logging.yaml": {
+    "git_blob_sha1": "55323d00fb804f7ad7b083c1edb471687d46fdb0",
+    "bytes": 121
+   },
+   "configs/data/ego_trajectory_dataset.yaml": {
+    "git_blob_sha1": "7975f1af51a3926ca4ccafe2c7efecc906dd5d31",
+    "bytes": 293
+   },
+   "configs/data/finetuning_mix.yaml": {
+    "git_blob_sha1": "680d2f9b31284adb880c2ebf3535111b8c062c59",
+    "bytes": 512
+   },
+   "configs/data/tokenized_sequence_opendv.yaml": {
+    "git_blob_sha1": "d7d1eed6b8dc4cef8e3f6628373a00afc858302e",
+    "bytes": 180
+   },
+   "configs/experiment/action_learning.yaml": {
+    "git_blob_sha1": "62a2a7a9ad4431e1eecb5e98630e26bf017abd26",
+    "bytes": 2879
+   },
+   "configs/experiment/finetune_mix_complet.yaml": {
+    "git_blob_sha1": "683ffb1c3809df6a1f595f2ff7c05ad5a90cf4b9",
+    "bytes": 2731
+   },
+   "configs/experiment/video_pretraining_GPT2_llamagen_ds16_16384_opendv.yaml": {
+    "git_blob_sha1": "06ebc88b11212a7fda61ece1dbdd1946b44453d4",
+    "bytes": 1945
+   },
+   "configs/hydra/default.yaml": {
+    "git_blob_sha1": "90ee7caf5df9633a9b6e053c6369fbf026b61e37",
+    "bytes": 328
+   },
+   "configs/logger/csv.yaml": {
+    "git_blob_sha1": "1f78f530240cdb5cb366bf0261cf1103d1599384",
+    "bytes": 165
+   },
+   "configs/logger/many_loggers.yaml": {
+    "git_blob_sha1": "4946f07f6046035702646db57f397371a20b515a",
+    "bytes": 79
+   },
+   "configs/logger/none.yaml": {
+    "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+    "bytes": 0
+   },
+   "configs/logger/tensorboard.yaml": {
+    "git_blob_sha1": "c9d171d863a4be6a388d1db9ae58e4e8f4f9c97e",
+    "bytes": 321
+   },
+   "configs/logger/wandb.yaml": {
+    "git_blob_sha1": "9086257049241b42d8f5022ed6af79a9780fdfda",
+    "bytes": 536
+   },
+   "configs/optimizer/muAdamW.yaml": {
+    "git_blob_sha1": "179925065d7d5b1655beabff8d41a041830cd844",
+    "bytes": 112
+   },
+   "configs/paths/default.yaml": {
+    "git_blob_sha1": "7bb85f18a70c92da55568fa7b6b517e97d695091",
+    "bytes": 199
+   },
+   "configs/paths/eval_paths_jeanzay.yaml": {
+    "git_blob_sha1": "3e0982778d74467749b7eb3bd67a67864e9bc347",
+    "bytes": 1024
+   },
+   "configs/paths/eval_paths_local.yaml": {
+    "git_blob_sha1": "d730cccb77efe226099727fb1ecf23b58147cde3",
+    "bytes": 671
+   },
+   "configs/paths/jeanzay_debug.yaml": {
+    "git_blob_sha1": "11955f6fe79b723dceb647c588ad28f37b13a868",
+    "bytes": 177
+   },
+   "configs/paths/jeanzay_nuplan.yaml": {
+    "git_blob_sha1": "6c9debe772ed3bf85480a1984b35ee1a4e4b2b69",
+    "bytes": 461
+   },
+   "configs/scheduler/none.yaml": {
+    "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+    "bytes": 0
+   },
+   "configs/scheduler/step_lr.yaml": {
+    "git_blob_sha1": "d55970300df992b211d0e8912db572a5b9d2d5ba",
+    "bytes": 68
+   },
+   "configs/scheduler/warmup_stable_drop.yaml": {
+    "git_blob_sha1": "656c100422b25f651d1b0fdc8044f1e506a8482d",
+    "bytes": 203
+   },
+   "configs/train.yaml": {
+    "git_blob_sha1": "bd62464447830fe468b454c3a0c9ca028df4c423",
+    "bytes": 1456
+   },
+   "configs/trainer/ddp.yaml": {
+    "git_blob_sha1": "d260b5393d1e2168f81f1aac9849b28eea3e0f8b",
+    "bytes": 124
+   },
+   "configs/trainer/deepspeed2.yaml": {
+    "git_blob_sha1": "ccb649a84cc0b7d6fbf6b0740114a59251e0baa0",
+    "bytes": 139
+   },
+   "configs/trainer/default.yaml": {
+    "git_blob_sha1": "963b6e3687b3522ed20ea1ceb3f2aec89c3202e9",
+    "bytes": 691
+   },
+   "configs/trainer/gpu.yaml": {
+    "git_blob_sha1": "b2389510a90f5f0161cff6ccfcb4a96097ddf9a1",
+    "bytes": 51
+   },
+   "docker/Dockerfile": {
+    "git_blob_sha1": "a4e890e833c9306c8cd6c832bbaebe2abef7ee3f",
+    "bytes": 951
+   },
+   "inference/README.md": {
+    "git_blob_sha1": "71f86055ac1d1c3633e53c6f9ead9b59db8253eb",
+    "bytes": 3779
+   },
+   "inference/runner.py": {
+    "git_blob_sha1": "e2da1d88b8773448584ec26e2e697f6658e38ac3",
+    "bytes": 7121
+   },
+   "inference/scripts/_dispatch_scenario.slurm": {
+    "git_blob_sha1": "f54c3d0f7b689613de37e5f21fc6d55eefe02e23",
+    "bytes": 852
+   },
+   "inference/scripts/_singularity_job.sh": {
+    "git_blob_sha1": "c0538e01e7dd4597e726dd386360edbf8729f486",
+    "bytes": 3334
+   },
+   "inference/scripts/aggregate_results.py": {
+    "git_blob_sha1": "56e3851abf182a01ff5eaaa121e952d230a57f56",
+    "bytes": 8672
+   },
+   "inference/scripts/build_singularity_images.slurm": {
+    "git_blob_sha1": "76e6195763b35e2e7c6c265bb9597cf383a56d32",
+    "bytes": 1829
+   },
+   "inference/scripts/create_mp4.py": {
+    "git_blob_sha1": "07fcb0892f14526e67f5879230bb0a6b9daa7925",
+    "bytes": 2418
+   },
+   "inference/scripts/create_mp4.slurm": {
+    "git_blob_sha1": "0af1d86d96141093aad01690dfcd522d8146f2a0",
+    "bytes": 1046
+   },
+   "inference/scripts/grid_ncap_evaluation.sh": {
+    "git_blob_sha1": "e0479eaf67d43a490b6fc287496ea244ac94de39",
+    "bytes": 3176
+   },
+   "inference/scripts/run_neuro_ncap_eval.sh": {
+    "git_blob_sha1": "c5d281e3b2eae60da741f2284bc2033dd9c02ad0",
+    "bytes": 3639
+   },
+   "inference/scripts/run_single_job.sh": {
+    "git_blob_sha1": "d0036cb0f4aef725dd193a0dd8be6b18b323dd6a",
+    "bytes": 3254
+   },
+   "inference/server.py": {
+    "git_blob_sha1": "0c19079bd9a90152307a2254d209685c1e5744b9",
+    "bytes": 3833
+   },
+   "jeanzay_slurm_job_submit.py": {
+    "git_blob_sha1": "56a6b645aea553e09294490ef4108812e8e233bd",
+    "bytes": 4100
+   },
+   "lint.sh": {
+    "git_blob_sha1": "a6564c9df125f6e23eb2c1f2e5aa098977383a3f",
+    "bytes": 280
+   },
+   "mup_shapes/actionexpert_24layers_baseattentiondim256_baseembeddingdim64.bsh": {
+    "git_blob_sha1": "be1d0c1134acf5d8e23ceab75cc354906a356f9c",
+    "bytes": 4969
+   },
+   "mup_shapes/gpt2_24layers_basewidth256.bsh": {
+    "git_blob_sha1": "48a6097d6de66c637e565320b6f343a7f781b1fc",
+    "bytes": 4944
+   },
+   "notebooks/qualitative_study_diffusion.ipynb": {
+    "git_blob_sha1": "23459d44d94a9f088758ea9c075e94bbc0609e16",
+    "bytes": 256219
+   },
+   "notebooks/qualitative_study_video_generation.ipynb": {
+    "git_blob_sha1": "a843fa22c5ca0fc0d97d6ef6dc4341a7e0dce05b",
+    "bytes": 1288989
+   },
+   "notebooks/scaling_laws.ipynb": {
+    "git_blob_sha1": "b5eb314b89b5b1fff66aa864332a9650614bff63",
+    "bytes": 5196798
+   },
+   "pyproject.toml": {
+    "git_blob_sha1": "522716c001378898820e4f9e4bf53e6a7f22871e",
+    "bytes": 1639
+   },
+   "scripts/README.md": {
+    "git_blob_sha1": "4a8de027ee9a09eb5b099e012592a8ff18b59e77",
+    "bytes": 1374
+   },
+   "scripts/create_vam_env_jeanzay.sh": {
+    "git_blob_sha1": "8e52860ed095cd64ca7843f6b8eab443ca013edb",
+    "bytes": 525
+   },
+   "scripts/depth_anything_a_dataset.py": {
+    "git_blob_sha1": "d45f1d69892de310f7d8caa6bbdc85b4a3f59ab6",
+    "bytes": 9609
+   },
+   "scripts/download_pretrained_models.py": {
+    "git_blob_sha1": "ff5a2a44702f2b916420d52ea0815e27b01386cf",
+    "bytes": 1371
+   },
+   "scripts/evaluate_ego_trajectory.py": {
+    "git_blob_sha1": "ab5ff5c606192437696e24097aef54880e7e718f",
+    "bytes": 9656
+   },
+   "scripts/evaluate_ego_trajectory.slurm": {
+    "git_blob_sha1": "43406a3cf7b426b3facbc46b2323c9f8240a4384",
+    "bytes": 2622
+   },
+   "scripts/fuse_multiple_checkpoints.py": {
+    "git_blob_sha1": "255fd5bbc23adf824b2ccf1e45f6d6d29fd23291",
+    "bytes": 3721
+   },
+   "scripts/fused_checkpoint.py": {
+    "git_blob_sha1": "bdb6d6d5a6e11087bc67007f36b08badc3a7aa2e",
+    "bytes": 818
+   },
+   "scripts/fused_checkpoint.sh": {
+    "git_blob_sha1": "da9830e904b7929105e85d26f4014a45a69ae3da",
+    "bytes": 1111
+   },
+   "scripts/handle_checkpoints.py": {
+    "git_blob_sha1": "6a6c5efb8273751827460872ca6620c37df9f3f5",
+    "bytes": 3662
+   },
+   "scripts/hbird_evaluation.py": {
+    "git_blob_sha1": "3a0e7c4d4657b6a552a307276108d0f661793ade",
+    "bytes": 7664
+   },
+   "scripts/hbird_evaluation.slurm": {
+    "git_blob_sha1": "2bd5e47cf6cddf2669741bfb6c9baf15f7d2275f",
+    "bytes": 3255
+   },
+   "scripts/hbird_evaluation_depth.slurm": {
+    "git_blob_sha1": "d8bffcf8ed49694a19d22f8f9d81cff6ca7194de",
+    "bytes": 3349
+   },
+   "scripts/nxt_evaluation.py": {
+    "git_blob_sha1": "e492dabda293d281c0ebe5f1c237cca6f0de5b5e",
+    "bytes": 5816
+   },
+   "scripts/nxt_evaluation.slurm": {
+    "git_blob_sha1": "742ac004eeee30032c43635d95b441c8f11e8d8a",
+    "bytes": 3311
+   },
+   "scripts/prepare_checkpoint_release.sh": {
+    "git_blob_sha1": "0a06b2edce52331b472713b0d0db02005f899355",
+    "bytes": 2410
+   },
+   "scripts/quality_evaluation.py": {
+    "git_blob_sha1": "2fece713af1c2ca4bedec53008a9a502ce39343b",
+    "bytes": 9652
+   },
+   "scripts/quality_evaluation.slurm": {
+    "git_blob_sha1": "56f9e525ea3866f4ac12e6d7fa7e17ebba61c95c",
+    "bytes": 3446
+   },
+   "scripts/regain_index_from_train.py": {
+    "git_blob_sha1": "3567504dcc4557fd0fe0bafd1fe194a5eb4e3e3c",
+    "bytes": 3388
+   },
+   "scripts/video_qualitative_results.py": {
+    "git_blob_sha1": "15d9898ed034c42fa293d2d7549b5958a70250b2",
+    "bytes": 11120
+   },
+   "vam/__init__.py": {
+    "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+    "bytes": 0
+   },
+   "vam/action_expert/__init__.py": {
+    "git_blob_sha1": "3e6b1a2eb18b709d2b74f757469f486f1d4ae873",
+    "bytes": 452
+   },
+   "vam/action_expert/action_learning.py": {
+    "git_blob_sha1": "b4fa987bcc11bcaf0d295506d663d8e92da9ca7f",
+    "bytes": 11712
+   },
+   "vam/action_expert/joint_model.py": {
+    "git_blob_sha1": "cc9c01e5286dacbed8bd7618369db28b09aa0980",
+    "bytes": 12853
+   },
+   "vam/action_expert/mup_action_expert.py": {
+    "git_blob_sha1": "0778322a0a4ad2322e88fc4847fa2aae46e5874d",
+    "bytes": 16782
+   },
+   "vam/action_expert/video_action_model.py": {
+    "git_blob_sha1": "e99d135861c3bd07442729fbdfbd2b444df79abe",
+    "bytes": 15709
+   },
+   "vam/datalib/README.md": {
+    "git_blob_sha1": "8b9a0de24b01442708bfd30171bf17201037e41d",
+    "bytes": 4217
+   },
+   "vam/datalib/__init__.py": {
+    "git_blob_sha1": "72d36165f82db5ac66cd73b168cdc561448b430c",
+    "bytes": 976
+   },
+   "vam/datalib/create_opendv_tokens.py": {
+    "git_blob_sha1": "9644c7c1801c681e1dbbee476695b7db54d1e51f",
+    "bytes": 4585
+   },
+   "vam/datalib/data_mixing.py": {
+    "git_blob_sha1": "31a2ba0c794bc62a5923101b50024f52d17b36b2",
+    "bytes": 7718
+   },
+   "vam/datalib/ego_trajectory_datamodule.py": {
+    "git_blob_sha1": "f6c1bd8373728c5d34c80cedb5d9153123acc9a3",
+    "bytes": 7362
+   },
+   "vam/datalib/ego_trajectory_dataset.py": {
+    "git_blob_sha1": "b0f7d4c07ca587cff3be107f1a360fff529fb93a",
+    "bytes": 19756
+   },
+   "vam/datalib/finetuning_datamodule.py": {
+    "git_blob_sha1": "b9fb1b81ef5cdb2daa907c9e91eeca3d5d95400e",
+    "bytes": 9439
+   },
+   "vam/datalib/hq/README.md": {
+    "git_blob_sha1": "524c4205af1dc1b1e587b051c78a5d5eecdd3136",
+    "bytes": 510
+   },
+   "vam/datalib/hq/start_hq_archive_slurm.sh": {
+    "git_blob_sha1": "7a4418cc1c10d0efbd107c0745beb2164313fed1",
+    "bytes": 1590
+   },
+   "vam/datalib/hq/start_hq_prepost_slurm.sh": {
+    "git_blob_sha1": "b52aca18f5c2b03031825fc9dbf847f6815a1277",
+    "bytes": 1413
+   },
+   "vam/datalib/hq/start_hq_server.slurm": {
+    "git_blob_sha1": "313a1c0bd9c36dbd0d0b5d7bccc093c643817bf5",
+    "bytes": 436
+   },
+   "vam/datalib/hq/start_hq_server_prepost.slurm": {
+    "git_blob_sha1": "fc1188a80d7f6b9a5edac5780a59e4c7f09b31ed",
+    "bytes": 378
+   },
+   "vam/datalib/hq/start_hq_slurm.sh": {
+    "git_blob_sha1": "e35eecda34b73199c36f348f9ced8203eeead992",
+    "bytes": 1582
+   },
+   "vam/datalib/hq/start_hq_worker.slurm": {
+    "git_blob_sha1": "7c6443a209d1e74a07c7c5cc7fb073face68b195",
+    "bytes": 1105
+   },
+   "vam/datalib/hq/start_hq_worker_archive.slurm": {
+    "git_blob_sha1": "711cb24d7acdc77d864bba4d0111e5d8fe334f75",
+    "bytes": 648
+   },
+   "vam/datalib/hq/start_hq_worker_prepost.slurm": {
+    "git_blob_sha1": "11130abe5984e7cbf24b08df647f3f9acbb93ce6",
+    "bytes": 440
+   },
+   "vam/datalib/opendv_tokens_datamodule.py": {
+    "git_blob_sha1": "873c7c41f52df839deb0b22ef4117b91ae166993",
+    "bytes": 6185
+   },
+   "vam/datalib/opendv_tokens_dataset.py": {
+    "git_blob_sha1": "5719df596f00d185de09dc40ac64a88e40f9a179",
+    "bytes": 4413
+   },
+   "vam/datalib/scripts/_extract_frames.sh": {
+    "git_blob_sha1": "8153d25f1576ab882b5b4593779a5e26747263df",
+    "bytes": 2126
+   },
+   "vam/datalib/scripts/check_missing_videos.py": {
+    "git_blob_sha1": "69cc31db51e240faeac831e34341c170f0724fad",
+    "bytes": 1844
+   },
+   "vam/datalib/scripts/create_train_val_split.py": {
+    "git_blob_sha1": "2cae51dc1b8efb3a657afee457164528311fc513",
+    "bytes": 1075
+   },
+   "vam/datalib/scripts/extract_nuplan_archive.sh": {
+    "git_blob_sha1": "34b8257e3c6d4da97b0f25777037e12127d4e385",
+    "bytes": 1385
+   },
+   "vam/datalib/scripts/extract_nuscenes_archive.sh": {
+    "git_blob_sha1": "ff034ac2fa4c7b2804bc809a1072e04c1f4cf536",
+    "bytes": 1586
+   },
+   "vam/datalib/scripts/extract_opendv_frames.sh": {
+    "git_blob_sha1": "abfcef5b27173784445bcda8dd3792d17ac8b8f0",
+    "bytes": 2499
+   },
+   "vam/datalib/scripts/flatten_opendv_tokens.py": {
+    "git_blob_sha1": "898a15f65436895f5579862ca2b1d67fc2b20a8a",
+    "bytes": 997
+   },
+   "vam/datalib/scripts/glob.sh": {
+    "git_blob_sha1": "4e920c78457ede4c8fd2d8de7c4c9630ee3e9453",
+    "bytes": 298
+   },
+   "vam/datalib/scripts/remove_dir.slurm": {
+    "git_blob_sha1": "c99db5800030e6531afc9605b154448da349c8cc",
+    "bytes": 1014
+   },
+   "vam/datalib/scripts/tokenize_nuplan.sh": {
+    "git_blob_sha1": "f9713804014789fe64a96c54099ff28f8c53035b",
+    "bytes": 2629
+   },
+   "vam/datalib/scripts/tokenize_nuscenes.sh": {
+    "git_blob_sha1": "d82680667c735a7a2840475aafc6e1226b34c467",
+    "bytes": 1166
+   },
+   "vam/datalib/scripts/tokenize_opendv_from_frames.sh": {
+    "git_blob_sha1": "3c7633ce345c1ce21f128c7c07fdce8a0f5c7146",
+    "bytes": 2696
+   },
+   "vam/datalib/stateful_dataloader.py": {
+    "git_blob_sha1": "63ea3283d7282076b2901ddfef14e7dea8d06e4b",
+    "bytes": 2402
+   },
+   "vam/datalib/token_creator.py": {
+    "git_blob_sha1": "adcd4f1f0f201b4da601e30a5b9672009a1f619f",
+    "bytes": 10361
+   },
+   "vam/datalib/transforms.py": {
+    "git_blob_sha1": "c1d4c05f8a0eb7699aabdcdb75a0363fdab724fe",
+    "bytes": 3369
+   },
+   "vam/evaluation/__init__.py": {
+    "git_blob_sha1": "fa8dad314480dffdd5612cd050886febfed49ee4",
+    "bytes": 453
+   },
+   "vam/evaluation/datasets/__init__.py": {
+    "git_blob_sha1": "4fd8930fd4fbf279214e1fbadcc82ff977c59692",
+    "bytes": 169
+   },
+   "vam/evaluation/datasets/base_dataset.py": {
+    "git_blob_sha1": "beca8f46a3eaf622da855227af9f251512b389b0",
+    "bytes": 7375
+   },
+   "vam/evaluation/datasets/cityscapes.py": {
+    "git_blob_sha1": "dee405e404412f3d38d260669995481532774a7f",
+    "bytes": 4434
+   },
+   "vam/evaluation/datasets/kitti.py": {
+    "git_blob_sha1": "b8d3920378965c4667614dae2adae0f0ee19337d",
+    "bytes": 7302
+   },
+   "vam/evaluation/depth.py": {
+    "git_blob_sha1": "ebc5aeadc3ebdd3480ed3fd249d5bf713d1f08ed",
+    "bytes": 2803
+   },
+   "vam/evaluation/ego_trajectory_forecasting.py": {
+    "git_blob_sha1": "dde54bd74e7896c547353e514230a68df0a28516",
+    "bytes": 2026
+   },
+   "vam/evaluation/hbird.py": {
+    "git_blob_sha1": "3c5c033eb2111deb19367b685155ed0440d40376",
+    "bytes": 29271
+   },
+   "vam/evaluation/miou.py": {
+    "git_blob_sha1": "6d38ed108c8a9c3998ad2300c3bb3b63b918932b",
+    "bytes": 4203
+   },
+   "vam/evaluation/quality.py": {
+    "git_blob_sha1": "77d41549e6bf071e42e7c6bf710938979589b9be",
+    "bytes": 13592
+   },
+   "vam/train.py": {
+    "git_blob_sha1": "bf915b5ae0563df725b305dd729df81f6a254543",
+    "bytes": 5141
+   },
+   "vam/utils/__init__.py": {
+    "git_blob_sha1": "bda56f46d88c8e1bcd487aadd7f7037f9327b116",
+    "bytes": 1199
+   },
+   "vam/utils/boolean_flag.py": {
+    "git_blob_sha1": "7c3136c7092535c7bc27a580a9a1a6986112b8f9",
+    "bytes": 373
+   },
+   "vam/utils/cmd_line_logging.py": {
+    "git_blob_sha1": "f876dde5d41bb3447c89ebb6b72a8768f301be2b",
+    "bytes": 2336
+   },
+   "vam/utils/create_mp4_from_folder.py": {
+    "git_blob_sha1": "67fb9356a0c3285dfff1c21ea4379eb7f6e20b20",
+    "bytes": 4109
+   },
+   "vam/utils/expand_path.py": {
+    "git_blob_sha1": "9c6a65d37a2165e74772a671cc44b7119a45c73e",
+    "bytes": 121
+   },
+   "vam/utils/hyperparam_logging.py": {
+    "git_blob_sha1": "da76e5952d2dd57dfdf063482d9c9749bd49b4c1",
+    "bytes": 2685
+   },
+   "vam/utils/info_printing.py": {
+    "git_blob_sha1": "3d3c8373b4f4cf246fc306d049e3ccae3739eb7d",
+    "bytes": 1870
+   },
+   "vam/utils/instantiators.py": {
+    "git_blob_sha1": "aa54252e3244e3b5aeaeadc98c42957898ab0aa7",
+    "bytes": 1816
+   },
+   "vam/utils/plot_utils.py": {
+    "git_blob_sha1": "e87ebab70477682feedf61df554d5b548be84bd4",
+    "bytes": 484
+   },
+   "vam/utils/read_eval_config.py": {
+    "git_blob_sha1": "bc26f69579c5245809127f880c28565f6fa2ebba",
+    "bytes": 253
+   },
+   "vam/utils/task_utils.py": {
+    "git_blob_sha1": "d3275467437b8c750108eefb51d2a195a0e0e5a1",
+    "bytes": 3993
+   },
+   "vam/utils/tensorboard_logging.py": {
+    "git_blob_sha1": "9d5b45452fda29311260a311b4ba5adcca20820f",
+    "bytes": 2507
+   },
+   "vam/utils/torch_dtype.py": {
+    "git_blob_sha1": "9b4c8c0b1196d3fd1d026afd454ed459d471bb8b",
+    "bytes": 507
+   },
+   "vam/utils/trajectory_logging.py": {
+    "git_blob_sha1": "299380dc3f00c593400da1102fb9625b76984ed0",
+    "bytes": 4814
+   },
+   "vam/utils/warmup_stable_drop.py": {
+    "git_blob_sha1": "03a483c58ef34692319f1f7856d479180a0052d9",
+    "bytes": 2213
+   },
+   "vam/video_pretraining/__init__.py": {
+    "git_blob_sha1": "80726625b7fea6a6972edd760872be03ffc9c2db",
+    "bytes": 500
+   },
+   "vam/video_pretraining/mup_gpt2.py": {
+    "git_blob_sha1": "c7e0629ca7bb4c77d9d407cc7441cb781588a049",
+    "bytes": 26126
+   },
+   "vam/video_pretraining/next_token_predictor.py": {
+    "git_blob_sha1": "2ccb16c445cd73aae9a962c12735963cad78621e",
+    "bytes": 9884
+   },
+   "vam/video_pretraining/prepare_token_sequence.py": {
+    "git_blob_sha1": "0735070a7e3e03cef08973e1b117bae9e05aae85",
+    "bytes": 2416
+   }
+  }
+ },
+ "weights": {
+  "release": {
+   "repo": "valeoai/VideoActionModel",
+   "tag": "v1.0.0",
+   "release_id": 201365880,
+   "tag_commit": "997bee85ad18cc26e37ba6e8f39fc8d7d0e6e5eb",
+   "published_at": "2025-02-20T08:44:46Z",
+   "digest_note": "the GitHub API reports no digest for these assets (uploaded 2025-02-20); sha256 pinned from a streamed read on 2026-11-13 (sizes equal the API sizes)"
+  },
+  "license_name": "VideoActionModel RESEARCH-ONLY RAIL-M (LICENSE_MODEL); accepted by the owner for research use (bench-v1/vavim/owner-license-approval.json)",
+  "gated": false,
+  "checkpoint_choice": "VaViM-L = width_2048_pretrained_139k_total_155k (README / MODELS.md main table, VaViM column of VaVAM-L; the fine-tuned checkpoint used for the paper's generation results, Table 2 and Figure 6c). The pre-trained-only width_2048_pretrained_139k is not approved and not downloaded.",
+  "assets": [
+   {
+    "name": "width_2048_pretrained_139k_total_155k_chunked.tar.gz.part_aa",
+    "asset_id": 230927251,
+    "role": "vavim_l_tar_part",
+    "bytes": 1900000000,
+    "sha256": "674d38d0c02c9b9a2a57b2e2942576bc085419a846394b31a7e2bd52dcf6734b",
+    "updated_at": "2025-02-20T10:33:40Z",
+    "url": "https://github.com/valeoai/VideoActionModel/releases/download/v1.0.0/width_2048_pretrained_139k_total_155k_chunked.tar.gz.part_aa"
+   },
+   {
+    "name": "width_2048_pretrained_139k_total_155k_chunked.tar.gz.part_ab",
+    "asset_id": 230927407,
+    "role": "vavim_l_tar_part",
+    "bytes": 1900000000,
+    "sha256": "148948eaf777f138f988efee9da26fd630b5e15cf3f7ad220e129f73e8d5facd",
+    "updated_at": "2025-02-20T10:34:51Z",
+    "url": "https://github.com/valeoai/VideoActionModel/releases/download/v1.0.0/width_2048_pretrained_139k_total_155k_chunked.tar.gz.part_ab"
+   },
+   {
+    "name": "width_2048_pretrained_139k_total_155k_chunked.tar.gz.part_ac",
+    "asset_id": 230927113,
+    "role": "vavim_l_tar_part",
+    "bytes": 812464404,
+    "sha256": "faeba0c38ff2ede1d6d24d5f6315c3c8f7fff3b617d1fd7ced6b8ab0a9f6685b",
+    "updated_at": "2025-02-20T10:32:30Z",
+    "url": "https://github.com/valeoai/VideoActionModel/releases/download/v1.0.0/width_2048_pretrained_139k_total_155k_chunked.tar.gz.part_ac"
+   },
+   {
+    "name": "VQ_ds16_16384_llamagen_encoder.jit",
+    "asset_id": 230906916,
+    "role": "tokenizer_encoder",
+    "bytes": 117842796,
+    "sha256": "b5e2c47d04f8ff8a6a47433252aaeefaa8be16be83db6521521a78fefae7e228",
+    "updated_at": "2025-02-20T09:13:29Z",
+    "label": "llamagen_encoder.jit",
+    "url": "https://github.com/valeoai/VideoActionModel/releases/download/v1.0.0/VQ_ds16_16384_llamagen_encoder.jit"
+   },
+   {
+    "name": "VQ_ds16_16384_llamagen_decoder.jit",
+    "asset_id": 230906985,
+    "role": "tokenizer_decoder",
+    "bytes": 170398990,
+    "sha256": "1606c10e8dbc6bcc7143a509e55acdf1c53912c996648797556cb436d19d65ee",
+    "updated_at": "2025-02-20T09:13:47Z",
+    "label": "llamagen_decoder.jit",
+    "url": "https://github.com/valeoai/VideoActionModel/releases/download/v1.0.0/VQ_ds16_16384_llamagen_decoder.jit"
+   }
+  ],
+  "extracted": {
+   "member": "width_2048_pretrained_139k_total_155k.pt",
+   "bytes": 4972251282,
+   "sha256": "f1d52b4bc99c6adaf80451ec87fc1ccb3596bb7d461bed8142bc528d9591dbe7",
+   "from_parts": [
+    "width_2048_pretrained_139k_total_155k_chunked.tar.gz.part_aa",
+    "width_2048_pretrained_139k_total_155k_chunked.tar.gz.part_ab",
+    "width_2048_pretrained_139k_total_155k_chunked.tar.gz.part_ac"
+   ],
+   "pinned_from": "first extraction 2026-11-13 (observed-extraction.json); the member is a deterministic function of the three hash-pinned parts (gzip CRC32 and tar size checked by the reader)"
+  },
+  "files": [
+   {
+    "role": "gpt_checkpoint",
+    "path": "width_2048_pretrained_139k_total_155k.pt",
+    "bytes": 4972251282,
+    "sha256": "f1d52b4bc99c6adaf80451ec87fc1ccb3596bb7d461bed8142bc528d9591dbe7",
+    "note": "Lightning checkpoint extracted from the three tar.gz parts; loaded by the official load_pretrained_gpt sequence"
+   },
+   {
+    "role": "tokenizer_encoder",
+    "path": "VQ_ds16_16384_llamagen_encoder.jit",
+    "bytes": 117842796,
+    "sha256": "b5e2c47d04f8ff8a6a47433252aaeefaa8be16be83db6521521a78fefae7e228",
+    "note": "TorchScript LlamaGen VQ-16 encoder (release label llamagen_encoder.jit)"
+   },
+   {
+    "role": "tokenizer_decoder",
+    "path": "VQ_ds16_16384_llamagen_decoder.jit",
+    "bytes": 170398990,
+    "sha256": "1606c10e8dbc6bcc7143a509e55acdf1c53912c996648797556cb436d19d65ee",
+    "note": "TorchScript LlamaGen VQ-16 decoder (release label llamagen_decoder.jit)"
+   }
+  ],
+  "not_downloaded": [
+   "every other v1.0.0 asset: width_768_*, width_1024_*, width_2048_pretrained_139k_chunked.*, VAM_* (VaVAM action experts), opendv_vavam.tar.gz, nuscenes_vavam.tar.gz"
+  ],
+  "pickle_globals_allowed": {
+   "checkpoint": [
+    [
+     "__builtin__",
+     "dict"
+    ],
+    [
+     "__builtin__",
+     "list"
+    ],
+    [
+     "__builtin__",
+     "long"
+    ],
+    [
+     "__builtin__",
+     "set"
+    ],
+    [
+     "collections",
+     "OrderedDict"
+    ],
+    [
+     "collections",
+     "defaultdict"
+    ],
+    [
+     "mup.infshape",
+     "InfDim"
+    ],
+    [
+     "mup.infshape",
+     "InfShape"
+    ],
+    [
+     "omegaconf.base",
+     "ContainerMetadata"
+    ],
+    [
+     "omegaconf.base",
+     "Metadata"
+    ],
+    [
+     "omegaconf.dictconfig",
+     "DictConfig"
+    ],
+    [
+     "omegaconf.listconfig",
+     "ListConfig"
+    ],
+    [
+     "omegaconf.nodes",
+     "AnyNode"
+    ],
+    [
+     "torch",
+     "ByteStorage"
+    ],
+    [
+     "torch",
+     "FloatStorage"
+    ],
+    [
+     "torch",
+     "Size"
+    ],
+    [
+     "torch._utils",
+     "_rebuild_tensor_v2"
+    ],
+    [
+     "typing",
+     "Any"
+    ]
+   ],
+   "tokenizer_encoder": [
+    [
+     "__torch__.___torch_mangle_553",
+     "VQModelEncode"
+    ],
+    [
+     "collections",
+     "OrderedDict"
+    ],
+    [
+     "torch",
+     "DoubleStorage"
+    ],
+    [
+     "torch",
+     "FloatStorage"
+    ],
+    [
+     "torch",
+     "LongStorage"
+    ],
+    [
+     "torch._utils",
+     "_rebuild_tensor_v2"
+    ]
+   ],
+   "tokenizer_decoder": [
+    [
+     "__torch__.___torch_mangle_1404",
+     "VQModelDecode"
+    ],
+    [
+     "collections",
+     "OrderedDict"
+    ],
+    [
+     "torch",
+     "DoubleStorage"
+    ],
+    [
+     "torch",
+     "FloatStorage"
+    ],
+    [
+     "torch",
+     "LongStorage"
+    ],
+    [
+     "torch._utils",
+     "_rebuild_tensor_v2"
+    ]
+   ]
+  },
+  "pickle_note": "checkpoint: Lightning checkpoint (fused DeepSpeed state); its pickle imports only builtin containers, collections OrderedDict/defaultdict, typing.Any, torch storages/Size/_rebuild_tensor_v2, OmegaConf containers (hyper_parameters) and mup InfShape/InfDim (saved base shapes), checked by opcode scan before the official torch.load(map_location=cpu) (weights_only=False, as released); the TorchScript archives (encoder, decoder) hold traced graphs whose pickles import only their own module class, OrderedDict and torch storages"
+ },
+ "bench": {
+  "track": "T1-H2",
+  "band_rows": [
+   797,
+   1669
+  ],
+  "canvas_wh": [
+   512,
+   288
+  ],
+  "canvas_fps": 10,
+  "canvas_frames": 81,
+  "t0_canvas_index": 20,
+  "model_wh": [
+   512,
+   288
+  ],
+  "model_frame_rule": "model frame = the 512x288 canvas render of the bench band (source rows [797, 1669), full width, cv2.INTER_AREA, bench render_version 2), bit-identical to canvas/real.mp4; 1550:872 = 1.7775 against the 16:9 = 1.7778 of the training frames (OpenDV ffmpeg scale to 512x288, nuPlan 1920x1080 / 3.75, nuScenes 1600x900 / 3.125, torchvision bilinear antialias)",
+  "model_fps": 2,
+  "model_step_ticks": 5,
+  "frame_rate_evidence": "paper section 4.1: OpenDV frames extracted at 10 FPS, 512x288, clips of 8 frames at 2 FPS; nuPlan 10 Hz -> clips of 8 frames at 2 Hz; nuScenes natively 2 Hz; code: extract_opendv_frames.sh FPS=10, OpenDVTokensDataset subsampling_factor=5, nuPlan EgoTrajectoryDataset subsampling_factor=5, KITTI evaluation frame_stride 5 (\"to match the training FPS\")",
+  "history_ticks": [
+   -20,
+   0
+  ],
+  "context_ticks": [
+   -20,
+   -15,
+   -10,
+   -5,
+   0
+  ],
+  "future_ticks": [
+   5,
+   60
+  ],
+  "native2_ticks": [
+   -20,
+   60
+  ],
+  "nb_timesteps": 8,
+  "tokens_per_frame": 576,
+  "token_grid_hw": [
+   18,
+   32
+  ],
+  "codebook_size": 16384,
+  "gpt_vocabulary_size": 16385,
+  "canvas_map": "nearest",
+  "canvas_map_rules": {
+   "nearest": "canvas tick k shows the model frame of tick 5 round(k / 5) (no ties for integer k): each 2 Hz frame covers ticks 5m-2..5m+2; ticks 1-2 show the t0 frame, ticks 3-4 the first generated frame (tick 5); |shown - actual| <= 0.2 s, mean 0 (precedent: ReWorld/DriveLaW nearest native frame)",
+   "hold": "canvas tick k shows the model frame of tick 5 floor(k / 5) (latest frame at or before k): ticks 1-4 show the t0 frame; delay 0-0.4 s, mean 0.2 s; causal"
+  },
+  "prefix": "shared",
+  "prefix_rate": "10hz",
+  "prefix_rules": {
+   "2hz": "canvas ticks whose model tick is <= 0 show the 2 Hz prefix: the VQ round trip (official encoder, official decoder) of the history frames at ticks -20, -15, -10, -5, 0, i.e. exactly the decoded context tokens; mapped like the future",
+   "10hz": "canvas ticks -20..0 show the per-frame VQ round trip of all 21 history frames (Orbis 2 precedent); its ticks -20, -15, ..., 0 equal the 2 Hz prefix bit for bit (one encode and one decode of the 21 frames per window); ticks after t0 follow canvas_map"
+  },
+  "prefix_encode": "the 21 history frames are encoded in ONE tokenizer call and decoded in ONE detokenizer call per window; the context tokens are the rows at ticks -20, -15, -10, -5, 0 of that encode, so prefix frames, context tokens and the t0 frame are shared byte for byte by every clip of the window and its reference",
+  "reference_rule": "real future frames at ticks 5, 10, ..., 60 (the window tick frames; DEV, or TEST after stage 2), encoded in one tokenizer call and decoded in one detokenizer call (deterministic VQ round trip, no sampling), assembled with the same shared prefix and the same canvas map as the continuations",
+  "sampling": {
+   "function": "official MupGPT2._sample_next_token arithmetic: logits[:, -1] / temperature -> softmax -> torch.topk(k, sorted=False) -> renormalise -> torch.multinomial -> gather; the only change is that each batch row draws from its own torch.Generator",
+   "temperature": 1.0,
+   "top_k": 16385,
+   "use_kv_cache": true,
+   "generator": "per-sample torch.Generator(device) seeded seed_of(window, k); one torch.multinomial per row per token; no global RNG consumed",
+   "official_default": "forward_inference(temperature=1.0, topk_sampler=1, use_kv_cache=True): top-1 = greedy; README example, scripts/video_qualitative_results.py, scripts/quality_evaluation.py (deterministic=True) and the notebook all use top-1",
+   "top_k_rule": "16385 = the GPT vocabulary: the released _sample_next_token arithmetic with topk_sampler equal to the vocabulary size samples the full temperature-1 distribution (plain ancestral sampling); no truncation parameter is chosen by the kit",
+   "top_k_evidence": "DEV CPU probes (checks/token-rank-probe-v1.json, checks/topk-probe-v1/): teacher-forced on the registered context, the model's mean token entropy equals the real next-frame tokens' mean -log p within 0.02-0.30 nats on 4 DEV windows (ticks 5 and 10), and the share of real tokens outside the top-k equals the model's own tail mass (e.g. moving window f8b7965d-t8.5 tick 5: outside top-50 56.2 % vs tail mass 53.8 %; outside top-500 19.3 % vs 19.7 %); top-k 50 or 500 would remove real-like choices in 42-57 % or 11-21 % of positions on the two moving windows; top-1 (released default) reproduces the t0 frame (2-17 % of tokens changed vs 62 % in the real next frame); p(token 16384) <= 4.3e-13 per step"
+  },
+  "autocast": {
+   "gpt": "torch.autocast(cuda, bfloat16) around forward_inference (README, scripts)",
+   "encoder": "torch.autocast(cuda, bfloat16) (token_creator.py: every training token; quality_evaluation.py; notebook)",
+   "decoder": "torch.autocast(cuda, bfloat16) (quality_evaluation.py, video_qualitative_results.py; the README example and the notebook decode in float32)"
+  },
+  "batch_layout": "one window per batch: the window's continuation samples in ascending k (K = 16 -> batch 16) through one official forward_inference call; generated frames decoded per sample (one detokenizer call of 12 frames)",
+  "uint8_rule": "official torch_image_to_plot: clamp(127.5 x + 128, 0, 255).to(uint8) (truncation of x * 127.5 + 128)",
+  "input_rule": "official transforms: uint8 / 255 (ToDtype float32 scale=True), then 2 x - 1 (Normalize); NCHW float32",
+  "seed_rule": "int.from_bytes(sha256(f\"bench-v1|{window}|{k}\")[:4],\"big\")&0x7fffffff",
+  "equivalence_seed_rule": "seed_of(window, \"equivalence\") with the same formula",
+  "test_generation_freeze": "protocol-vavim-frozen.txt",
+  "test_measurement_freeze": "protocol-vavim-stage2-frozen.txt",
+  "smoke": {
+   "windows": [
+    "2eeaccb0-t2.5",
+    "47a9fb77-t9.5"
+   ],
+   "samples": [
+    0,
+    1
+   ],
+   "references": true,
+   "run_prefix": "vavim-dev-smoke-"
+  },
+  "diagnostic_run_prefix": "vavim-dev-diag-",
+  "registered_names_sha256": {
+   "dev": "1e7b3878a485fb45fa295dddd29e63237f72a7423230cb0de7c012808f47fbd1",
+   "test": "not read by the kit preparation (TEST names untouched); checked at freeze time"
+  },
+  "gpt_config": {
+   "embedding_dim": 2048,
+   "dim_heads": 128,
+   "nb_layers": 24,
+   "mlp_dim_mult": 4,
+   "vocabulary_size": 16385,
+   "nb_timesteps": 8,
+   "nb_tokens_per_timestep": 576,
+   "init_std": 0.0289,
+   "output_tied": true
+  },
+  "lm_head_width_mult": 8.0
+ },
+ "seed_snapshot": {
+  "file": "scripts/make_bench_nano_specs.py",
+  "sha256": "108c4cc974487284182bcc4fc6c84ff12477437059e9a90a50e1fa6fd441968c"
+ },
+ "decisions_pending": [],
+ "coordinator_rulings": "bench-v1/vavim/COORDINATOR-RULINGS-v1.json + COORDINATOR-RULINGS-v1-addendum-1.json (p-inter-84, 2026-11-13): O1-O14 ruled; canvas_map nearest, prefix_rate 10hz"
+}
