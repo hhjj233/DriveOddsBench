@@ -1,6 +1,6 @@
 # DriveOddsBench: implementation
 
-This document describes how every step of the benchmark is implemented, in the order in which it runs. Section numbers of the paper are given as §, and supplementary sections as App. The scripts are in `scripts/` unless a path is given. The frozen files, and the differences of their copies in this repository, are listed in [`FROZEN_MANIFEST.md`](FROZEN_MANIFEST.md).
+This document describes how every step of the benchmark is implemented, in the order in which it runs. Section numbers of the paper are given as §, and appendix sections as App. The scripts are in `scripts/` unless a path is given. The frozen files, and the differences of their copies in this repository, are listed in [`FROZEN_MANIFEST.md`](FROZEN_MANIFEST.md).
 
 Contents: [1 Layout](#1-layout-and-conventions) · [2 Histories](#2-histories-and-scenario-families) · [3 Canvas and timing](#3-measurement-canvas-and-timing) · [4 Generation](#4-generation) · [5 Instrument](#5-instrument) · [6 Validation](#6-validation-and-reliability-labels) · [7 Ranks and tests](#7-ranks-and-confirmatory-tests) · [8 Further analyses](#8-further-analyses) · [9 Running](#9-running-the-pipeline)
 

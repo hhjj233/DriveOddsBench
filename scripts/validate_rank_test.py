@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Checks of DriveOddsBench's rank test on simulated numbers with known answers (Supp. F).
+"""Checks of DriveOddsBench's rank test on simulated numbers with known answers (App. F).
 
 No world model, video or driving data is used.
 Writes data/statistical_validation.json, data/statistical_validation.csv and tables/statistical_validation.tex
