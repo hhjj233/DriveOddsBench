@@ -8,9 +8,9 @@ Department of Civil and Environmental Engineering, University of Wisconsin–Mad
 
 [Project page](https://hhjj233.github.io/DriveOddsBench-page/) · [Paper (arXiv)](https://arxiv.org/abs/2611.29275)
 
-<a href="https://hhjj233.github.io/DriveOddsBench-page/"><img src="docs/assets/motivation.gif" width="100%" alt="One test history in 3D: the odds Epona gives the lead-car gap over time, and the real future"></a>
+<a href="https://hhjj233.github.io/DriveOddsBench-page/"><img src="docs/assets/motivation.gif" width="100%" alt="One test history in 3D: the odds Epona gives the lead-car gap over time, the real future, and a hypothetical real-world distribution"></a>
 
-<em>One test history: the lead car slows down, and all 16 futures that Epona imagines have it pulling away. The full one-minute video is on the <a href="https://hhjj233.github.io/DriveOddsBench-page/">project page</a>.</em>
+<em>One test history: the lead car slows down, and all 16 futures that Epona imagines have it pulling away. The dashed red distribution is a hypothetical illustration: real-world odds are never observed. The full one-minute video is on the <a href="https://hhjj233.github.io/DriveOddsBench-page/">project page</a>.</em>
 
 </div>
 
