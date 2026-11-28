@@ -8,9 +8,9 @@ Department of Civil and Environmental Engineering, University of Wisconsin–Mad
 
 [Project page](https://hhjj233.github.io/DriveOddsBench-page/) · [Paper (arXiv)](https://arxiv.org/abs/2611.29275)
 
-<img src="docs/assets/teaser.png" width="100%" alt="DriveOddsBench teaser">
+<a href="https://hhjj233.github.io/DriveOddsBench-page/"><img src="docs/assets/motivation.gif" width="100%" alt="One test history in 3D: the odds Epona gives the lead-car gap over time, and the real future"></a>
 
-<em>Driving video world models underestimate their uncertainty. (a) A test history from Argoverse 2. (b) The lead vehicle braked, and none of the futures that Orbis 2 imagines did. (c) For every model, the real outcome falls outside all samples far more often than the 11.8 % expected when the samples follow the real distribution.</em>
+<em>One test history: the lead car slows down, and all 16 futures that Epona imagines have it pulling away. The full one-minute video is on the <a href="https://hhjj233.github.io/DriveOddsBench-page/">project page</a>.</em>
 
 </div>
 
@@ -35,8 +35,8 @@ Department of Civil and Environmental Engineering, University of Wisconsin–Mad
 
 > **TL;DR.** Video world models are used in place of the real future, so their samples should be *aligned with real-world odds*: each future should appear among the samples as often as it follows the same history in reality. A recorded driving history has only one real future, but under alignment the rank of the real outcome among K samples is uniform in every history. Pooling these ranks over many histories tests alignment without knowing any probability. DriveOddsBench applies this test to eleven driving and general video world models on Argoverse 2, with one frozen instrument that reads the same physical quantities from real and imagined futures.
 
-<p align="center"><img src="docs/assets/teaser_orbis2.gif" width="100%" alt="Real future and five of the sixteen futures imagined by Orbis 2"></p>
-<p align="center"><em>The test history of the teaser, from t0 − 1 s to t0 + 4 s. Top left: the real future (raw video, red frame), in which the lead vehicle brakes. The other panels: five of the sixteen futures that Orbis 2 imagines from the same history. Frames: Argoverse 2 (CC BY-NC-SA 4.0).</em></p>
+<p align="center"><img src="docs/assets/teaser.png" width="100%" alt="DriveOddsBench teaser"></p>
+<p align="center"><em>Driving video world models underestimate their uncertainty. (a) A test history from Argoverse 2. (b) The lead vehicle braked, and none of the futures that Orbis 2 imagines did. (c) For every model, the real outcome falls outside all samples far more often than the 11.8 % expected when the samples follow the real distribution.</em></p>
 
 - **One future is enough once histories are pooled.** If a model's conditional distribution of a measured quantity equals the real one, the real reading and the K = 16 samples are exchangeable, so the rank of the real reading is uniform on {0, …, 16} in every history, whatever the history's outcome distribution.
 - **Coverage (H2).** Under alignment the real reading falls outside the range of all 16 samples in 2/17 = 11.8 % of cases. When it does so more often, the samples are more certain about the real outcome than the model's errors allow: the model underestimates its uncertainty. Too little spread and a shift both cause this.
@@ -126,7 +126,7 @@ DriveOddsBench/
 
 ## 📄 Paper
 
-*DriveOddsBench: Are Driving Video World Models Aligned with Real-World Odds?* [arXiv:2611.29275](https://arxiv.org/abs/2611.29275). The project page has two short videos: the pipeline, and one test history worked through.
+*DriveOddsBench: Are Driving Video World Models Aligned with Real-World Odds?* [arXiv:2611.29275](https://arxiv.org/abs/2611.29275). The project page has a one-minute motivating example and two short videos: the pipeline, and one test history worked through.
 
 ## 📚 Citation
 
